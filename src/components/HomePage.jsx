@@ -376,7 +376,7 @@ export default function HomePage() {
       {/* HERO */}
       <section
         ref={heroRef}
-        className="relative w-full min-h-screen flex items-center overflow-hidden bg-forest"
+        className="relative w-full  2xl:h-[92dvh] flex items-center overflow-hidden bg-forest"
       >
         <motion.div style={{ y: heroY }} className="absolute inset-0 z-0">
           <img
@@ -400,7 +400,7 @@ export default function HomePage() {
 
         <motion.div
           style={{ opacity: heroOpacity }}
-          className="relative z-10 max-w-7xl mx-auto px-4 md:px-12 w-full pt-28 pb-20"
+          className="relative z-10 max-w-7xl xl:max-w-[1240px] 2xl:max-w-[1640px] mx-auto px-4 md:px-12 w-full pt-28 pb-20 "
         >
           <motion.div
             initial="hidden"
@@ -473,8 +473,8 @@ export default function HomePage() {
       </section>
 
       {/* WHAT IS JYA */}
-      <section className="py-10 md:py-16 bg-ivory px-4 sm:px-6 lg:px-12">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-10 md:py-16 bg-ivory px-4 sm:px-6 lg:px-14 2xl:px-[75px]">
+        <div className="max-w-7xl xl:max-w-[1240px] 2xl:max-w-[1640px]  mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center">
             <div>
               <SectionLabel>What is JYA</SectionLabel>
@@ -589,7 +589,7 @@ export default function HomePage() {
               Why Humanity <span className="italic text-amber">Needs</span> JYA
             </motion.h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 2xl:max-w-4xl mx-auto gap-5">
             {needsData.map((box, index) => (
               <motion.div
                 key={index}
@@ -665,7 +665,7 @@ export default function HomePage() {
       </section>
 
       <section className="py-10 md:py-16 bg-ivory px-4 sm:px-6 lg:px-12">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl  mx-auto">
           <div className="text-center mb-7">
             <SectionLabel>Our Pillars</SectionLabel>
             <motion.h2
@@ -752,7 +752,7 @@ export default function HomePage() {
 
       {/* SERVICES */}
       <section className="py-10 md:py-16 bg-white px-4 sm:px-6 lg:px-12">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl 2xl:max-w-[1540px] mx-auto">
           <div className="text-center mb-7">
             <SectionLabel>What We Offer</SectionLabel>
             <motion.h2
@@ -824,7 +824,7 @@ export default function HomePage() {
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber/30 to-transparent" />
           <div className="absolute -top-64 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-moss/20 blur-3xl" />
         </div>
-        <div className="max-w-7xl mx-auto relative z-10">
+        <div className="max-w-7xl 2xl:max-w-[1540px] mx-auto relative z-10">
           <div className="mb-16">
             <SectionLabel>Communities</SectionLabel>
             <motion.h2
@@ -891,7 +891,7 @@ export default function HomePage() {
       {/* ============ BLOGS ============ */}
       <section className="py-10 md:py-16 bg-ivory px-4 sm:px-6 lg:px-12 relative overflow-hidden">
         <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-amber/10 blur-3xl pointer-events-none" />
-        <div className="max-w-7xl mx-auto relative z-10">
+        <div className="max-w-7xl 2xl:max-w-[1540px] mx-auto relative z-10">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14 md:mb-16">
             <div>
               <SectionLabel>Journal</SectionLabel>
@@ -941,7 +941,7 @@ export default function HomePage() {
                 transition={{ duration: 0.4 }}
                 className="group relative bg-white rounded-lg border border-forest/10 overflow-hidden hover:border-amber/40 hover:shadow-[0_28px_56px_-12px_rgba(15,61,38,0.2)] transition-all duration-500 flex flex-col cursor-pointer"
               >
-                <div className="relative h-56 overflow-hidden">
+                <div className="relative h-56 2xl:h-72 overflow-hidden">
                   <img
                     src={resourceBlog}
                     alt={post.title}
@@ -978,7 +978,7 @@ export default function HomePage() {
 
       {/* ============ WHITEPAPERS ============ */}
       <section className="py-10 md:py-16 bg-white px-4 sm:px-6 lg:px-12 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto relative z-10">
+        <div className="max-w-7xl 2xl:max-w-[1540px] mx-auto relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-10 md:gap-16 items-start">
             <div className="lg:sticky lg:top-24">
               <SectionLabel>Research</SectionLabel>
@@ -1081,7 +1081,7 @@ export default function HomePage() {
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber/30 to-transparent" />
           <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full bg-moss/25 blur-3xl" />
         </div>
-        <div className="max-w-7xl mx-auto relative z-10">
+        <div className="max-w-7xl 2xl:max-w-[1540px] mx-auto relative z-10">
           <div className="text-center mb-7">
             <SectionLabel>Listen & Watch</SectionLabel>
             <motion.h2

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FiMenu, FiX, FiHeart, FiShoppingCart } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
-import logo from "../assets/JnanaYogAyuLogo.png";
+import logo from "../assets/HorizentalLogo.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,24 +37,21 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out border-b border-white/50 bg-white/50 backdrop-blur-xl shadow-sm ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out border-b w-full border-white/50 bg-white/50 backdrop-blur-xl shadow-sm ${
         scrolled ? "py-4 bg-white/60 shadow-md backdrop-blur-2xl" : "py-3"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+      <div className=" w-full mx-auto px-6 lg:px-12 2xl:px-14">
         <div className="flex items-center justify-between w-full">
-          {/* Logo Section */}
           <Link to="/" className="flex-shrink-0 flex items-center z-50">
             <img 
               src={logo} 
               alt="JnanaYogAyu" 
               className={`transition-all duration-500 object-contain ${
-                scrolled ? "h-14 lg:h-16" : "h-16 lg:h-20"
+                scrolled ? "h-20 lg:h-12 2xl:h-16" : "h-16 lg:h-12 2xl:h-16"
               }`}
             />
           </Link>
-
-          {/* Right Navigation */}
           <div className="flex items-center justify-end">
             <div className="hidden lg:flex items-center space-x-8 pr-8">
             {navLinks.map((link) => (

@@ -10,7 +10,7 @@ import {
     FiYoutube,
 } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import jyaLogo from "../assets/JnanaYogAyuLogo.png";
+import jyaLogo from "../assets/VerticleLogo.png";
 
 const Footer = () => {
   const footerRef = useRef(null);
@@ -287,7 +287,7 @@ const Footer = () => {
                   src={jyaLogo}
                   loading="lazy"
                   alt="JnanaYogAyu Logo"
-                  style={{ width: "110px", height: "auto" }}
+                  style={{ width: "120px", height: "auto" }}
                 />
                 <p className="logo-tagline">
                   Ayurveda · Yoga · Nature<br />Wisdom for Wellbeing
