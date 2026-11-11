@@ -697,7 +697,9 @@ export default function JYAMembershipPage() {
           className="absolute bottom-5 left-1/2 z-10 -ml-3 hidden h-10 w-6 justify-center rounded-full border border-[#103F2E]/30 p-1.5 lg:flex"
         >
           <motion.span
-            animate={shouldReduce ? undefined : { y: [0, 14, 0], opacity: [1, 0.2, 1] }}
+            animate={
+              shouldReduce ? undefined : { y: [0, 14, 0], opacity: [1, 0.2, 1] }
+            }
             transition={{ duration: 1.8, ease: "easeInOut", repeat: Infinity }}
             className="h-1.5 w-1.5 rounded-full bg-[#C9A45C]"
           />
@@ -978,7 +980,9 @@ export default function JYAMembershipPage() {
             eyebrow="Gurukul Immersion"
             eyebrowClass="border-[#C9A45C]/40 bg-white text-[#103F2E]"
             parts={[
-              { text: "120+ Days Residential Academy & Certification Programmes" },
+              {
+                text: "120+ Days Residential Academy & Certification Programmes",
+              },
             ]}
             titleClass="text-[#103F2E]"
             description="प्रत्यक्ष नैसर्गिक जीवनशैलीचा अनुभव — Experience a natural and sustainable way of living."
@@ -1055,7 +1059,11 @@ export default function JYAMembershipPage() {
                   </h4>
                 </div>
 
-                <Stagger stagger={0.12} delay={0.2} className="space-y-3 sm:space-y-4">
+                <Stagger
+                  stagger={0.12}
+                  delay={0.2}
+                  className="space-y-3 sm:space-y-4"
+                >
                   {seasonalCalendar.map((season) => (
                     <Item
                       key={season.index}
@@ -1402,7 +1410,11 @@ export default function JYAMembershipPage() {
             Join the JYA Ecosystem. Begin Your Journey Today.
           </Reveal>
 
-          <Reveal kind="scale" delay={0.25} className="mt-10 flex justify-center sm:mt-12">
+          <Reveal
+            kind="scale"
+            delay={0.25}
+            className="mt-10 flex justify-center sm:mt-12"
+          >
             <Magnetic className="w-full sm:w-auto">
               <CommonButton
                 label="Join the JYA Community"
