@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   Layers,
   Compass,
+  Leaf,
 } from "lucide-react";
 
 import heroLessonImage from "../ui/assets/Community Learning Circle Under the Tree.png";
@@ -20,7 +21,6 @@ import MembershipModal from "./MembershipModal";
 import CommonButton from "../../common/button/CommonButton";
 import { useLenis } from "./SmoothScroll";
 
-// Correct capitalization
 import {
   AnimatedCheck,
   Counter,
@@ -870,14 +870,29 @@ export default function JYAMembershipPage() {
                         delay={0.3}
                         className="space-y-3 text-sm leading-relaxed text-[#F9F6EE]/90"
                       >
-                        {m.whoFor.map((w, idx) => (
-                          <p key={idx}>{w}</p>
-                        ))}
+                        <p>{m.whoFor[0]}</p>
+                      </Reveal>
+
+                      <Reveal kind="up" delay={0.35} className="max-w-xl">
+                        <div className="relative overflow-hidden rounded-2xl border border-[#C9A45C]/60 bg-gradient-to-br from-[#C9A45C]/15 via-white/5 to-transparent p-5 shadow-lg sm:p-6">
+                          <div className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-[radial-gradient(circle,rgba(201,164,92,0.28),transparent_70%)]" />
+                          <div className="relative flex items-start gap-4">
+                            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#C9A45C]/60 bg-[#C9A45C]/15 sm:h-12 sm:w-12">
+                              <Leaf className="h-5 w-5 text-[#C9A45C] sm:h-6 sm:w-6" />
+                            </div>
+                            <div className="min-w-0">
+                            
+                              <p className="text-sm font-medium leading-relaxed text-[#F9F6EE] sm:text-base">
+                                {m.whoFor[1]}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
                       </Reveal>
 
                       <Reveal
                         kind="scale"
-                        delay={0.35}
+                        delay={0.4}
                         className="max-w-xl rounded-2xl border border-[#C9A45C]/40 bg-black/30 p-5 sm:p-6"
                       >
                         <div className="mb-1 text-xs font-semibold uppercase tracking-widest text-[#F9F6EE]/70">
@@ -905,18 +920,7 @@ export default function JYAMembershipPage() {
                         </div>
                       </Reveal>
 
-                      <Reveal delay={0.4}>
-                        <Magnetic className="inline-block w-full sm:w-auto">
-                          <CommonButton
-                            label={m.cta}
-                            onClick={() => handleOpenModal(m.id)}
-                            icon={
-                              <ArrowRight className="h-4 w-4 text-[#0B3326]" />
-                            }
-                            className="!h-12 !w-full !px-8 sm:!w-auto bg-[#C9A45C] hover:bg-[#B89248] text-[#0B3326] font-bold !rounded-xl shadow-lg tracking-wide"
-                          />
-                        </Magnetic>
-                      </Reveal>
+                    
                     </div>
 
                     <Reveal
@@ -965,6 +969,20 @@ export default function JYAMembershipPage() {
                       </Stagger>
                     </Reveal>
                   </div>
+                    <div className="w-full flex justify-center mt-5">
+                        <Reveal delay={0.45}>
+                        <Magnetic className="inline-block w-full ">
+                          <CommonButton
+                            label={m.cta}
+                            onClick={() => handleOpenModal(m.id)}
+                            icon={
+                              <ArrowRight className="h-4 w-4 text-[#0B3326]" />
+                            }
+                            className="!h-12 !w-full !px-8 sm:!w-auto bg-[#C9A45C] hover:bg-[#B89248] text-[#0B3326] font-bold !rounded-xl shadow-lg tracking-wide"
+                          />
+                        </Magnetic>
+                      </Reveal>
+                    </div>
                 </article>
               </Reveal>
             );
