@@ -14,10 +14,13 @@ import {
   Layers,
   Compass,
 } from "lucide-react";
+
 import heroLessonImage from "../ui/assets/Community Learning Circle Under the Tree.png";
 import MembershipModal from "./MembershipModal";
 import CommonButton from "../../common/button/CommonButton";
 import { useLenis } from "./SmoothScroll";
+
+// Correct capitalization
 import {
   AnimatedCheck,
   Counter,
@@ -32,7 +35,7 @@ import {
   Stagger,
   TiltCard,
   ease,
-} from "./MotionKit";
+} from "./Motionkit";
 
 const memberships = [
   {
