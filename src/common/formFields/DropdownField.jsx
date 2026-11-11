@@ -1,0 +1,425 @@
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import SearchIcon from "@mui/icons-material/Search";
+import { FormControl } from "@mui/material";
+import React, { useLayoutEffect, useRef, useState } from "react";
+import { Controller } from "react-hook-form";
+import ReactSelect, { components } from "react-select";
+
+const DropdownField = ({
+  className,
+  isDisabled,
+  placeholdernotVisible,
+  isMulti,
+  inputRef,
+  control,
+  error,
+  dataArray,
+  name,
+  onInputChange,
+  placeholder,
+  isClearable,
+  maxMenuHeight,
+  defaultValue,
+  searchIcon,
+  isSearchable,
+  menuPlacement,
+  menuShouldBlockScroll,
+  referance,
+  onKeyDown,
+}) => {
+  const ref = useRef(null);
+  let isError = !!error?.message;
+  let bgColor = "rgba(255, 255, 255, 1)";
+
+  const [width, setWidth] = useState("full");
+
+  const placement = menuPlacement || "auto";
+  const blockScroll = menuShouldBlockScroll === true;
+  const searchable = isSearchable === true;
+
+  useLayoutEffect(() => {
+    if (isClearable) {
+      setWidth(ref.current ? ref.current.offsetWidth - 75 : 0);
+    } else {
+      setWidth(ref.current ? ref.current.offsetWidth - 52 : 0);
+    }
+  }, [isClearable]);
+
+  const selectStyles = {
+    menu: (styles) => ({
+      ...styles,
+      position: "absolute",
+      boxShadow: "0 20px 54px 0 rgba(0,0,0,0.2)",
+      zIndex: 9999,
+      fontStyle: "normal",
+      fontSize: "13px",
+      lineHeight: "24px",
+      minWidth: ref.current.offsetWidth,
+      width: "fit-content",
+    }),
+    option: (provided, { isDisabled, isFocused, isSelected }) => ({
+      ...provided,
+      whiteSpace: "nowrap",
+      zIndex: 9999,
+      backgroundColor: isDisabled
+        ? undefined
+        : isSelected
+          ? "rgba(222,235,255,1)"
+          : isFocused
+            ? "rgba(222,235,255,0.5)"
+            : undefined,
+
+      color: isDisabled
+        ? undefined
+        : isSelected
+          ? "#073763"
+          : isFocused
+            ? "#000000"
+            : undefined,
+    }),
+    menuList: (provided) => ({
+      ...provided,
+      zIndex: 9999,
+      maxHeight: maxMenuHeight || 180,
+      "&::-webkit-scrollbar": {
+        width: "5px",
+      },
+      "&::-webkit-scrollbar-track": {
+        background: "transparent",
+      },
+      "&::-webkit-scrollbar-thumb": {
+        background: "rgba(0,0,0,0.1)",
+        borderRadius: "5px",
+      },
+      "&::-webkit-scrollbar-thumb:hover": {
+        background: "rgba(0,0,0,0.2)",
+      },
+    }),
+    menuPortal: (provided) => ({ ...provided, zIndex: 9999 }),
+    control: (Colstyles, state) => ({
+      ...Colstyles,
+      borderRadius: "4px",
+      fontSize: "14px",
+      minHeight: "37px",
+      height: "37px",
+      backgroundColor: "#ffffff",
+      textOverflow: "ellipsis",
+      display: "flex",
+      alignItems: "center",
+      minWidth: "100%",
+      flexWrap: isMulti ? "wrap" : "nowrap",
+      borderWidth: "1px",
+      borderStyle: "solid",
+      borderColor: isError
+        ? "#d32f2f"
+        : state.isFocused
+          ? "rgba(0, 0, 0, 0.87)"
+          : "rgba(0, 0, 0, 0.23)",
+      boxShadow: "none",
+      "&:hover": {
+        borderColor: isError ? "#d32f2f" : "rgba(0, 0, 0, 0.87)",
+      },
+    }),
+    singleValue: (Singstyles) => ({
+      ...Singstyles,
+      display: "flex",
+      paddingLeft: "4px",
+      position: "absolute",
+      width: width,
+    }),
+    indicatorSeparator: (styles) => ({
+      ...styles,
+      display: "none",
+      paddingX: "2px",
+    }),
+    indicatorContainer: (styles) => ({ ...styles, padding: "0px" }),
+
+    clearIndicator: (styles) => ({
+      ...styles,
+      padding: "0px",
+      cursor: "pointer",
+    }),
+    valueContainer: (provided, state) => ({
+      ...provided,
+      position: "relative",
+      fontSize: "13px",
+      whiteSpace: "nowrap",
+      overflow: "visible",
+      display: "flex",
+      maxHeight: "fit-content",
+      textOverflow: "clipped",
+      flexWrap: isMulti ? "wrap" : "nowrap",
+      paddingLeft: state.hasValue || state.selectProps.inputValue ? 2 : 5,
+      padding: "0px",
+      fontStyle: "normal",
+    }),
+    input: (provided) => ({
+      ...provided,
+      fontSize: "13px",
+      overflow: "clip",
+    }),
+    placeholder: (provided, state) => ({
+      ...provided,
+      display: placeholdernotVisible
+        ? state.menuIsOpen ||
+          state.selectProps.menuIsOpen ||
+          state.hasValue ||
+          state.selectProps.inputValue
+          ? "none"
+          : "block"
+        : "block",
+
+      position: "absolute",
+      borderRadius: "2px",
+      color:
+        state.menuIsOpen || state.selectProps.menuIsOpen
+          ? isDisabled
+            ? "#073763"
+            : "#1976D2"
+          : isError
+            ? "#d32f2f"
+            : "rgba(0, 0, 0, 0.6)",
+
+      fontSize:
+        (state.menuIsOpen ||
+          state.selectProps.menuIsOpen ||
+          state.hasValue ||
+          state.selectProps.inputValue)
+          ? 11
+          : 13,
+      transition: "top 0.1s, font-size 0.1s",
+
+      top:
+        state.menuIsOpen ||
+        state.selectProps.menuIsOpen ||
+        state.hasValue ||
+        state.selectProps.inputValue
+          ? searchable
+            ? -14
+            : -16
+          : searchable
+            ? 4
+            : "0%",
+
+      paddingLeft:
+        state.menuIsOpen ||
+        state.selectProps.menuIsOpen ||
+        state.hasValue ||
+        state.selectProps.inputValue
+          ? 4
+          : "",
+
+      paddingRight:
+        state.menuIsOpen ||
+        state.selectProps.menuIsOpen ||
+        state.hasValue ||
+        state.selectProps.inputValue
+          ? 4
+          : "",
+      marginBottom:
+        state.menuIsOpen ||
+        state.selectProps.menuIsOpen ||
+        state.hasValue ||
+        state.selectProps.inputValue
+          ? 2
+          : "",
+
+      backgroundColor:
+        state.menuIsOpen ||
+        state.selectProps.menuIsOpen ||
+        state.hasValue ||
+        state.selectProps.inputValue
+          ? isDisabled
+            ? "#f0f0f0"
+            : bgColor
+          : "",
+
+      zIndex:
+        state.menuIsOpen ||
+        state.selectProps.menuIsOpen ||
+        state.hasValue ||
+        state.selectProps.inputValue
+          ? 10
+          : "",
+
+      fontStyle: "normal",
+    }),
+  };
+  const { ValueContainer, Placeholder } = components;
+
+  const CustomValueContainer = ({ children, ...props }) => {
+    return (
+      <ValueContainer {...props}>
+        <Placeholder {...props} isFocused={props.isFocused}>
+          {props.selectProps.placeholder}
+        </Placeholder>
+        {React.Children.map(children, (child) =>
+          child && child.type !== Placeholder ? child : null,
+        )}
+      </ValueContainer>
+    );
+  };
+  const getOptionVal = (option) => {
+    if (option === null || option === undefined) return "";
+    if (typeof option !== "object") return String(option);
+    if (option.value !== undefined && option.value !== null)
+      return String(option.value);
+    if (option.id !== undefined && option.id !== null) return String(option.id);
+    if (option.userId !== undefined && option.userId !== null)
+      return String(option.userId);
+    if (option.patientId !== undefined && option.patientId !== null)
+      return String(option.patientId);
+    if (option.label !== undefined && option.label !== null)
+      return String(option.label);
+    return "";
+  };
+
+  const getOptionLbl = (option) => {
+    if (option === null || option === undefined) return "";
+    if (typeof option !== "object") return String(option);
+    if (option.label !== undefined && option.label !== null)
+      return String(option.label);
+    if (option.name !== undefined && option.name !== null)
+      return String(option.name);
+    if (option.title !== undefined && option.title !== null)
+      return String(option.title);
+    return "";
+  };
+
+  const isOptionSelected = (option, selectValues) => {
+    if (!selectValues || !option) return false;
+
+    if (option === selectValues) return true;
+
+    const optVal = getOptionVal(option);
+    const selectedArr = Array.isArray(selectValues)
+      ? selectValues
+      : [selectValues];
+
+    return selectedArr.some((selected) => {
+      if (!selected) return false;
+      if (selected === option) return true;
+
+      const selVal = getOptionVal(selected);
+      if (!optVal || !selVal) return false;
+
+      return String(optVal) === String(selVal);
+    });
+  };
+
+  return (
+    <div className=" w-full" ref={ref}>
+      <FormControl fullWidth sx={{ overFlowX: "hidden" }}>
+        <Controller
+          control={control}
+          name={name}
+          defaultValue={defaultValue}
+          render={({ field }) => {
+            const findItem = (val) => {
+              if (val === undefined || val === null || val === "") return null;
+              if (typeof val === "object") {
+                const valId = getOptionVal(val);
+                if (!valId) return val;
+                return (
+                  dataArray?.find((item) => {
+                    if (item === val) return true;
+                    const itemVal = getOptionVal(item);
+                    return itemVal && itemVal === valId;
+                  }) ?? val
+                );
+              }
+              const strVal = String(val);
+              return (
+                dataArray?.find((item) => {
+                  const itemVal = getOptionVal(item);
+                  return itemVal && itemVal === strVal;
+                }) ?? null
+              );
+            };
+
+            const selectValue = isMulti
+              ? Array.isArray(field.value)
+                ? field.value.map((v) => findItem(v)).filter(Boolean)
+                : []
+              : findItem(field.value);
+
+            return (
+              <ReactSelect
+                className={`${className ? className + " " : ""}text-[14px] text-gray-600 w-full`}
+                isDisabled={isDisabled}
+                inputRef={inputRef}
+                {...field}
+                value={selectValue}
+                getOptionValue={getOptionVal}
+                getOptionLabel={getOptionLbl}
+                isOptionSelected={isOptionSelected}
+                onChange={(val) => {
+                  field.onChange(val);
+                }}
+                onBlur={() => {
+                  field.onBlur();
+                }}
+                ref={(e) => {
+                  field.ref(e);
+                  if (referance) {
+                    if (typeof referance === "function") {
+                      referance(e);
+                    } else {
+                      referance.current = e;
+                    }
+                  }
+                }}
+                onKeyDown={onKeyDown}
+                isMulti={isMulti}
+                closeMenuOnSelect={!isMulti}
+                maxMenuHeight={maxMenuHeight || 180}
+                options={dataArray}
+                isClearable={isClearable}
+                clearValue={true}
+                isSearchable={searchable}
+                placeholder={placeholder}
+                defaultValue={defaultValue}
+                styles={selectStyles}
+                blurInputOnSelect={true}
+                menuPlacement={placement}
+                menuShouldBlockScroll={blockScroll}
+                closeMenuOnScroll={true}
+                onInputChange={onInputChange}
+                menuPortalTarget={
+                  typeof document !== "undefined" ? document.body : null
+                }
+                components={{
+                  DropdownIndicator: () =>
+                    isMulti ? (
+                      <KeyboardArrowDownIcon
+                        sx={{
+                          "& .css-1xc3v61-indicatorContainer": {
+                            padding: "0px",
+                          },
+                        }}
+                        className="text-gray-600 p-0"
+                      />
+                    ) : searchIcon ? (
+                      <SearchIcon className=" text-gray-600 p-0 mx-1" />
+                    ) : (
+                      <KeyboardArrowDownIcon
+                        sx={{
+                          "& .css-1xc3v61-indicatorContainer": {
+                            padding: "0px",
+                          },
+                        }}
+                        className="text-gray-600 p-0"
+                      />
+                    ),
+                  ValueContainer: CustomValueContainer,
+                }}
+              />
+            );
+          }}
+        />
+      </FormControl>
+    </div>
+  );
+};
+
+export default DropdownField;

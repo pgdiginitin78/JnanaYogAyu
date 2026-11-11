@@ -14,6 +14,17 @@ module.exports = {
         bark: '#8b6534',
         mist: '#f0f6f2',
         charcoal: '#1c1c1e',
+        'jya-deep': '#0D3323',
+        'jya-mid': '#12432D',
+        'jya-green': '#1B5137',
+        'jya-cream': '#FBF8F1',
+        // Redesign Brand Palette:
+        'jya-forest': '#103F2E',
+        'jya-dark': '#0B3326',
+        'jya-sage': '#A5B99A',
+        'jya-ivory': '#F9F6EE',
+        'jya-gold': '#C9A45C',
+        'jya-beige': '#EDE5D5',
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],

@@ -1,66 +1,95 @@
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { FiChevronRight, FiPlayCircle, FiArrowRight } from "react-icons/fi";
-import { HiSparkles } from "react-icons/hi2";
 import {
-  GiLotus,
-  GiMeditation,
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import { useRef } from "react";
+
+import { FiArrowRight, FiChevronRight, FiPlayCircle } from "react-icons/fi";
+import {
   GiHerbsBundle,
-  GiCampfire,
-  GiVillage,
+  GiInkSwirl,
+  GiMeditation,
   GiMicrophone,
   GiScrollQuill,
-  GiInkSwirl,
 } from "react-icons/gi";
 import {
-  LuRepeat,
   LuBookOpen,
-  LuCrown,
-  LuCamera,
-  LuCpu,
+  LuBrainCircuit,
   LuBriefcase,
+  LuCamera,
+  LuClock,
+  LuCpu,
+  LuCrown,
+  LuDownload,
+  LuEarth,
   LuFileText,
   LuHeadphones,
+  LuInfinity,
   LuNewspaper,
   LuPlay,
-  LuClock,
-  LuDownload,
-  LuBrainCircuit,
-  LuInfinity,
-  LuEarth,
-  LuHandHeart,
-  LuSparkles,
+  LuRepeat,
 } from "react-icons/lu";
 import {
-  TbBrain,
-  TbHeartRateMonitor,
-  TbDeviceMobile,
-  TbPlugConnectedX,
-  TbWorldHeart,
-  TbLeaf,
-  TbUsers,
-  TbRobot,
-  TbPlant,
-  TbTree,
-  TbHeartHandshake,
-  TbWorldStar,
-  TbTargetArrow,
+  PiBookOpen,
+  PiFlowerLotus,
+  PiShoppingCart,
+  PiUsersThree,
+} from "react-icons/pi";
+import {
   TbAtom,
-  TbUsersGroup,
+  TbBrain,
+  TbDeviceMobile,
+  TbHeartHandshake,
+  TbHeartRateMonitor,
+  TbLeaf,
+  TbPlant,
+  TbPlugConnectedX,
+  TbRobot,
+  TbTree,
   TbUserHeart,
+  TbUsers,
+  TbUsersGroup,
+  TbWorldHeart,
+  TbWorldStar,
 } from "react-icons/tb";
-
-import HeroImage from "../assets/HeroImage.png";
+import HeroImage from "../assets/Golden Sunrise River Retreat.png";
+import resourceBlog from "../assets/resource-blog.jpg";
+import resourcePodcast from "../assets/resource-podcast.jpg";
+import resourceWhitepaper from "../assets/resource-whitepaper.jpg";
 import serviceBarter from "../assets/service-barter.jpg";
+import serviceBranding from "../assets/service-branding.jpg";
+import serviceConsultancy from "../assets/service-consultancy.jpg";
+import serviceDigital from "../assets/service-digital.jpg";
 import serviceGurukul from "../assets/service-gurukul.jpg";
 import serviceMembership from "../assets/service-membership.jpg";
-import serviceBranding from "../assets/service-branding.jpg";
-import serviceDigital from "../assets/service-digital.jpg";
-import serviceConsultancy from "../assets/service-consultancy.jpg";
 import communitySwagram from "../assets/swagramaMain.webp";
-import resourceBlog from "../assets/resource-blog.jpg";
-import resourceWhitepaper from "../assets/resource-whitepaper.jpg";
-import resourcePodcast from "../assets/resource-podcast.jpg";
+import LearnWithGurukul from "./ui/LearnWithGurukul";
+import MuktikhelaAyurvedaSection from "./ui/MuktikhelaAyurvedaSection";
+import SwagramaCommunity from "./ui/SwagramaCommunity";
+import WellnessMarketplace from "./ui/WellnessMarketplace";
+
+import JyaBg from "../components/ui/assets/section-two/Elegant Cream and Gold Wave Haze.png";
+import JyaLotusImg from "../components/ui/assets/section-two/Golden Lotus with Halo and Ripples.png";
+
+const MonitorLeaf = ({ className }) => (
+  <svg
+    viewBox="0 0 48 48"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <rect x="4" y="6" width="40" height="28" rx="3" />
+    <path d="M17 42h14M24 34v8" />
+    <path d="M24 28v-6" />
+    <path d="M24 22c0-4-3-6-7-6 0 4 2 6 7 6Z" />
+    <path d="M24 22c0-3.5 2.5-5.5 6.5-5.5 0 3.5-2 5.5-6.5 5.5Z" />
+  </svg>
+);
 
 const needsData = [
   {
@@ -135,18 +164,16 @@ const ecosystemData = [
     PrimaryIcon: TbHeartHandshake,
     AccentIcon: LuInfinity,
     SubIcon: TbUserHeart,
-    gradient: "from-forest/[0.06] to-amber/[0.04]",
   },
   {
     number: "02",
-    tag: "Digital Wellness AI",
+    tag: "Digital Wellness",
     title: "Global AyurX",
     desc: "A unified digital wellness ecosystem integrating AI, Ayurveda, and intelligent health platforms to deliver personalized healing, preventive care, and lifelong well-being.",
     btnText: "EXPLORE NOW",
     PrimaryIcon: LuBrainCircuit,
     AccentIcon: TbAtom,
     SubIcon: TbRobot,
-    gradient: "from-forest/[0.06] to-amber/[0.04]",
   },
   {
     number: "03",
@@ -157,10 +184,10 @@ const ecosystemData = [
     PrimaryIcon: TbWorldStar,
     AccentIcon: LuEarth,
     SubIcon: TbUsersGroup,
-    gradient: "from-forest/[0.06] to-amber/[0.04]",
   },
 ];
 
+// eslint-disable-next-line no-unused-vars
 const servicesData = [
   {
     name: "Barter",
@@ -205,51 +232,6 @@ const communitiesData = {
   desc: "A community living ecosystem fostering wellness, self-reliance, and meaningful human connections through conscious and sustainable living.",
   btnText: "EXPLORE",
 };
-
-const cardData = [
-  {
-    title: "KNOWLEDGE",
-    subtitle: "Understanding Life",
-    desc: "JnanaYogAyu helps individuals understand the principles of holistic health, natural living, and conscious decision-making by blending ancient wisdom with modern insights.",
-    backTitle: "Discover",
-    backList: [
-      "Self-awareness",
-      "Holistic health education",
-      "Preventive lifestyle practices",
-      "Sustainable living",
-      "Lifelong learning",
-    ],
-    Icon: LuBookOpen,
-  },
-  {
-    title: "YOGA",
-    subtitle: "Aligning Life",
-    desc: "JnanaYogAyu promotes daily Yoga practices that reduce stress, improve resilience, and create lasting physical and mental well-being.",
-    backTitle: "Experience",
-    backList: [
-      "Physical wellness",
-      "Mental clarity",
-      "Emotional balance",
-      "Mindfulness",
-      "Daily wellness practices",
-    ],
-    Icon: GiMeditation,
-  },
-  {
-    title: "AYURVED",
-    subtitle: "Living Life",
-    desc: "Rooted in Ayurvedic principles, JnanaYogAyu encourages preventive healthcare through personalized nutrition, healthy routines, natural therapies, and lifestyle choices.",
-    backTitle: "Achieve",
-    backList: [
-      "Preventive healthcare",
-      "Healthy ageing",
-      "Personalized wellness",
-      "Natural nutrition",
-      "Long-term vitality",
-    ],
-    Icon: GiHerbsBundle,
-  },
-];
 
 const resourcesData = [
   {
@@ -336,353 +318,384 @@ const resourcesData = [
 ];
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 24 },
   visible: (i = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.7, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] },
   }),
 };
 
-function SectionLabel({ children }) {
-  return (
-    <motion.div
-      variants={fadeUp}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-80px" }}
-      className="flex items-center gap-3 mb-4"
-    >
-      <div className="h-px w-8 bg-amber" />
-      <span className="text-xs font-semibold tracking-[0.25em] text-amber uppercase">
-        {children}
-      </span>
-      <div className="h-px w-8 bg-amber" />
-    </motion.div>
-  );
-}
+const fadeUpReduced = {
+  hidden: { opacity: 0 },
+  visible: (i = 0) => ({
+    opacity: 1,
+    transition: { duration: 0.4, delay: i * 0.06 },
+  }),
+};
 
 export default function HomePage() {
+  const shouldReduceMotion = useReducedMotion();
+  const variants = shouldReduceMotion ? fadeUpReduced : fadeUp;
+
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
   });
-  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
+  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
   return (
     <main className="w-full overflow-x-hidden text-forest">
-      {/* HERO */}
+      {/* SECTION 1: HERO (Theme B — Clean White / Warm Cream) */}
       <section
         ref={heroRef}
-        className="relative w-full  2xl:h-[92dvh] flex items-center overflow-hidden bg-forest"
+        className="relative w-full h-[800px] min-h-[700px] 2xl:h-[92dvh] flex items-center overflow-hidden bg-[#FFFDF9]"
       >
         <motion.div style={{ y: heroY }} className="absolute inset-0 z-0">
           <img
             src={HeroImage}
-            alt="JnanaYogAyu wellness sanctuary bathed in golden light"
+            alt="JnanaYogAyu natural living sanctuary"
             width={1920}
             height={1280}
-            className="w-full h-full object-cover object-center scale-110"
+            className="absolute inset-0 w-full h-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-forest/95 via-forest/75 to-forest/20" />
-          <div className="absolute inset-0 bg-gradient-to-t from-forest/80 via-transparent to-transparent" />
+
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(255,249,236,0.58) 0%, rgba(255,249,236,0.46) 22%, rgba(255,249,236,0.26) 38%, rgba(255,249,236,0.09) 52%, rgba(255,249,236,0) 64%)",
+              WebkitMaskImage:
+                "linear-gradient(to bottom, transparent 0%, #000 24%, #000 60%, transparent 82%)",
+              maskImage:
+                "linear-gradient(to bottom, transparent 0%, #000 24%, #000 60%, transparent 82%)",
+            }}
+          />
+
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 30% 40% at 20% 24%, rgba(255,246,222,0.75) 0%, rgba(255,238,196,0.48) 26%, rgba(255,230,170,0.18) 54%, transparent 78%)",
+              mixBlendMode: "screen",
+            }}
+          />
+
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 36% 24% at 22% 50%, rgba(255,252,246,0.62) 0%, rgba(255,252,246,0.36) 45%, transparent 100%)",
+            }}
+          />
+
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 30% 16% at 38% 60%, rgba(255,252,246,0.38) 0%, transparent 100%)",
+            }}
+          />
+
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 30% 14% at 8% 66%, rgba(255,240,205,0.35) 0%, transparent 100%)",
+            }}
+          />
+
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to top, rgba(18,42,26,0.14) 0%, transparent 28%)",
+            }}
+          />
         </motion.div>
 
-        <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-[1]">
-          <div className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full bg-amber/5 blur-3xl animate-float" />
-          <div
-            className="absolute bottom-1/4 right-1/3 w-64 h-64 rounded-full bg-amber/10 blur-2xl animate-float"
-            style={{ animationDelay: "2s" }}
+        <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
+          <motion.div
+            animate={{ x: [0, 40, 0] }}
+            transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute left-[4%] top-[40%] w-[38vw] h-[22vh] rounded-full bg-[#FFFCF4]/35 blur-[80px]"
+          />
+          <motion.div
+            animate={{ x: [0, -30, 0] }}
+            transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute left-[22%] top-[56%] w-[28vw] h-[16vh] rounded-full bg-[#FFFCF4]/25 blur-[70px]"
           />
         </div>
 
         <motion.div
           style={{ opacity: heroOpacity }}
-          className="relative z-10 max-w-7xl xl:max-w-[1240px] 2xl:max-w-[1640px] mx-auto px-4 md:px-12 w-full pt-28 pb-20 "
+          className="relative z-10 w-full px-6 md:px-12 lg:px-[6vw]"
         >
           <motion.div
             initial="hidden"
             animate="visible"
-            variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
-            className="max-w-2xl lg:max-w-3xl"
+            variants={{
+              visible: {
+                transition: {
+                  staggerChildren: 0.12,
+                },
+              },
+            }}
+            className="relative lg:max-w-[48vw]"
           >
             <motion.div
               variants={fadeUp}
-              className="flex items-center gap-3 mb-6"
+              className="flex items-center gap-4 mb-6"
             >
-              <div className="h-px w-10 bg-amber/70" />
-              <span className="text-xs font-semibold tracking-[0.3em] text-amber uppercase">
+              <span className="w-[46px] h-px bg-[#D5A354]" />
+
+              <span className="font-sans text-[11px] xl:text-xs font-bold tracking-[0.3em] text-[#173826] uppercase">
                 One Universe. One Community. One Life.
               </span>
             </motion.div>
+
             <motion.h1
               variants={fadeUp}
-              className="font-serif text-3xl  md:text-4xl lg:text-[50px] text-white grid mb-6 tracking-tight"
+              className="font-serif font-medium text-[clamp(40px,3.6vw,76px)] leading-[1.1] tracking-[-0.03em] text-[#103F2A] mb-7"
             >
-              <span>
-                {" "}
-                The Digital&nbsp;
-                <span className="text-amber italic">Intelligence</span>
+              <span className="block sm:whitespace-nowrap">
+                The Digital{" "}
+                <span className="gradient-heading italic">Intelligence</span>
               </span>
 
-              <span className="mt-3"> of Natural Living</span>
+              <span className="block">of Natural Living</span>
             </motion.h1>
+
             <motion.div
               variants={fadeUp}
-              className="flex items-center gap-4 mb-8"
+              className="flex items-center gap-3 mb-8"
             >
-              <div className="h-px w-12 bg-amber" />
-              <HiSparkles className="w-5 h-5 text-amber shrink-0" />
-              <div className="h-px w-80 bg-amber/50" />
+              <div className="w-[clamp(110px,12vw,230px)] h-px bg-gradient-to-r from-transparent to-[#D5A354]/80" />
+
+              <PiFlowerLotus className="w-6 h-6 text-[#D5A354] shrink-0" />
+
+              <div className="w-[clamp(110px,12vw,230px)] h-px bg-gradient-to-l from-transparent to-[#D5A354]/80" />
             </motion.div>
+
             <motion.p
               variants={fadeUp}
-              className="text-lg md:text-xl text-white/80 leading-relaxed mb-10 max-w-xl"
+              className="font-sans text-base xl:text-[clamp(17px,1.1vw,22px)] leading-[1.5] text-[#1E4630] max-w-[600px] mb-8"
             >
               Your gateway to Ayurveda, Wellness, Learning, Community and a
               Sustainable Life.
             </motion.p>
+
             <motion.div
               variants={fadeUp}
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col sm:flex-row items-start sm:items-center gap-4"
             >
               <motion.button
-                whileHover={{ scale: 1.02, backgroundColor: "#1a5c3a" }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{
+                  scale: 1.025,
+                  backgroundColor: "#18583B",
+                }}
+                whileTap={{ scale: 0.97 }}
                 transition={{ duration: 0.2 }}
-                className="flex items-center rounded justify-center gap-3 px-8 py-4 bg-forest border border-amber/60 text-white font-semibold tracking-wider text-sm hover:border-amber transition-all duration-300"
+                className="min-w-[205px] h-[56px] flex items-center justify-center gap-3 rounded-[12px] bg-[#0F4A32] text-white font-sans font-semibold text-[15px] tracking-wide shadow-[0_8px_20px_rgba(16,67,45,0.28)]"
               >
-                Explore JYA <FiChevronRight className="w-4 h-4" />
+                Explore JYA
+                <FiChevronRight className="w-4 h-4" />
               </motion.button>
+
               <motion.button
                 whileHover={{
-                  scale: 1.02,
-                  backgroundColor: "rgba(255,255,255,0.12)",
+                  scale: 1.025,
+                  backgroundColor: "rgba(28,58,40,0.42)",
                 }}
-                whileTap={{ scale: 0.98 }}
+                whileTap={{ scale: 0.97 }}
                 transition={{ duration: 0.2 }}
-                className="flex items-center justify-center rounded gap-3 px-8 py-4 bg-white/10 backdrop-blur-md border border-white/30 text-white font-semibold tracking-wider text-sm hover:border-white/60 transition-all duration-300"
+                className="min-w-[270px] h-[56px] flex items-center justify-center gap-3 rounded-[12px] bg-[#1C3A28]/30 backdrop-blur-md border border-white/60 text-white font-sans font-semibold text-[15px] tracking-wide shadow-sm [text-shadow:0_1px_3px_rgba(0,0,0,0.35)]"
               >
-               Join The Movement 
+                <FiPlayCircle className="w-5 h-5" />
+                Join The Movement
               </motion.button>
             </motion.div>
           </motion.div>
         </motion.div>
       </section>
 
-      {/* WHAT IS JYA */}
-      <section className="py-10 md:py-16 bg-ivory px-4 sm:px-6 lg:px-14 2xl:px-[75px]">
-        <div className="max-w-7xl xl:max-w-[1240px] 2xl:max-w-[1640px]  mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center">
-            <div>
-              <SectionLabel>What is JYA</SectionLabel>
-              <motion.h2
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-80px" }}
-                className="font-serif text-3xl md:text-4xl text-forest leading-[1.15] mb-5"
-              >
-                Ancient Wisdom.
-                <br />
-                <span className="text-amber italic">Modern Intelligence.</span>
-                <br />A Better Way of Living.
-              </motion.h2>
-              <motion.div
-                variants={fadeUp}
-                custom={1}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-80px" }}
-                className="space-y-3 text-forest/75 leading-relaxed text-[17px]"
-              >
-                <p>
-                  <span className="font-semibold text-forest">JnanaYogAyu</span>{" "}
-                  is an integrated wellness ecosystem that combines the timeless
-                  principles of{" "}
-                  <span className="font-bold text-forest">
-                    Knowledge (Jnana), Yoga, and Ayurveda (Ayu)
-                  </span>{" "}
-                  with modern science and digital intelligence. It empowers
-                  individuals, families, communities, and organizations to
-                  embrace a healthier, more balanced, and sustainable way of
-                  life.
-                </p>
-                <p>
-                  Whether your goal is preventive healthcare, holistic wellness,
-                  longevity, or conscious living,{" "}
-                  <span className="font-semibold text-forest">JnanaYogAyu</span>{" "}
-                  provides a practical framework to help you reconnect with your
-                  mind, body, nature, and purpose.
-                </p>
-              </motion.div>
-            </div>
+      {/* SECTION 2: WHAT IS JYA (The JnanaYogAyu Ecosystem) */}
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {cardData.map((card, index) => (
-                <motion.div
-                  key={card.title}
-                  variants={fadeUp}
-                  custom={index * 0.5}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, margin: "-60px" }}
-                  className="group  h-[380px] [perspective:1200px] cursor-pointer"
-                >
-                  <div className="relative w-full h-full  transition-transform duration-700 ease-in-out [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-                    <div className="absolute inset-0 rounded-lg bg-white border border-forest/15 p-6 flex flex-col items-center justify-center text-center [backface-visibility:hidden] shadow-sm hover:shadow-md transition-shadow">
-                      <card.Icon className="w-8 h-8 text-amber mb-3" />
-                      <h3 className="text-sm font-bold text-forest tracking-[0.2em] mb-2">
-                        {card.title}
-                      </h3>
-                      <p className="text-xs text-amber font-medium mb-5 tracking-wide italic">
-                        {card.subtitle}
-                      </p>
-                      <div className="w-8 h-px bg-amber/50 mb-5" />
-                      <p className="text-forest/70 leading-relaxed text-xs">
-                        {card.desc}
-                      </p>
-                    </div>
-                    <div className="absolute inset-0 rounded-lg bg-forest border border-forest p-6 flex flex-col justify-center [backface-visibility:hidden] [transform:rotateY(180deg)] shadow-xl">
-                      <h4 className="text-xs font-bold text-amber tracking-[0.2em] uppercase mb-5">
-                        {card.backTitle}
-                      </h4>
-                      <ul className="space-y-3">
-                        {card.backList.map((item, idx) => (
-                          <li key={idx} className="flex items-start gap-3">
-                            <div className="w-1 h-1 rounded-full bg-amber mt-2 shrink-0" />
-                            <span className="text-white/85 text-xs leading-snug">
-                              {item}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+      <section className="relative isolate overflow-hidden bg-[#FAF5E8] py-16 sm:py-20 lg:py-14">
+        {/* Background */}
+        <div className="absolute inset-0 -z-10">
+          <img
+            src={JyaBg}
+            alt=""
+            className="h-full w-full object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#FFFDF7]/85 via-[#FAF5E8]/75 to-[#F4EBD9]/90" />
+        </div>
+
+        <div className="mx-auto max-w-[1380px] px-5 sm:px-8 lg:px-12">
+          {/* MAIN HEADING */}
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="mx-auto max-w-5xl text-center"
+          >
+        
+
+            <h2 className="font-serif text-2xl font-bold leading-[1.12] tracking-tight text-[#0F3D29]  md:text-5xl">
+              Ancient Wisdom.
+              <br />
+              Modern Intelligence.
+              <br />
+              <span className="italic text-[#A27128]">
+                A Better Way of Living.
+              </span>
+            </h2>
+
+            <div className="mx-auto mt-6 h-[2px] w-40 rounded-full bg-[#C8933F]" />
+          </motion.div>
+
+          {/* INTRODUCTION */}
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="mx-auto mt-10 max-w-4xl text-center"
+          >
+            <p className="font-serif text-lg font-bold leading-relaxed text-[#0F3D29] sm:text-xl lg:text-2xl">
+              JnanaYogAyu (JYA) is an integrated ecosystem bringing together
+              health, wellness, Ayurveda, technology, learning and conscious
+              living on a single platform.
+            </p>
+
+            <p className="mx-auto mt-5 max-w-3xl text-sm leading-7 text-[#354237] sm:text-base">
+              Rooted in the timeless principles of Jnana (Knowledge), Yoga and
+              Ayurveda (Ayu), JYA connects individuals, healthcare
+              practitioners, clinics, hospitals, wellness centres and businesses
+              through a comprehensive range of services and digital solutions.
+            </p>
+          </motion.div>
+
+          {/* CONTENT CARDS */}
+          <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {/* CARD 1 */}
+            <motion.article
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.65 }}
+              className="group relative flex flex-col rounded-[28px] border border-[#E7D7B5] bg-white/75 p-7 shadow-[0_12px_40px_rgba(42,67,43,0.06)] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(42,67,43,0.12)] sm:p-9"
+            >
+              <div className="mb-7 flex h-14 w-14 items-center justify-center rounded-2xl border border-[#E5D4A9] bg-[#F8F0D9] text-[#145235] transition-transform duration-500 group-hover:scale-110">
+                <MonitorLeaf className="h-7 w-7" />
+              </div>
+
+              <div className="mb-5 h-[2px] w-12 rounded-full bg-[#C8933F]" />
+
+              <p className="text-[15px] leading-[1.85] text-[#29382E] sm:text-base">
+                From clinic management and automation solutions that help
+                Ayurvedic practitioners streamline their practice, to a unified
+                platform that enables individuals to access services and track
+                their wellness journey, JYA bridges traditional healthcare
+                wisdom with modern technology.
+              </p>
+            </motion.article>
+
+            {/* CARD 2 */}
+            <motion.article
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.65, delay: 0.12 }}
+              className="group relative flex flex-col rounded-[28px] border border-[#E7D7B5] bg-white/75 p-7 shadow-[0_12px_40px_rgba(42,67,43,0.06)] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(42,67,43,0.12)] sm:p-9"
+            >
+              <div className="mb-7 flex h-14 w-14 items-center justify-center rounded-2xl border border-[#E5D4A9] bg-[#F8F0D9] text-[#145235] transition-transform duration-500 group-hover:scale-110">
+                <PiShoppingCart className="h-7 w-7" />
+              </div>
+
+              <div className="mb-5 h-[2px] w-12 rounded-full bg-[#C8933F]" />
+
+              <p className="text-[15px] leading-[1.85] text-[#29382E] sm:text-base">
+                The ecosystem also supports clinics, hospitals and Ayurvedic
+                centres with digital marketing and growth services, enables
+                access to organic and high-quality products through its commerce
+                and barter network, creates opportunities to source and sell
+                organic produce, and makes knowledge accessible through curated
+                learning programmes and courses.
+              </p>
+            </motion.article>
+
+            {/* CARD 3 */}
+            <motion.article
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.65, delay: 0.24 }}
+              className="group relative flex flex-col rounded-[28px] border border-[#E7D7B5] bg-white/75 p-7 shadow-[0_12px_40px_rgba(42,67,43,0.06)] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(42,67,43,0.12)] sm:p-9"
+            >
+              <div className="mb-7 flex h-14 w-14 items-center justify-center rounded-2xl border border-[#E5D4A9] bg-[#F8F0D9] text-[#145235] transition-transform duration-500 group-hover:scale-110">
+                <PiUsersThree className="h-7 w-7" />
+              </div>
+
+              <div className="mb-5 h-[2px] w-12 rounded-full bg-[#C8933F]" />
+
+              <p className="text-[15px] leading-[1.85] text-[#29382E] sm:text-base">
+                Whether you are a healthcare practitioner looking to modernise
+                your practice, an individual seeking a more informed approach to
+                wellness, a healthcare institution looking to strengthen its
+                digital presence, or someone interested in learning, sourcing
+                and sharing quality products, JYA brings these opportunities
+                together.
+              </p>
+            </motion.article>
           </div>
+
+          {/* CLOSING STATEMENT */}
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="relative mt-16 overflow-hidden rounded-[28px] bg-gradient-to-r from-[#0B3825] via-[#145235] to-[#0B3825] px-6 py-10 text-center shadow-[0_15px_45px_rgba(15,61,41,0.15)] sm:px-12 sm:py-14"
+          >
+      
+
+            <div className="relative z-10">
+              <h3 className="font-serif text-2xl font-bold leading-snug text-[#FFFDF5] sm:text-3xl lg:text-4xl">
+                One ecosystem. Multiple possibilities.
+              </h3>
+
+              <p className="mt-4 font-serif text-base italic text-[#F2C56B] sm:text-lg lg:text-xl">
+                A more connected approach to health, wellness and living.
+              </p>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* NEEDS */}
-      <section className="py-10 md:py-16 bg-forest px-4 sm:px-6 lg:px-12 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber/30 to-transparent" />
-          <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber/30 to-transparent" />
-          <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-moss/30 blur-3xl" />
-          <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-moss/30 blur-3xl" />
-        </div>
-        <div className="max-w-5xl 2xl:max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-7 md:mb-12">
-            <SectionLabel>Why Choose JYA</SectionLabel>
+      {/* SECTION 3: OUR PILLARS (Theme B — Clean White / Warm Cream) */}
+      <section className="py-10 md:py-14 bg-[#FDFBF7] px-4 sm:px-6 lg:px-20 relative overflow-hidden">
+        <div className="max-w-7xl 2xl:max-w-[1600px] mx-auto">
+          <div className="text-center mb-12">
             <motion.h2
               variants={fadeUp}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, margin: "-80px" }}
-              className="font-serif text-3xl md:text-4xl text-white leading-tight"
+              viewport={{ once: false, amount: 0.2 }}
+              className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-forest"
             >
-              Why Humanity <span className="italic text-amber">Needs</span> JYA
-            </motion.h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 2xl:max-w-4xl mx-auto gap-5">
-            {needsData.map((box, index) => (
-              <motion.div
-                key={index}
-                variants={fadeUp}
-                custom={index}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-60px" }}
-                className="relative rounded-xl overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 hover:border-amber/30 transition-all duration-500 group"
-              >
-                <div
-                  className="absolute top-0 right-0 w-32 h-32 pointer-events-none opacity-[0.07] rounded-bl-full"
-                  style={{
-                    background:
-                      "radial-gradient(circle, #C9A96E 0%, transparent 70%)",
-                  }}
-                />
-                <div className="px-6 pt-5 pb-3 flex items-center justify-between border-b border-white/[0.08]">
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-px bg-amber/60" />
-                    <span className="text-[10px] font-bold tracking-[0.3em] text-amber/70 uppercase">
-                      {box.label}
-                    </span>
-                    <div className="w-4 h-px bg-amber/60" />
-                  </div>
-                  <span className="text-[9px] font-semibold tracking-[0.2em] text-white/20">
-                    0{index + 1} / 02
-                  </span>
-                </div>
-                <ul className="px-6 py-3 divide-y divide-white/[0.06]">
-                  {box.items.map(({ text, Icon, desc }, idx) => (
-                    <motion.li
-                      key={idx}
-                      initial={{ opacity: 0, x: index === 0 ? -20 : 20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{
-                        duration: 0.5,
-                        delay: idx * 0.08 + index * 0.12,
-                        ease: [0.22, 1, 0.36, 1],
-                      }}
-                      whileHover={{ x: 3 }}
-                      className="flex items-center gap-4 py-3 group/item cursor-default"
-                    >
-                      <div className="shrink-0 w-9 h-9 rounded-lg flex items-center justify-center border border-amber/20 bg-amber/[0.08] group-hover/item:bg-amber/[0.14] group-hover/item:border-amber/35 transition-all duration-300">
-                        <Icon className="w-4 h-4 text-amber" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-white leading-tight">
-                          {text}
-                        </p>
-                        <p className="text-[11px] text-white/35 mt-0.5 leading-snug">
-                          {desc}
-                        </p>
-                      </div>
-                      <span className="shrink-0 text-[10px] font-semibold tabular-nums text-amber/20 group-hover/item:text-amber/45 transition-colors duration-300">
-                        {String(idx + 1).padStart(2, "0")}
-                      </span>
-                    </motion.li>
-                  ))}
-                </ul>
-                <div
-                  className="absolute bottom-0 left-0 right-0 h-px"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, transparent, rgba(201,169,110,0.4), transparent)",
-                  }}
-                />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-10 md:py-16 bg-ivory px-4 sm:px-6 lg:px-12">
-        <div className="max-w-7xl  mx-auto">
-          <div className="text-center mb-7">
-            <SectionLabel>Our Pillars</SectionLabel>
-            <motion.h2
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-80px" }}
-              className="font-serif text-3xl md:text-4xl text-forest"
-            >
-              The <span className="italic text-amber">JYA</span> Ecosystem
+              The <span className="italic gradient-heading">JYA</span> Ecosystem
             </motion.h2>
             <motion.div
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
-              viewport={{ once: true }}
+              viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="h-px w-16 bg-amber/50 mx-auto mt-5 origin-center"
+              className="h-px w-20 bg-amber mx-auto mt-5 origin-center"
             />
           </div>
 
@@ -694,189 +707,205 @@ export default function HomePage() {
                 custom={index}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, margin: "-60px" }}
+                viewport={{ once: false, amount: 0.15 }}
                 whileHover={{ y: -6 }}
                 transition={{ duration: 0.4 }}
-                className="group relative flex flex-col bg-white rounded-2xl border border-forest/8 px-8 pt-10 pb-8 hover:shadow-[0_24px_56px_-12px_rgba(15,61,38,0.13)] hover:border-amber/35 transition-all duration-500 overflow-hidden cursor-pointer"
+                className="group relative flex flex-col bg-white rounded-2xl sm:rounded-3xl border border-forest/10 px-8 pt-10 pb-8 hover:shadow-[0_24px_56px_-12px_rgba(15,61,38,0.14)] hover:border-amber/50 transition-all duration-500 overflow-hidden cursor-pointer shadow-sm"
               >
-                <span className="absolute top-5 right-6 font-serif text-7xl font-bold text-forest/[0.05] select-none leading-none group-hover:text-amber/10 transition-colors duration-500">
+                <span className="absolute top-5 right-6 font-serif text-7xl font-bold text-forest/[0.05] select-none leading-none group-hover:text-forest/10 transition-colors duration-500">
                   {card.number}
                 </span>
 
                 <div className="relative z-10 mb-7">
-                  <div className="w-14 h-14 rounded-full border border-amber/30 bg-amber/[0.07] flex items-center justify-center group-hover:bg-amber/[0.13] group-hover:border-amber/55 transition-all duration-400">
+                  <div className="w-14 h-14 rounded-full border border-forest/20 bg-forest/[0.06] flex items-center justify-center group-hover:bg-forest group-hover:border-forest transition-all duration-400">
                     <card.PrimaryIcon
-                      className="w-6 h-6 text-amber"
+                      className="w-6 h-6 text-forest group-hover:text-amber transition-colors"
                       strokeWidth={1.4}
                     />
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2 mb-3">
-                  <div className="h-px w-5 bg-amber/50" />
-                  <span className="text-[10px] font-semibold tracking-[0.28em] text-amber/65 uppercase">
+                  <div className="h-px w-5 bg-amber" />
+                  <span className="font-sans text-[10px] font-semibold tracking-[0.28em] text-forest/70 uppercase">
                     {card.tag}
                   </span>
                 </div>
 
-                <h3 className="font-serif text-xl font-bold text-forest mb-3 leading-snug group-hover:text-moss transition-colors duration-300">
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-forest mb-3 leading-snug group-hover:text-moss transition-colors duration-300">
                   {card.title}
                 </h3>
 
-                <p className="text-forest/55 text-sm leading-relaxed flex-grow mb-8">
+                <p className="font-sans text-forest/70 text-sm leading-relaxed flex-grow mb-8">
                   {card.desc}
                 </p>
 
-                <div className="flex items-center justify-between pt-5 border-t border-forest/8">
+                <div className="flex items-center justify-between pt-5 border-t border-forest/10">
                   <motion.button
                     whileHover={{ gap: "12px" }}
-                    className="flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] text-forest uppercase transition-all duration-300"
+                    className="flex items-center gap-2 font-sans text-[11px] font-bold tracking-[0.2em] text-forest group-hover:text-amber uppercase transition-all duration-300"
                   >
                     {card.btnText}
-                    <FiArrowRight className="w-3.5 h-3.5 text-amber group-hover:translate-x-1 transition-transform duration-300" />
+                    <FiArrowRight className="w-3.5 h-3.5 text-forest group-hover:text-amber group-hover:translate-x-1 transition-transform duration-300" />
                   </motion.button>
-                  <div className="w-6 h-6 rounded-full border border-forest/10 flex items-center justify-center group-hover:border-amber/40 group-hover:bg-amber/[0.08] transition-all duration-300">
+                  <div className="w-7 h-7 rounded-full border border-forest/15 flex items-center justify-center group-hover:border-amber/50 group-hover:bg-amber/10 transition-all duration-300">
                     <card.AccentIcon
-                      className="w-3 h-3 text-forest/25 group-hover:text-amber/60 transition-colors duration-300"
+                      className="w-3.5 h-3.5 text-forest/40 group-hover:text-amber transition-colors duration-300"
                       strokeWidth={1.5}
                     />
                   </div>
                 </div>
 
-                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-amber/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
+                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-amber to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* SERVICES */}
-      <section className="py-10 md:py-16 bg-white px-4 sm:px-6 lg:px-12">
-        <div className="max-w-7xl 2xl:max-w-[1540px] mx-auto">
-          <div className="text-center mb-7">
-            <SectionLabel>What We Offer</SectionLabel>
+      {/* SECTION 4: WHY HUMANITY NEEDS JYA (Theme A — Premium Dark Gradient) */}
+      {/* <section className="py-10 md:py-14 bg-gradient-to-br from-[#0D3323] via-[#12432D] to-[#1B5137] text-[#FDFBF7] px-4 sm:px-6 lg:px-20 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber/40 to-transparent" />
+          <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber/40 to-transparent" />
+          <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-moss/20 blur-3xl" />
+          <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-amber/10 blur-3xl" />
+        </div>
+        <div className="max-w-5xl 2xl:max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-10 md:mb-14">
             <motion.h2
               variants={fadeUp}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, margin: "-80px" }}
-              className="font-serif text-4xl md:text-5xl text-forest"
+              viewport={{ once: false, amount: 0.2 }}
+              className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#FDFBF7] leading-tight"
             >
-              Our <span className="italic text-amber">Services</span>
+              Why Humanity{" "}
+              <span className="italic gradient-heading-dark">Needs</span> JYA
             </motion.h2>
-            <motion.div
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="h-px w-24 bg-amber mx-auto mt-6 origin-left"
-            />
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-            {servicesData.map((service, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 2xl:max-w-4xl mx-auto gap-6 md:gap-8">
+            {needsData.map((box, index) => (
               <motion.div
                 key={index}
                 variants={fadeUp}
-                custom={index * 0.5}
+                custom={index}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, margin: "-60px" }}
-                whileHover={{ y: -8 }}
-                transition={{ duration: 0.4 }}
-                className="group relative bg-ivory rounded-lg border border-forest/10 overflow-hidden cursor-pointer hover:shadow-[0_28px_56px_-12px_rgba(15,61,38,0.25)] hover:border-amber/40 transition-all duration-500"
+                viewport={{ once: false, amount: 0.15 }}
+                className="relative rounded-2xl overflow-hidden bg-white/[0.07] backdrop-blur-md border border-white/15 hover:border-amber/40 shadow-2xl transition-all duration-500 group"
               >
-                <div className="relative h-80 overflow-hidden">
-                  <img
-                    src={service.image}
-                    alt={service.name}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-forest/90 via-forest/30 to-transparent" />
-                  <div className="absolute bottom-4 left-4 flex items-center gap-3">
-                    <div className="w-11 h-11 flex items-center justify-center bg-amber/95 backdrop-blur-md border border-amber">
-                      <service.Icon className="w-5 h-5 text-forest" />
-                    </div>
+                <div className="px-6 pt-5 pb-3.5 flex items-center justify-between border-b border-white/10">
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-px bg-amber" />
+                    <span className="font-sans text-[10px] font-bold tracking-[0.3em] text-amber uppercase">
+                      {box.label}
+                    </span>
+                    <div className="w-4 h-px bg-amber" />
                   </div>
+                  <span className="font-sans text-[10px] font-semibold tracking-[0.2em] text-white/40">
+                    0{index + 1} / 02
+                  </span>
                 </div>
-                <div className="relative p-6 md:p-7">
-                  <h3 className="text-base font-bold text-forest tracking-wide leading-snug mb-2 group-hover:text-moss transition-colors duration-300">
-                    {service.name}
-                  </h3>
-                  <p className="text-forest/60 text-xs leading-relaxed mb-4">
-                    {service.blurb}
-                  </p>
-                  <div className="flex items-center gap-2 text-[11px] font-semibold text-amber tracking-[0.25em] uppercase">
-                    <span>Discover</span>
-                    <FiArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" />
-                  </div>
-                  <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-amber group-hover:w-full transition-all duration-700 ease-out" />
-                </div>
+                <ul className="px-6 py-3 divide-y divide-white/10">
+                  {box.items.map(({ text, Icon, desc }, idx) => (
+                    <motion.li
+                      key={idx}
+                      initial={{ opacity: 0, x: index === 0 ? -20 : 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: false, amount: 0.2 }}
+                      transition={{
+                        duration: 0.5,
+                        delay: idx * 0.08 + index * 0.12,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                      whileHover={{ x: 3 }}
+                      className="flex items-center gap-4 py-3.5 group/item cursor-default"
+                    >
+                      <div className="shrink-0 w-9 h-9 rounded-lg flex items-center justify-center border border-white/20 bg-white/10 group-hover/item:bg-amber group-hover/item:border-amber transition-all duration-300">
+                        <Icon className="w-4 h-4 text-amber group-hover/item:text-forest transition-colors" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-sans text-sm font-semibold text-[#FDFBF7] leading-tight">
+                          {text}
+                        </p>
+                        <p className="font-sans text-xs text-white/70 mt-1 leading-snug">
+                          {desc}
+                        </p>
+                      </div>
+                      <span className="font-sans shrink-0 text-[10px] font-semibold tabular-nums text-white/40 group-hover/item:text-amber transition-colors duration-300">
+                        {String(idx + 1).padStart(2, "0")}
+                      </span>
+                    </motion.li>
+                  ))}
+                </ul>
+                <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber/40 to-transparent" />
               </motion.div>
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
-      {/* COMMUNITIES */}
-      <section className="py-10 md:py-16 bg-forest px-4 sm:px-6 lg:px-12 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber/30 to-transparent" />
-          <div className="absolute -top-64 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-moss/20 blur-3xl" />
-        </div>
+      {/* SECTION 5: MUKTIKHELA (Theme B — Clean White / Warm Cream) */}
+      <MuktikhelaAyurvedaSection />
+
+      {/* SECTION 6: SWAGURUKUL (Theme A — Premium Dark Gradient) */}
+      <LearnWithGurukul />
+
+      {/* SECTION 7: WELLNESS & MARKETPLACE (Theme B — Clean White / Warm Cream) */}
+      <WellnessMarketplace />
+
+      {/* SECTION 8: SWAGRAMA COMMUNITY (Theme A — Premium Dark Gradient) */}
+      <SwagramaCommunity />
+
+      {/* SECTION 9: COMMUNITIES / SWAGRAM FEATURE (Theme B — Clean White / Warm Cream) */}
+      {/* <section className="py-10 md:py-14 bg-[#FDFBF7] px-4 sm:px-6 lg:px-20 relative overflow-hidden">
         <div className="max-w-7xl 2xl:max-w-[1540px] mx-auto relative z-10">
-          <div className="mb-16">
-            <SectionLabel>Communities</SectionLabel>
+          <div className="mb-12">
             <motion.h2
               variants={fadeUp}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, margin: "-80px" }}
-              className="font-serif text-3xl md:text-4xl text-white"
+              viewport={{ once: false, amount: 0.2 }}
+              className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-forest"
             >
-              Our <span className="italic text-amber">Communities</span>
+              Our <span className="italic gradient-heading">Communities</span>
             </motion.h2>
           </div>
           <motion.div
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-60px" }}
-            className="relative rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:border-amber/30 transition-all duration-500 group overflow-hidden"
+            viewport={{ once: false, amount: 0.15 }}
+            className="relative rounded-3xl bg-white border border-forest/10 hover:border-amber/40 transition-all duration-500 group overflow-hidden shadow-[0_20px_50px_rgba(15,61,38,0.08)] hover:shadow-[0_28px_60px_rgba(15,61,38,0.15)]"
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 ">
-              <div className="relative min-h-[280px] md:min-h-[420px] overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-2">
+              <div className="relative min-h-[280px] md:min-h-[440px] overflow-hidden">
                 <img
                   src={communitySwagram}
                   alt="Swagram — sustainable community living"
                   loading="lazy"
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1500ms] group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-forest/60 via-transparent to-forest/40" />
               </div>
-              <div className="relative z-10 p-10 md:p-16 flex flex-col justify-center">
+              <div className="relative z-10 p-8 sm:p-12 md:p-16 flex flex-col justify-center">
                 <div className="flex items-center gap-4 mb-6">
                   <div className="w-12 h-px bg-amber" />
-                  <span className="text-xs font-semibold tracking-[0.25em] text-amber uppercase">
+                  <span className="font-sans text-xs font-semibold tracking-[0.25em] text-amber uppercase">
                     Featured Community
                   </span>
                 </div>
-                <h3 className="font-serif text-3xl md:text-4xl font-bold text-white mb-6">
+                <h3 className="font-serif text-3xl sm:text-4xl font-bold text-forest mb-6">
                   {communitiesData.title}
                 </h3>
-                <p className="text-white/65 leading-relaxed text-lg max-w-2xl mb-8">
+                <p className="font-sans text-forest/75 leading-relaxed text-base sm:text-lg max-w-2xl mb-8">
                   {communitiesData.desc}
                 </p>
-                <div className="flex justify-end">
+                <div className="flex">
                   <motion.button
-                    style={{
-                      backgroundColor: "#FDFBF7",
-                      color: "#0F3D26",
-                      border: "1px solid #FDFBF7",
-                    }}
-
                     whileTap={{ scale: 0.97 }}
-                    className="self-start flex items-center gap-4 font-bold py-3 px-6 tracking-[0.2em] text-sm transition-all duration-300 group/btn rounded-md"
+                    whileHover={{ scale: 1.02 }}
+                    className="self-start flex items-center gap-4 font-sans font-bold py-3.5 px-8 tracking-[0.2em] text-sm bg-forest text-white hover:bg-moss transition-all duration-300 group/btn rounded-xl shadow-md"
                   >
                     {communitiesData.btnText}
                     <FiArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
@@ -886,21 +915,24 @@ export default function HomePage() {
             </div>
           </motion.div>
         </div>
-      </section>
+      </section> */}
 
-      {/* ============ BLOGS ============ */}
-      <section className="py-10 md:py-16 bg-ivory px-4 sm:px-6 lg:px-12 relative overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-amber/10 blur-3xl pointer-events-none" />
+      {/* SECTION 10: BLOGS / JOURNAL (Theme A — Premium Dark Gradient) */}
+      <section className="py-10 md:py-14 bg-gradient-to-br from-[#0D3323] via-[#12432D] to-[#1B5137] text-[#FDFBF7] px-4 sm:px-6 lg:px-20 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber/40 to-transparent" />
+          <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber/40 to-transparent" />
+          <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-amber/10 blur-3xl" />
+        </div>
         <div className="max-w-7xl 2xl:max-w-[1540px] mx-auto relative z-10">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14 md:mb-16">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-10">
             <div>
-              <SectionLabel>Journal</SectionLabel>
               <motion.h2
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, margin: "-80px" }}
-                className="font-serif text-3xl md:text-4xl text-forest"
+                viewport={{ once: false, amount: 0.2 }}
+                className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#FDFBF7]"
               >
                 Blogs
               </motion.h2>
@@ -909,8 +941,8 @@ export default function HomePage() {
                 custom={1}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
-                className="text-forest/65 max-w-xl mt-4 text-[16px] leading-relaxed"
+                viewport={{ once: false, amount: 0.2 }}
+                className="font-sans text-white/80 max-w-4xl mt-4 text-base sm:text-[17px] leading-relaxed"
               >
                 Reflections on Ayurveda, mindfulness, and the quiet science of
                 living well.
@@ -921,10 +953,10 @@ export default function HomePage() {
               custom={2}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true }}
-              className="hidden md:inline-flex items-center gap-2 text-[11px] font-semibold text-amber tracking-[0.25em] uppercase cursor-pointer hover:gap-3 transition-all duration-300"
+              viewport={{ once: false, amount: 0.2 }}
+              className="hidden md:inline-flex items-center gap-2 font-sans text-xs font-semibold text-amber tracking-[0.25em] uppercase cursor-pointer hover:gap-3 hover:text-white transition-all duration-300"
             >
-              View All Articles <FiArrowRight className="w-3.5 h-3.5" />
+              View All Articles <FiArrowRight className="w-4 h-4" />
             </motion.a>
           </div>
 
@@ -936,60 +968,53 @@ export default function HomePage() {
                 custom={i * 0.5}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, margin: "-60px" }}
+                viewport={{ once: false, amount: 0.15 }}
                 whileHover={{ y: -8 }}
                 transition={{ duration: 0.4 }}
-                className="group relative bg-white rounded-lg border border-forest/10 overflow-hidden hover:border-amber/40 hover:shadow-[0_28px_56px_-12px_rgba(15,61,38,0.2)] transition-all duration-500 flex flex-col cursor-pointer"
+                className="group relative bg-white/[0.07] backdrop-blur-md rounded-2xl border border-white/15 hover:border-amber/50 hover:shadow-2xl transition-all duration-500 flex flex-col cursor-pointer overflow-hidden shadow-xl"
               >
                 <div className="relative h-56 2xl:h-72 overflow-hidden">
                   <img
                     src={resourceBlog}
                     alt={post.title}
                     loading="lazy"
-                    style={{
-                      objectPosition: `${20 + i * 30}% ${30 + i * 15}%`,
-                    }}
                     className="w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-forest/60 via-transparent to-transparent" />
-                  <span className="absolute top-4 left-4 px-3 py-1.5 bg-white/95 backdrop-blur-md text-[10px] font-bold text-forest tracking-[0.2em] uppercase">
-                    {post.tag}
-                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 </div>
                 <div className="p-6 md:p-7 flex flex-col flex-grow">
-                  <div className="flex items-center gap-2 text-[11px] text-forest/50 mb-3">
-                    <LuClock className="w-3 h-3" />
+                  <div className="flex items-center gap-2 font-sans text-xs text-white/60 mb-3">
+                    <LuClock className="w-3.5 h-3.5 text-amber" />
                     <span>{post.meta}</span>
                   </div>
-                  <h3 className="font-serif text-xl text-forest leading-snug mb-4 group-hover:text-moss transition-colors duration-300 flex-grow">
+                  <h3 className="font-serif text-xl text-[#FDFBF7] font-bold leading-snug mb-4 group-hover:text-amber transition-colors duration-300 flex-grow">
                     {post.title}
                   </h3>
-                  <div className="flex items-center gap-2 text-[11px] font-semibold text-amber tracking-[0.25em] uppercase pt-4 border-t border-forest/10">
+                  <div className="flex items-center gap-2 font-sans text-xs font-semibold text-amber tracking-[0.25em] uppercase pt-4 border-t border-white/10">
                     <span>Read Article</span>
                     <FiArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" />
                   </div>
                 </div>
-                <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-amber group-hover:w-full transition-all duration-700 ease-out" />
+                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-amber to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
               </motion.article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ============ WHITEPAPERS ============ */}
-      <section className="py-10 md:py-16 bg-white px-4 sm:px-6 lg:px-12 relative overflow-hidden">
+      {/* SECTION 11: WHITEPAPERS & REPORTS (Theme B — Clean White / Warm Cream) */}
+      <section className="py-10 md:py-14 bg-[#FDFBF7] px-4 sm:px-6 lg:px-20 relative overflow-hidden">
         <div className="max-w-7xl 2xl:max-w-[1540px] mx-auto relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-10 md:gap-16 items-start">
-            <div className="lg:sticky lg:top-24">
-              <SectionLabel>Research</SectionLabel>
+            <div className="lg:sticky lg:top-28">
               <motion.h2
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, margin: "-80px" }}
-                className="font-serif text-3xl md:text-4xl text-forest leading-tight"
+                viewport={{ once: false, amount: 0.2 }}
+                className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-forest leading-tight"
               >
-                <span className="italic text-amber">Whitepapers</span>&nbsp; &
+                <span className=" gradient-heading">Whitepapers</span>&nbsp; &
                 Reports
               </motion.h2>
               <motion.p
@@ -997,8 +1022,8 @@ export default function HomePage() {
                 custom={1}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
-                className="text-forest/65 max-w-md mt-5 text-[16px] leading-relaxed mb-8"
+                viewport={{ once: false, amount: 0.2 }}
+                className="font-sans text-forest/75 max-w-md mt-5 text-base sm:text-[17px] leading-relaxed mb-8"
               >
                 Peer-reviewed thinking on the intersection of Ayurveda,
                 artificial intelligence, and regenerative living. Download and
@@ -1009,8 +1034,8 @@ export default function HomePage() {
                 custom={2}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
-                className="relative aspect-[4/3] overflow-hidden rounded-lg border border-forest/10"
+                viewport={{ once: false, amount: 0.2 }}
+                className="relative aspect-[4/3] overflow-hidden rounded-2xl sm:rounded-3xl border border-forest/10 shadow-lg"
               >
                 <img
                   src={resourceWhitepaper}
@@ -1018,12 +1043,12 @@ export default function HomePage() {
                   loading="lazy"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-forest/70 via-forest/10 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                 <div className="absolute bottom-5 left-5 flex items-center gap-3">
-                  <div className="w-10 h-10 flex items-center justify-center bg-amber">
-                    <LuFileText className="w-4 h-4 text-forest" />
+                  <div className="w-10 h-10 flex items-center justify-center bg-amber rounded-lg shadow-md">
+                    <LuFileText className="w-5 h-5 text-forest" />
                   </div>
-                  <span className="text-white text-xs font-semibold tracking-[0.25em] uppercase">
+                  <span className="font-sans text-white text-xs font-semibold tracking-[0.25em] uppercase">
                     Library
                   </span>
                 </div>
@@ -1038,33 +1063,33 @@ export default function HomePage() {
                   custom={i * 0.4}
                   initial="hidden"
                   whileInView="visible"
-                  viewport={{ once: true, margin: "-60px" }}
+                  viewport={{ once: false, amount: 0.15 }}
                   whileHover={{ x: 6 }}
                   transition={{ duration: 0.35 }}
-                  className="group relative bg-ivory rounded-lg border border-forest/10 hover:border-amber/50 hover:shadow-[0_20px_40px_-12px_rgba(15,61,38,0.15)] transition-all duration-500 p-6 md:p-8 flex items-start gap-5 md:gap-7 cursor-pointer"
+                  className="group relative bg-white rounded-2xl border border-forest/10 hover:border-amber/50 hover:shadow-[0_20px_40px_-12px_rgba(15,61,38,0.15)] transition-all duration-500 p-6 sm:p-8 flex items-start gap-5 sm:gap-7 cursor-pointer shadow-sm"
                 >
-                  <div className="shrink-0 w-16 h-20 md:w-20 md:h-24 rounded bg-forest text-amber flex flex-col items-center justify-center relative overflow-hidden">
-                    <LuFileText className="w-6 h-6 md:w-7 md:h-7 mb-1" />
-                    <span className="text-[9px] font-bold tracking-[0.15em]">
+                  <div className="shrink-0 w-16 h-20 sm:w-20 sm:h-24 rounded-xl bg-forest text-amber flex flex-col items-center justify-center relative overflow-hidden shadow-md">
+                    <LuFileText className="w-6 h-6 sm:w-7 sm:h-7 mb-1" />
+                    <span className="font-sans text-[9px] font-bold tracking-[0.15em]">
                       PDF
                     </span>
                     <div className="absolute top-0 right-0 w-3 h-3 bg-amber/30 [clip-path:polygon(100%_0,0_0,100%_100%)]" />
                   </div>
                   <div className="flex-grow min-w-0">
                     <div className="flex items-center gap-3 mb-2">
-                      <span className="text-[10px] font-bold text-amber tracking-[0.25em] uppercase">
+                      <span className="font-sans text-xs font-bold text-amber tracking-[0.25em] uppercase">
                         {paper.tag}
                       </span>
                       <span className="text-forest/30">·</span>
-                      <span className="text-[11px] text-forest/55">
+                      <span className="font-sans text-xs text-forest/55">
                         {paper.meta}
                       </span>
                     </div>
-                    <h3 className="font-serif text-xl md:text-2xl text-forest leading-snug mb-4 group-hover:text-moss transition-colors duration-300">
+                    <h3 className="font-serif text-xl sm:text-2xl font-bold text-forest leading-snug mb-4 group-hover:text-moss transition-colors duration-300">
                       {paper.title}
                     </h3>
-                    <div className="flex items-center gap-2 text-[11px] font-semibold text-forest/70 tracking-[0.25em] uppercase group-hover:text-amber transition-colors duration-300">
-                      <LuDownload className="w-3.5 h-3.5" />
+                    <div className="flex items-center gap-2 font-sans text-xs font-semibold text-forest/70 tracking-[0.25em] uppercase group-hover:text-amber transition-colors duration-300">
+                      <LuDownload className="w-4 h-4" />
                       <span>Download PDF</span>
                     </div>
                   </div>
@@ -1075,31 +1100,59 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ============ PODCAST VIDEOS ============ */}
-      <section className="py-10 md:py-16 bg-ivory px-4 sm:px-6 lg:px-12 relative overflow-hidden">
+      {/* SECTION 12: PODCAST VIDEOS (Theme A — Premium Dark Gradient) */}
+      <section className="py-10 md:py-14 bg-gradient-to-br from-[#FFFDF9] via-[#F7F2E4] to-[#E4EEE1] text-[#103F2A] px-4 sm:px-6 lg:px-20 relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber/30 to-transparent" />
-          <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full bg-moss/25 blur-3xl" />
+          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber/50 to-transparent" />
+          <div className="absolute -top-32 -right-24 w-[560px] h-[560px] rounded-full bg-[#E9C47A]/25 blur-[120px]" />
+          <div className="absolute -bottom-40 -left-24 w-[620px] h-[620px] rounded-full bg-[#7FA98A]/25 blur-[130px]" />
+          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[300px] rounded-full bg-white/60 blur-[110px]" />
+          <div
+            className="absolute inset-0 opacity-[0.35]"
+            style={{
+              backgroundImage:
+                "radial-gradient(rgba(16,63,42,0.07) 1px, transparent 1px)",
+              backgroundSize: "26px 26px",
+              WebkitMaskImage:
+                "radial-gradient(ellipse at center, #000 30%, transparent 75%)",
+              maskImage:
+                "radial-gradient(ellipse at center, #000 30%, transparent 75%)",
+            }}
+          />
         </div>
+
         <div className="max-w-7xl 2xl:max-w-[1540px] mx-auto relative z-10">
-          <div className="text-center mb-7">
-            <SectionLabel>Listen & Watch</SectionLabel>
+          <div className="text-center mb-14">
             <motion.h2
               variants={fadeUp}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, margin: "-80px" }}
-              className="font-serif text-3xl md:text-4xl text-forest"
+              viewport={{ once: false, amount: 0.2 }}
+              className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-bold text-[#103F2A] tracking-tight"
             >
-              Podcast <span className="italic text-moss">Videos</span>
+              Podcast <span className="italic gradient-heading">Videos</span>
             </motion.h2>
-            <motion.p
+
+            <motion.div
               variants={fadeUp}
               custom={1}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true }}
-              className="text-forest/70 max-w-2xl mx-auto mt-5 text-[16px] leading-relaxed"
+              viewport={{ once: false, amount: 0.2 }}
+              className="flex items-center justify-center gap-3 mt-6"
+            >
+              <span className="w-16 h-px bg-gradient-to-r from-transparent to-amber/80" />
+              <span className="w-2 h-2 rotate-45 bg-amber" />
+              <span className="w-16 h-px bg-gradient-to-l from-transparent to-amber/80" />
+            </motion.div>
+
+            <motion.p
+              variants={fadeUp}
+              custom={2}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.2 }}
+              className="font-sans text-[#3F5F4C] max-w-2xl mx-auto mt-6 text-base sm:text-[17px] leading-relaxed"
             >
               Long-form conversations with vaidyas, researchers, and community
               builders reimagining a hundred-year life.
@@ -1114,59 +1167,58 @@ export default function HomePage() {
                 custom={i * 0.5}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, margin: "-60px" }}
-                whileHover={{ y: -8 }}
+                viewport={{ once: false, amount: 0.15 }}
+                whileHover={{ y: -10 }}
                 transition={{ duration: 0.4 }}
-                className="group relative bg-white border border-forest/10 hover:border-amber/50 rounded-lg overflow-hidden transition-all duration-500 cursor-pointer shadow-sm hover:shadow-md"
+                className="group relative bg-white/90 backdrop-blur-xl border border-[#EADFC3] hover:border-amber/60 rounded-[26px] overflow-hidden transition-all duration-500 cursor-pointer shadow-[0_12px_40px_rgba(16,63,42,0.08)] hover:shadow-[0_28px_70px_rgba(16,63,42,0.18)]"
               >
-                <div className="relative aspect-video overflow-hidden">
-                  <img
-                    src={resourcePodcast}
-                    alt={ep.title}
-                    loading="lazy"
-                    style={{ objectPosition: `${25 + i * 25}% center` }}
-                    className="w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-forest/90 via-forest/30 to-forest/40" />
+                <div className="p-3 pb-0">
+                  <div className="relative aspect-video overflow-hidden rounded-[18px]">
+                    <img
+                      src={resourcePodcast}
+                      alt={ep.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0D3323]/65 via-[#0D3323]/10 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-amber/15 via-transparent to-transparent" />
 
-                  {/* Play button */}
-                  <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute inset-0 flex items-center justify-center"
-                  >
-                    <div className="relative">
-                      <div className="absolute inset-0 rounded-full bg-amber/30 blur-xl group-hover:bg-amber/50 transition-colors duration-500" />
-                      <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full bg-amber flex items-center justify-center shadow-2xl">
-                        <LuPlay className="w-6 h-6 md:w-7 md:h-7 text-forest ml-1 fill-forest" />
+                    <motion.div
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ duration: 0.3 }}
+                      className="absolute inset-0 flex items-center justify-center"
+                    >
+                      <div className="relative">
+                        <div className="absolute -inset-3 rounded-full bg-white/30 blur-xl group-hover:bg-amber/50 transition-colors duration-500" />
+                        <div className="relative w-16 h-16 sm:w-[72px] sm:h-[72px] rounded-full bg-white/25 backdrop-blur-md border border-white/60 flex items-center justify-center shadow-2xl">
+                          <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-amber flex items-center justify-center">
+                            <LuPlay className="w-5 h-5 text-forest ml-0.5 fill-forest" />
+                          </div>
+                        </div>
                       </div>
+                    </motion.div>
+
+                    <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-1 bg-white/90 backdrop-blur-md rounded-full shadow-sm font-sans">
+                      <LuClock className="w-3 h-3 text-[#B8862F]" />
+                      <span className="text-[11px] text-[#103F2A] font-semibold tracking-wide">
+                        {ep.meta}
+                      </span>
                     </div>
-                  </motion.div>
-
-                  {/* Duration badge */}
-                  <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-1 bg-forest/85 backdrop-blur-md">
-                    <LuClock className="w-3 h-3 text-amber" />
-                    <span className="text-[11px] text-white font-semibold tracking-wide">
-                      {ep.meta}
-                    </span>
-                  </div>
-
-                  {/* Episode tag */}
-                  <div className="absolute top-3 left-3 px-2.5 py-1 bg-amber text-forest text-[10px] font-bold tracking-[0.2em] uppercase">
-                    {ep.tag}
                   </div>
                 </div>
 
-                <div className="p-5 md:p-6">
-                  <h3 className="font-serif text-lg md:text-xl text-forest leading-snug mb-4 group-hover:text-moss transition-colors duration-300">
+                <div className="px-6 pt-6 pb-6">
+                  <h3 className="font-serif text-lg sm:text-xl font-bold text-[#103F2A] leading-snug mb-5 group-hover:text-[#B8862F] transition-colors duration-300">
                     {ep.title}
                   </h3>
-                  <div className="flex items-center justify-between pt-4 border-t border-forest/10">
-                    <div className="flex items-center gap-2 text-[10px] font-semibold text-amber tracking-[0.25em] uppercase">
-                      <LuHeadphones className="w-3.5 h-3.5" />
+                  <div className="flex items-center justify-between pt-4 border-t border-[#EFE6CE]">
+                    <div className="flex items-center gap-2 font-sans text-xs font-semibold text-[#B8862F] tracking-[0.25em] uppercase">
+                      <LuHeadphones className="w-4 h-4" />
                       <span>Watch Now</span>
                     </div>
-                    <FiArrowRight className="w-4 h-4 text-amber group-hover:translate-x-1 transition-transform duration-300" />
+                    <span className="w-9 h-9 rounded-full border border-[#E3D7B5] flex items-center justify-center text-[#B8862F] group-hover:bg-[#103F2A] group-hover:border-[#103F2A] group-hover:text-white transition-all duration-300">
+                      <FiArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300" />
+                    </span>
                   </div>
                 </div>
               </motion.article>
@@ -1177,17 +1229,13 @@ export default function HomePage() {
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.2 }}
             className="text-center mt-14"
           >
             <motion.button
-              whileHover={{
-                scale: 1.02,
-                backgroundColor: "#0f3d26",
-                color: "#ffffff",
-              }}
+              whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
-              className="inline-flex items-center rounded-lg gap-3 border border-forest/20 text-forest hover:text-white font-semibold py-4 px-10 tracking-[0.2em] text-xs uppercase transition-all duration-300"
+              className="inline-flex items-center rounded gap-3 bg-[#10432D] text-white hover:bg-[#18583B] font-sans font-bold py-3 px-10 tracking-[0.2em] text-xs uppercase shadow-[0_14px_34px_rgba(16,67,45,0.28)] transition-all duration-300"
             >
               Browse All Episodes
               <FiArrowRight className="w-4 h-4" />

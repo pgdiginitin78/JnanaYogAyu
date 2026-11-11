@@ -1,3 +1,237 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ============================================================
+   JnanaYogAyu — Centralized Typography System
+   Primary font  : Georgia (font-serif)  → All headings
+   Secondary font: Inter  (font-sans)    → Body, nav, buttons
+   ============================================================ */
+
+@layer components {
+  /* ── Gradient text utilities ── */
+
+  /* Green-to-gold gradient — use on light/cream backgrounds */
+  .gradient-heading {
+    background: linear-gradient(90deg, #174A35 0%, #8E5B1C 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* Primary deep-green gradient */
+  .gradient-heading-green {
+    background: linear-gradient(90deg, #0D3323 0%, #1B5137 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* Cream-to-gold gradient — use on dark/green backgrounds */
+  .gradient-heading-dark {
+    background: linear-gradient(90deg, #F8F3E8 0%, #C9A15B 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* ── Footer utilities (moved from inline <style> block in Footer.jsx) ── */
+  .footer-accent-bar {
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #cfa462, #8b6534, #cfa462, transparent);
+  }
+
+  .footer-heading {
+    position: relative;
+    padding-bottom: 10px;
+    letter-spacing: 0.1em;
+  }
+  .footer-heading::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 36px;
+    height: 2px;
+    background: linear-gradient(90deg, #cfa462, #8b6534);
+    border-radius: 2px;
+  }
+
+  .footer-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba(253, 251, 247, 0.68);
+    font-size: 0.8rem;
+    transition: color 0.25s ease, gap 0.25s ease;
+    text-decoration: none;
+  }
+  .footer-link:hover {
+    color: #cfa462;
+    gap: 10px;
+  }
+  .footer-link .link-arrow {
+    opacity: 0;
+    color: #cfa462;
+    flex-shrink: 0;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    transform: translateX(-4px);
+  }
+  .footer-link:hover .link-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .contact-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: rgba(253, 251, 247, 0.72);
+    font-size: 0.775rem;
+    line-height: 1.55;
+  }
+  .contact-icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: #cfa462;
+  }
+
+  .social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: rgba(253, 251, 247, 0.07);
+    border: 1px solid rgba(207, 164, 98, 0.25);
+    color: rgba(253, 251, 247, 0.78);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+  }
+  .social-btn:hover {
+    background: rgba(207, 164, 98, 0.18);
+    border-color: rgba(207, 164, 98, 0.55);
+    color: #cfa462;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(207, 164, 98, 0.18);
+  }
+
+  .map-container {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(207, 164, 98, 0.22);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+  }
+
+  .logo-card {
+    background: linear-gradient(135deg, rgba(253,251,247,0.09), rgba(253,251,247,0.04));
+    border: 1px solid rgba(207, 164, 98, 0.22);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+  .logo-tagline {
+    font-size: 0.7rem;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+    color: rgba(207, 164, 98, 0.80);
+    text-align: center;
+    line-height: 1.65;
+  }
+
+  .maps-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.72rem;
+    color: #cfa462;
+    text-decoration: none;
+    margin-top: 6px;
+    transition: color 0.2s, gap 0.2s;
+  }
+  .maps-link:hover {
+    color: #d4b87d;
+    gap: 8px;
+  }
+
+  .contact-link {
+    color: rgba(253,251,247,0.72);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .contact-link:hover {
+    color: #cfa462;
+  }
+
+  .cta-nudge {
+    margin-top: 18px;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, rgba(207,164,98,0.10), rgba(139,101,52,0.07));
+    border: 1px solid rgba(207,164,98,0.20);
+    border-radius: 10px;
+  }
+  .cta-nudge-label {
+    font-size: 0.7rem;
+    color: #cfa462;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .cta-nudge-body {
+    font-size: 0.72rem;
+    color: rgba(253,251,247,0.58);
+    line-height: 1.55;
+  }
+  .cta-nudge-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: #cfa462;
+    text-decoration: none;
+    transition: gap 0.2s;
+  }
+  .cta-nudge-link:hover {
+    gap: 10px;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(207,164,98,0.14);
+    padding-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-bottom p {
+    font-size: 0.73rem;
+    color: rgba(253,251,247,0.45);
+    letter-spacing: 0.04em;
+  }
+  .footer-bottom-links {
+    display: flex;
+    gap: 18px;
+  }
+  .footer-bottom-links a {
+    font-size: 0.73rem;
+    color: rgba(207,164,98,0.60);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-bottom-links a:hover {
+    color: #cfa462;
+  }
+}
