@@ -91,7 +91,7 @@ function WellnessMarketplace() {
 
   return (
     <section className="bg-[#FDFBF7] py-6 md:py-14 text-forest relative overflow-hidden">
-      <div className="max-w-7xl 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-20">
+      <div className=" mx-auto px-4 sm:px-6 lg:px-20">
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <motion.span
             variants={fadeUp}

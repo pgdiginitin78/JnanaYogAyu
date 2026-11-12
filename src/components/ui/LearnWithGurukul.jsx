@@ -44,7 +44,7 @@ function LearnWithGurukul() {
         <div className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-moss/20 blur-3xl" />
       </div>
 
-      <div className="relative z-10 max-w-7xl 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-20">
+      <div className="relative z-10  mx-auto px-4 sm:px-6 lg:px-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div className="space-y-6 max-w-xl">
             <motion.span

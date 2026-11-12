@@ -77,7 +77,7 @@ export default function MuktikhelaAyurvedaSection() {
       id="muktikhela"
       className="w-full bg-[#FDFBF7] py-14 sm:py-6 lg:py-14 text-forest relative overflow-hidden"
     >
-      <div className="mx-auto grid w-full max-w-7xl 2xl:max-w-[1600px] items-center gap-10 px-4 sm:px-6 lg:px-20 lg:grid-cols-[minmax(300px,0.85fr)_minmax(0,1.65fr)] lg:gap-14">
+      <div className="mx-auto grid w-full  items-center gap-10 px-4 sm:px-6 lg:px-20 lg:grid-cols-[minmax(300px,0.85fr)_minmax(0,1.65fr)] lg:gap-14">
         {/* Introduction: the game is explained, not shown as a live quiz. */}
         <div className="max-w-[540px]">
           <motion.div

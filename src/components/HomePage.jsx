@@ -538,8 +538,7 @@ export default function HomePage() {
           <div className="pointer-events-none absolute -top-40 left-1/2 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-gradient-to-b from-[#F7E7C4]/40 to-transparent blur-3xl" />
         </div>
 
-        <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
-          {/* MAIN HEADING */}
+        <div className="mx-auto  px-5 sm:px-8 lg:px-20">
           <motion.div
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -555,7 +554,6 @@ export default function HomePage() {
             </h2>
           </motion.div>
 
-          {/* INTRODUCTION */}
           <motion.div
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -586,9 +584,7 @@ export default function HomePage() {
             </div>
           </motion.div>
 
-          {/* CONTENT CARDS */}
           <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
-            {/* CARD 1 */}
             <motion.article
               initial={{ opacity: 0, y: 35 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -596,7 +592,6 @@ export default function HomePage() {
               transition={{ duration: 0.65 }}
               className="group relative flex flex-col overflow-hidden rounded-[28px] border border-[#E7D7B5] bg-white/85 shadow-[0_14px_45px_rgba(42,67,43,0.07)] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_24px_55px_rgba(42,67,43,0.14)]"
             >
-              {/* Image Banner */}
               <div className="relative h-60 w-full overflow-hidden bg-[#FAF5E8]">
                 <img
                   src={card1Img}
@@ -605,7 +600,6 @@ export default function HomePage() {
                 />
               </div>
 
-              {/* Card Body */}
               <div className="flex flex-1 flex-col p-7 pt-4 sm:p-9 sm:pt-4">
                 <div className="mb-5 h-[2px] w-12 rounded-full bg-[#C8933F]" />
 
@@ -619,7 +613,6 @@ export default function HomePage() {
               </div>
             </motion.article>
 
-            {/* CARD 2 */}
             <motion.article
               initial={{ opacity: 0, y: 35 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -627,7 +620,6 @@ export default function HomePage() {
               transition={{ duration: 0.65, delay: 0.12 }}
               className="group relative flex flex-col overflow-hidden rounded-[28px] border border-[#E7D7B5] bg-white/85 shadow-[0_14px_45px_rgba(42,67,43,0.07)] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_24px_55px_rgba(42,67,43,0.14)]"
             >
-              {/* Image Banner */}
               <div className="relative h-60 w-full overflow-hidden bg-[#FAF5E8]">
                 <img
                   src={card2Img}
@@ -636,7 +628,6 @@ export default function HomePage() {
                 />
               </div>
 
-              {/* Card Body */}
               <div className="flex flex-1 flex-col p-7 pt-4 sm:p-9 sm:pt-4">
                 <div className="mb-5 h-[2px] w-12 rounded-full bg-[#C8933F]" />
 
@@ -651,7 +642,6 @@ export default function HomePage() {
               </div>
             </motion.article>
 
-            {/* CARD 3 */}
             <motion.article
               initial={{ opacity: 0, y: 35 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -659,7 +649,6 @@ export default function HomePage() {
               transition={{ duration: 0.65, delay: 0.24 }}
               className="group relative flex flex-col overflow-hidden rounded-[28px] border border-[#E7D7B5] bg-white/85 shadow-[0_14px_45px_rgba(42,67,43,0.07)] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_24px_55px_rgba(42,67,43,0.14)]"
             >
-              {/* Image Banner */}
               <div className="relative h-60 w-full overflow-hidden bg-[#FAF5E8]">
                 <img
                   src={card3Img}
@@ -668,7 +657,6 @@ export default function HomePage() {
                 />
               </div>
 
-              {/* Card Body */}
               <div className="flex flex-1 flex-col p-7 pt-4 sm:p-9 sm:pt-4">
                 <div className="mb-5 h-[2px] w-12 rounded-full bg-[#C8933F]" />
 
@@ -684,7 +672,6 @@ export default function HomePage() {
             </motion.article>
           </div>
 
-          {/* CLOSING STATEMENT */}
           <motion.div
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}

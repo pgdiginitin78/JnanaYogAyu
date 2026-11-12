@@ -1,55 +1,151 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FiMenu, FiX, FiHeart, FiShoppingCart } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "../assets/HorizentalLogo.webp";
 
+const navLinks = [
+  { name: "Home", path: "/" },
+  { name: "Shatayush World", path: "/shatayushWorld" },
+  { name: "Global AyurX", path: "/globalayurx" },
+  { name: "EcoSphere", path: "/ecosphere" },
+  { name: "Muktikhela", path: "/muktikhela" },
+  { name: "Membership", path: "/membership" },
+  { name: "Insight", path: "/insight" },
+  { name: "Contact", path: "/contact" },
+];
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const navContainerRef = useRef(null);
+  const underlineRef = useRef(null);
+  const linkRefs = useRef({});
+  const activeTargetRef = useRef(null);
+  const currentTransformRef = useRef({ x: 0, scale: 0, initialized: false });
   const location = useLocation();
 
   useEffect(() => {
     setIsOpen(false);
-  }, [location]);
+  }, [location.pathname, location.hash]);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      const isScrolled = window.scrollY > 20;
+      setScrolled((prev) => (prev !== isScrolled ? isScrolled : prev));
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Shatayush World", path: "/shatayushWorld" },
-    { name: "Global AyurX", path: "/globalayurx" },
-    { name: "EcoSphere", path: "/ecosphere" },
-    { name: "Muktikhela", path: "/muktikhela" },
-    { name: "Membership", path: "/membership" },
-    { name: "Insight", path: "/insight" },
-    { name: "Contact", path: "/contact" },
-  ];
+  const isLinkActive = useCallback(
+    (path) => {
+      const currentPath = location.pathname.toLowerCase();
+      const targetPath = path.toLowerCase();
 
-  const isLinkActive = (path) => {
-    const currentPath = location.pathname.toLowerCase();
-    const targetPath = path.toLowerCase();
+      if (targetPath === "/muktikhela") {
+        return currentPath === "/muktikhela" || location.hash === "#muktikhela";
+      }
 
-    if (targetPath === "/muktikhela") {
-      return currentPath === "/muktikhela" || location.hash === "#muktikhela";
+      if (targetPath === "/") {
+        return currentPath === "/" && location.hash !== "#muktikhela";
+      }
+
+      return (
+        currentPath === targetPath || currentPath.startsWith(`${targetPath}/`)
+      );
+    },
+    [location.pathname, location.hash]
+  );
+
+  const moveUnderlineToLink = useCallback((targetPath, immediate = false) => {
+    const containerEl = navContainerRef.current;
+    const lineEl = underlineRef.current;
+    const activeEl = targetPath ? linkRefs.current[targetPath] : null;
+
+    if (!containerEl || !lineEl || !activeEl) return;
+
+    const containerWidth = containerEl.offsetWidth || 1;
+    const nextX = activeEl.offsetLeft;
+    const nextScale = activeEl.offsetWidth / containerWidth;
+
+    const prev = currentTransformRef.current;
+    if (
+      !immediate &&
+      prev.initialized &&
+      activeTargetRef.current === targetPath &&
+      Math.abs(prev.x - nextX) < 0.5 &&
+      Math.abs(prev.scale - nextScale) < 0.001
+    ) {
+      return;
     }
 
-    if (targetPath === "/") {
-      return currentPath === "/" && location.hash !== "#muktikhela";
+    let startX = prev.x;
+    let startScale = prev.scale;
+
+    if (prev.initialized && !immediate) {
+      const containerRect = containerEl.getBoundingClientRect();
+      const lineRect = lineEl.getBoundingClientRect();
+      if (lineRect.width > 0 && containerRect.width > 0) {
+        startX = lineRect.left - containerRect.left;
+        startScale = lineRect.width / containerRect.width;
+      }
     }
 
-    return currentPath === targetPath || currentPath.startsWith(`${targetPath}/`);
-  };
+    activeTargetRef.current = targetPath;
+    currentTransformRef.current = {
+      x: nextX,
+      scale: nextScale,
+      initialized: true,
+    };
+
+    const endTransform = `translate3d(${nextX}px, 0, 0) scaleX(${nextScale})`;
+
+    lineEl.getAnimations().forEach((anim) => anim.cancel());
+
+    if (immediate || !prev.initialized) {
+      lineEl.animate(
+        [{ transform: endTransform, opacity: 1 }, { transform: endTransform, opacity: 1 }],
+        { duration: 0, fill: "forwards" }
+      );
+      return;
+    }
+
+    const startTransform = `translate3d(${startX}px, 0, 0) scaleX(${startScale})`;
+
+    lineEl.animate(
+      [
+        { transform: startTransform, opacity: 1 },
+        { transform: endTransform, opacity: 1 },
+      ],
+      {
+        duration: 420,
+        easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+        fill: "forwards",
+      }
+    );
+  }, []);
+
+  useEffect(() => {
+    const matchedLink = navLinks.find((link) => isLinkActive(link.path));
+    if (matchedLink) {
+      moveUnderlineToLink(
+        matchedLink.path,
+        !currentTransformRef.current.initialized
+      );
+    }
+  }, [isLinkActive, moveUnderlineToLink]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const matchedLink = navLinks.find((link) => isLinkActive(link.path));
+      if (matchedLink) {
+        moveUnderlineToLink(matchedLink.path, true);
+      }
+    };
+    window.addEventListener("resize", handleResize, { passive: true });
+    return () => window.removeEventListener("resize", handleResize);
+  }, [isLinkActive, moveUnderlineToLink]);
 
   return (
     <nav
@@ -69,54 +165,36 @@ const Navbar = () => {
             />
           </Link>
           <div className="flex items-center justify-end">
-            <div className="hidden lg:flex items-center space-x-1 xl:space-x-2 2xl:space-x-4 pr-6">
+            <div
+              ref={navContainerRef}
+              className="hidden lg:flex items-center gap-8 pr-8 relative"
+            >
               {navLinks.map((link) => {
                 const isActive = isLinkActive(link.path);
                 return (
                   <Link
                     key={link.name}
                     to={link.path}
+                    ref={(el) => {
+                      if (el) linkRefs.current[link.path] = el;
+                    }}
+                    onClick={() => moveUnderlineToLink(link.path, false)}
                     aria-current={isActive ? "page" : undefined}
-                    className={`relative px-3.5 py-2 rounded-full font-sans text-[13px] tracking-[0.14em] whitespace-nowrap transition-all duration-300 flex items-center gap-2 group ${
+                    className={`relative py-1 font-sans text-[13px] font-semibold tracking-[0.15em] whitespace-nowrap transition-colors duration-300 ${
                       isActive
-                        ? "font-bold text-[#0F3D29]"
-                        : "font-semibold text-emerald-950/70 hover:text-emerald-950 hover:bg-emerald-950/5"
+                        ? "text-emerald-950"
+                        : "text-emerald-950/65 hover:text-emerald-700"
                     }`}
                   >
-                    {isActive && (
-                      <motion.span
-                        layoutId="navbar-active-pill"
-                        transition={{
-                          type: "spring",
-                          stiffness: 380,
-                          damping: 30,
-                        }}
-                        className="absolute inset-0 rounded-full bg-[#0F3D29]/10 border border-[#C8933F]/55 shadow-sm -z-10"
-                      />
-                    )}
-
-                    {isActive && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#C8933F] shadow-sm shrink-0" />
-                    )}
-
-                    <span>{link.name}</span>
-
-                    {isActive ? (
-                      <motion.span
-                        layoutId="navbar-active-underline"
-                        transition={{
-                          type: "spring",
-                          stiffness: 380,
-                          damping: 30,
-                        }}
-                        className="absolute -bottom-1 left-3 right-3 h-[2.5px] bg-gradient-to-r from-[#0F3D29] via-[#C8933F] to-[#0F3D29] rounded-full"
-                      />
-                    ) : (
-                      <span className="absolute -bottom-1 left-1/2 w-0 h-[2px] bg-emerald-700/70 transition-all duration-300 group-hover:w-2/3 group-hover:left-[16.666%] opacity-0 group-hover:opacity-100 rounded-full" />
-                    )}
+                    {link.name}
                   </Link>
                 );
               })}
+
+              <span
+                ref={underlineRef}
+                className="pointer-events-none absolute -bottom-1 left-0 w-full h-[2px] bg-emerald-800 origin-left will-change-transform opacity-0"
+              />
             </div>
 
             <div className="hidden lg:flex items-center space-x-6 pl-8 border-l border-emerald-900/10">
@@ -165,7 +243,7 @@ const Navbar = () => {
             transition={{ duration: 0.3, ease: "easeOut" }}
             className="lg:hidden absolute top-full left-0 right-0 h-screen bg-white/90 backdrop-blur-2xl border-t border-white/40 shadow-2xl z-50"
           >
-            <div className="px-6 pt-8 pb-6 space-y-3 flex flex-col items-center">
+            <div className="px-6 pt-12 pb-6 space-y-8 flex flex-col items-center">
               {navLinks.map((link) => {
                 const isActive = isLinkActive(link.path);
                 return (
@@ -174,16 +252,24 @@ const Navbar = () => {
                     to={link.path}
                     aria-current={isActive ? "page" : undefined}
                     onClick={() => setIsOpen(false)}
-                    className={`w-full max-w-xs py-3 px-5 rounded-xl font-sans text-base tracking-[0.18em] transition-all duration-300 flex items-center justify-center gap-2.5 ${
+                    className={`relative inline-block py-2 font-sans text-lg tracking-[0.2em] transition-colors ${
                       isActive
-                        ? "bg-[#0F3D29] text-[#FAF6EE] font-bold border border-[#C8933F]/60 shadow-md"
-                        : "text-emerald-950/75 font-semibold hover:text-emerald-950 hover:bg-emerald-950/5"
+                        ? "font-bold text-emerald-950"
+                        : "font-semibold text-emerald-950/75 hover:text-emerald-700"
                     }`}
                   >
+                    {link.name}
                     {isActive && (
-                      <span className="w-2 h-2 rounded-full bg-[#C8933F] shrink-0" />
+                      <motion.span
+                        layoutId="mobile-navbar-active-underline"
+                        transition={{
+                          type: "spring",
+                          stiffness: 300,
+                          damping: 30,
+                        }}
+                        className="absolute bottom-0 left-0 right-0 h-[2px] bg-emerald-800 rounded-full"
+                      />
                     )}
-                    <span>{link.name}</span>
                   </Link>
                 );
               })}
