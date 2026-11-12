@@ -1,12 +1,12 @@
 import { motion, useReducedMotion } from "framer-motion";
-import opdImage from "./assets/marketplace/Warm Ayurveda Clinic Consultation.png";
-import PanchakarmaImage from "./assets/marketplace/Serene Shirodhara Ayurvedic Spa Ritual.png";
-import natureTherapyImage from "./assets/marketplace/Serene Forest Stream Meditation.png";
-import wellnessImage from "./assets/marketplace/Sunrise Garden Meditation Retreat.png";
-import HerbalImage from "./assets/marketplace/Ayurvedic Herbal Still Life.png";
-import naturalFoodsImage from "./assets/marketplace/Rustic Harvest of Grains and Garden Freshness.png";
-import artisanGoodsImage from "./assets/marketplace/Rustic Artisan Market Still Life.png";
-import communityBarterImage from "./assets/marketplace/Sustainable Village Barter Market.png";
+import opdImage from "./assets/marketplace/Warm Ayurveda Clinic Consultation.webp";
+import PanchakarmaImage from "./assets/marketplace/Serene Shirodhara Ayurvedic Spa Ritual.webp";
+import natureTherapyImage from "./assets/marketplace/Serene Forest Stream Meditation.webp";
+import wellnessImage from "./assets/marketplace/Sunrise Garden Meditation Retreat.webp";
+import HerbalImage from "./assets/marketplace/Ayurvedic Herbal Still Life.webp";
+import naturalFoodsImage from "./assets/marketplace/Rustic Harvest of Grains and Garden Freshness.webp";
+import artisanGoodsImage from "./assets/marketplace/Rustic Artisan Market Still Life.webp";
+import communityBarterImage from "./assets/marketplace/Sustainable Village Barter Market.webp";
 
 const sections = [
   {

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import communityMain from "./assets/joincommunity/Golden Gathering Under the Tree.png";
-import communityPlanting from "./assets/joincommunity/Community Tree Planting Together.png";
-import communityBarter from "./assets/joincommunity/Warm Village Market Exchange.png";
-import gurukulLearning from "./assets/joincommunity/Traditional Gurukul Learning Circle.png";
-import gurukulCircleImage from "./assets/joincommunity/Ayurvedic Garden Lesson with the Guru.png";
-import gurkulSqureImage from "./assets/joincommunity/Herbal Preparation in a Sunlit Courtyard.png";
+import communityMain from "./assets/joincommunity/Golden Gathering Under the Tree.webp";
+import communityPlanting from "./assets/joincommunity/Community Tree Planting Together.webp";
+import communityBarter from "./assets/joincommunity/Warm Village Market Exchange.webp";
+import gurukulLearning from "./assets/joincommunity/Traditional Gurukul Learning Circle.webp";
+import gurukulCircleImage from "./assets/joincommunity/Ayurvedic Garden Lesson with the Guru.webp";
+import gurkulSqureImage from "./assets/joincommunity/Herbal Preparation in a Sunlit Courtyard.webp";
 
 const iconPaths = {
   leaf: [

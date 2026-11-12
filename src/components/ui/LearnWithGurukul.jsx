@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
-import heroImage from "./assets/Traditional Ayurveda Gurukul Lesson.png";
+import heroImage from "./assets/Traditional Ayurveda Gurukul Lesson.webp";
 
 const vp = { once: false, amount: 0.15 };
 

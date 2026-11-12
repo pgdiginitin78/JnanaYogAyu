@@ -36,15 +36,15 @@ import InputArea from "../../common/formFields/InputArea";
 import InputField from "../../common/formFields/InputField";
 import { ModalStyle } from "../../common/modalStyle/ModalStyle";
 
-import sunriseRiverImg from "../../assets/Golden Sunrise River Retreat.png";
-import gardenLessonImg from "../ui/assets/joincommunity/Ayurvedic Garden Lesson with the Guru.png";
-import botanicalStillLifeImg from "../ui/assets/marketplace/Ayurvedic Herbal Still Life.png";
-import forestStreamImg from "../ui/assets/marketplace/Serene Forest Stream Meditation.png";
-import shirodharaImg from "../ui/assets/marketplace/Serene Shirodhara Ayurvedic Spa Ritual.png";
-import heroImg from "../ui/assets/marketplace/Sunrise Garden Meditation Retreat.png";
-import rainyAcademyHd from "./assets/rainy-academy-hd.jpg";
-import summerAcademyHd from "./assets/summer-academy-hd.jpg";
-import winterAcademyHd from "./assets/winter-academy-hd.jpg";
+import sunriseRiverImg from "../../assets/Golden Sunrise River Retreat.webp";
+import gardenLessonImg from "../ui/assets/joincommunity/Ayurvedic Garden Lesson with the Guru.webp";
+import botanicalStillLifeImg from "../ui/assets/marketplace/Ayurvedic Herbal Still Life.webp";
+import forestStreamImg from "../ui/assets/marketplace/Serene Forest Stream Meditation.webp";
+import shirodharaImg from "../ui/assets/marketplace/Serene Shirodhara Ayurvedic Spa Ritual.webp";
+import heroImg from "../ui/assets/marketplace/Sunrise Garden Meditation Retreat.webp";
+import rainyAcademyHd from "./assets/rainy-academy-hd.webp";
+import summerAcademyHd from "./assets/summer-academy-hd.webp";
+import winterAcademyHd from "./assets/winter-academy-hd.webp";
 import {
   ageGroups,
   challengeDefaults,
@@ -56,15 +56,15 @@ import {
   step1Fields,
 } from "./shatayusSchema";
 
-import GoldenGardenWellnessChecklist from "./assets/resource-conscious-living-checklist.jpg";
-import BotanicalBookCoverMeditation from "./assets/resource-healthy-longevity-guide.jpg";
-import ABeginnersGuidetoSeasonalLiving from "./assets/resource-seasonal-living-guide.jpg";
-import SereneHerbalWellnessJournalStillLife from "./assets/resource-self-awareness-journal.jpg";
-import shatayusCommunityLivingImg from "./assets/shatayus-community-living.jpg";
-import shatayusConsciousLongevityImg from "./assets/shatayus-conscious-longevity.jpg";
-import shatayusHolisticLivingImg from "./assets/shatayus-holistic-living.jpg";
-import shatayusSeasonalWisdomImg from "./assets/shatayus-seasonal-wisdom.jpg";
-import shatayusSelfAwarenessImg from "./assets/shatayus-self-awareness.jpg";
+import GoldenGardenWellnessChecklist from "./assets/resource-conscious-living-checklist.webp";
+import BotanicalBookCoverMeditation from "./assets/resource-healthy-longevity-guide.webp";
+import ABeginnersGuidetoSeasonalLiving from "./assets/resource-seasonal-living-guide.webp";
+import SereneHerbalWellnessJournalStillLife from "./assets/resource-self-awareness-journal.webp";
+import shatayusCommunityLivingImg from "./assets/shatayus-community-living.webp";
+import shatayusConsciousLongevityImg from "./assets/shatayus-conscious-longevity.webp";
+import shatayusHolisticLivingImg from "./assets/shatayus-holistic-living.webp";
+import shatayusSeasonalWisdomImg from "./assets/shatayus-seasonal-wisdom.webp";
+import shatayusSelfAwarenessImg from "./assets/shatayus-self-awareness.webp";
 
 const philosophyPillars = [
   {

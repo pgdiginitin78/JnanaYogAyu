@@ -17,8 +17,8 @@ import {
   Phone,
   ArrowRight,
 } from "lucide-react";
-import successBgImage from "../ui/assets/success-modal-bg.jpg";
-import ayurvedicSuccessImage from "../ui/assets/ayurvedic-success-mortar.jpg";
+import successBgImage from "../ui/assets/success-modal-bg.webp";
+import ayurvedicSuccessImage from "../ui/assets/ayurvedic-success-mortar.webp";
 
 import {
   membershipSchema,

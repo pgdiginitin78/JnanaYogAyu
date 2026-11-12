@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
-import AyurvedaStillLife from "./assets/a_photorealistic_still_life_scene_on_a_warm_beige.png";
+import AyurvedaStillLife from "./assets/a_photorealistic_still_life_scene_on_a_warm_beige.webp";
 
 const vp = { once: false, amount: 0.15 };
 

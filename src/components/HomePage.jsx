@@ -54,27 +54,27 @@ import {
   TbWorldHeart,
   TbWorldStar,
 } from "react-icons/tb";
-import HeroImage from "../assets/Golden Sunrise River Retreat.png";
-import resourceBlog from "../assets/resource-blog.jpg";
-import resourcePodcast from "../assets/resource-podcast.jpg";
-import resourceWhitepaper from "../assets/resource-whitepaper.jpg";
-import serviceBarter from "../assets/service-barter.jpg";
-import serviceBranding from "../assets/service-branding.jpg";
-import serviceConsultancy from "../assets/service-consultancy.jpg";
-import serviceDigital from "../assets/service-digital.jpg";
-import serviceGurukul from "../assets/service-gurukul.jpg";
-import serviceMembership from "../assets/service-membership.jpg";
+import HeroImage from "../assets/Golden Sunrise River Retreat.webp";
+import resourceBlog from "../assets/resource-blog.webp";
+import resourcePodcast from "../assets/resource-podcast.webp";
+import resourceWhitepaper from "../assets/resource-whitepaper.webp";
+import serviceBarter from "../assets/service-barter.webp";
+import serviceBranding from "../assets/service-branding.webp";
+import serviceConsultancy from "../assets/service-consultancy.webp";
+import serviceDigital from "../assets/service-digital.webp";
+import serviceGurukul from "../assets/service-gurukul.webp";
+import serviceMembership from "../assets/service-membership.webp";
 import communitySwagram from "../assets/swagramaMain.webp";
 import LearnWithGurukul from "./ui/LearnWithGurukul";
 import MuktikhelaAyurvedaSection from "./ui/MuktikhelaAyurvedaSection";
 import SwagramaCommunity from "./ui/SwagramaCommunity";
 import WellnessMarketplace from "./ui/WellnessMarketplace";
 
-import JyaBg from "../components/ui/assets/section-two/Elegant Cream and Gold Wave Haze.png";
-import JyaLotusImg from "../components/ui/assets/section-two/Golden Lotus with Halo and Ripples.png";
-import card1Img from "../components/ui/assets/section-two/card1-clinic-tech.jpg";
-import card2Img from "../components/ui/assets/section-two/card2-organic-market.png";
-import card3Img from "../components/ui/assets/section-two/card3-community-ecosystem.jpg";
+import JyaBg from "../components/ui/assets/section-two/Elegant Cream and Gold Wave Haze.webp";
+import JyaLotusImg from "../components/ui/assets/section-two/Golden Lotus with Halo and Ripples.webp";
+import card1Img from "../components/ui/assets/section-two/card1-clinic-tech.webp";
+import card2Img from "../components/ui/assets/section-two/card2-organic-market.webp";
+import card3Img from "../components/ui/assets/section-two/card3-community-ecosystem.webp";
 
 const MonitorLeaf = ({ className }) => (
   <svg

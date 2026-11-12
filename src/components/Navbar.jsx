@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FiMenu, FiX, FiHeart, FiShoppingCart } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
-import logo from "../assets/HorizentalLogo.png";
+import logo from "../assets/HorizentalLogo.webp";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,6 +36,21 @@ const Navbar = () => {
     { name: "Contact", path: "/contact" },
   ];
 
+  const isLinkActive = (path) => {
+    const currentPath = location.pathname.toLowerCase();
+    const targetPath = path.toLowerCase();
+
+    if (targetPath === "/muktikhela") {
+      return currentPath === "/muktikhela" || location.hash === "#muktikhela";
+    }
+
+    if (targetPath === "/") {
+      return currentPath === "/" && location.hash !== "#muktikhela";
+    }
+
+    return currentPath === targetPath || currentPath.startsWith(`${targetPath}/`);
+  };
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out border-b w-full border-white/50 bg-white/50 backdrop-blur-xl shadow-sm ${
@@ -54,17 +69,54 @@ const Navbar = () => {
             />
           </Link>
           <div className="flex items-center justify-end">
-            <div className="hidden lg:flex items-center space-x-8 pr-8">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.path}
-                  className="font-sans text-[13px] font-semibold text-emerald-950 tracking-[0.15em] hover:text-emerald-700 transition-colors duration-300 relative group"
-                >
-                  {link.name}
-                  <span className="absolute -bottom-2 left-1/2 w-0 h-[2px] bg-emerald-700 transition-all duration-300 group-hover:w-full group-hover:left-0 opacity-0 group-hover:opacity-100 rounded-full"></span>
-                </Link>
-              ))}
+            <div className="hidden lg:flex items-center space-x-1 xl:space-x-2 2xl:space-x-4 pr-6">
+              {navLinks.map((link) => {
+                const isActive = isLinkActive(link.path);
+                return (
+                  <Link
+                    key={link.name}
+                    to={link.path}
+                    aria-current={isActive ? "page" : undefined}
+                    className={`relative px-3.5 py-2 rounded-full font-sans text-[13px] tracking-[0.14em] whitespace-nowrap transition-all duration-300 flex items-center gap-2 group ${
+                      isActive
+                        ? "font-bold text-[#0F3D29]"
+                        : "font-semibold text-emerald-950/70 hover:text-emerald-950 hover:bg-emerald-950/5"
+                    }`}
+                  >
+                    {isActive && (
+                      <motion.span
+                        layoutId="navbar-active-pill"
+                        transition={{
+                          type: "spring",
+                          stiffness: 380,
+                          damping: 30,
+                        }}
+                        className="absolute inset-0 rounded-full bg-[#0F3D29]/10 border border-[#C8933F]/55 shadow-sm -z-10"
+                      />
+                    )}
+
+                    {isActive && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#C8933F] shadow-sm shrink-0" />
+                    )}
+
+                    <span>{link.name}</span>
+
+                    {isActive ? (
+                      <motion.span
+                        layoutId="navbar-active-underline"
+                        transition={{
+                          type: "spring",
+                          stiffness: 380,
+                          damping: 30,
+                        }}
+                        className="absolute -bottom-1 left-3 right-3 h-[2.5px] bg-gradient-to-r from-[#0F3D29] via-[#C8933F] to-[#0F3D29] rounded-full"
+                      />
+                    ) : (
+                      <span className="absolute -bottom-1 left-1/2 w-0 h-[2px] bg-emerald-700/70 transition-all duration-300 group-hover:w-2/3 group-hover:left-[16.666%] opacity-0 group-hover:opacity-100 rounded-full" />
+                    )}
+                  </Link>
+                );
+              })}
             </div>
 
             <div className="hidden lg:flex items-center space-x-6 pl-8 border-l border-emerald-900/10">
@@ -113,17 +165,28 @@ const Navbar = () => {
             transition={{ duration: 0.3, ease: "easeOut" }}
             className="lg:hidden absolute top-full left-0 right-0 h-screen bg-white/90 backdrop-blur-2xl border-t border-white/40 shadow-2xl z-50"
           >
-            <div className="px-6 pt-12 pb-6 space-y-8 flex flex-col items-center">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.path}
-                  onClick={() => setIsOpen(false)}
-                  className="block w-full text-center py-2 font-sans text-lg font-semibold tracking-[0.2em] text-emerald-950 hover:text-emerald-700 transition-colors"
-                >
-                  {link.name}
-                </Link>
-              ))}
+            <div className="px-6 pt-8 pb-6 space-y-3 flex flex-col items-center">
+              {navLinks.map((link) => {
+                const isActive = isLinkActive(link.path);
+                return (
+                  <Link
+                    key={link.name}
+                    to={link.path}
+                    aria-current={isActive ? "page" : undefined}
+                    onClick={() => setIsOpen(false)}
+                    className={`w-full max-w-xs py-3 px-5 rounded-xl font-sans text-base tracking-[0.18em] transition-all duration-300 flex items-center justify-center gap-2.5 ${
+                      isActive
+                        ? "bg-[#0F3D29] text-[#FAF6EE] font-bold border border-[#C8933F]/60 shadow-md"
+                        : "text-emerald-950/75 font-semibold hover:text-emerald-950 hover:bg-emerald-950/5"
+                    }`}
+                  >
+                    {isActive && (
+                      <span className="w-2 h-2 rounded-full bg-[#C8933F] shrink-0" />
+                    )}
+                    <span>{link.name}</span>
+                  </Link>
+                );
+              })}
 
               <div className="flex items-center space-x-8 pt-4 border-t border-emerald-900/10 w-full justify-center">
                 <button

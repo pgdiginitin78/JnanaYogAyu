@@ -17,7 +17,7 @@ import {
   Leaf,
 } from "lucide-react";
 
-import heroLessonImage from "../ui/assets/Community Learning Circle Under the Tree.png";
+import heroLessonImage from "../ui/assets/Community Learning Circle Under the Tree.webp";
 import MembershipModal from "./MembershipModal";
 import CommonButton from "../../common/button/CommonButton";
 import { useLenis } from "./SmoothScroll";

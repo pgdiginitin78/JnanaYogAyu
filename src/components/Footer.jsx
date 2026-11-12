@@ -11,7 +11,7 @@ import {
   FiYoutube,
 } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import jyaLogo from "../assets/VerticleLogo.png";
+import jyaLogo from "../assets/VerticleLogo.webp";
 
 const Footer = () => {
   const shouldReduce = useReducedMotion();
