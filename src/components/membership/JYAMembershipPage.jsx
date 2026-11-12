@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import {
   motion,
   useReducedMotion,
@@ -75,7 +76,7 @@ const memberships = [
   {
     id: "shatayus",
     no: "02",
-    title: "शतायुस्World Life Membership",
+    title: "शतायुस् World Life Membership",
     tagline: "A Lifetime Connection with Wellness, Knowledge & Community",
     badge: "5% Privilege",
     discountBadge: "5% Discount",
@@ -191,9 +192,9 @@ const memberships = [
 
 const comparisonColumns = [
   { key: "open", label: "JYA Open" },
-  { key: "shatayus", label: "शतायुस्World" },
+  { key: "shatayus", label: "शतायुस् World" },
   { key: "ayurx", label: "GlobalAyurX" },
-  { key: "ecosphere", label: "जैवमण्डलEcosphere", highlight: true },
+  { key: "ecosphere", label: "जैवमण्डल Ecosphere", highlight: true },
 ];
 
 const comparisonData = [
@@ -278,18 +279,21 @@ const cellClass = {
 
 const seasonalCalendar = [
   {
+    id: "summer",
     index: "01",
     sanskrit: "स्वग्रीष्मजाविहार",
     english: "Summer Academy",
     dates: "16 February 2027 – 21 June 2027",
   },
   {
+    id: "rainy",
     index: "02",
     sanskrit: "स्ववर्ष्यजाविहार",
     english: "Rainy Academy",
     dates: "18 June 2027 – 23 October 2027",
   },
   {
+    id: "winter",
     index: "03",
     sanskrit: "स्वहैमन्तजाविहार",
     english: "Winter Academy",
@@ -384,7 +388,7 @@ const marqueeItems = [
   "Connect",
   "Grow",
   "JYA Open Membership",
-  "शतायुस्World Life Membership",
+  "शतायुस् World Life Membership",
   "GlobalAyurX Life Membership",
   "जैवमण्डल Ecosphere Life Membership",
 ];
@@ -454,8 +458,24 @@ function SectionHeading({
 export default function JYAMembershipPage() {
   const shouldReduce = useReducedMotion();
   const lenis = useLenis();
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+  const [selectedSeason, setSelectedSeason] = useState(
+    () => queryParams.get("season") || null,
+  );
+  const [selectedPlan, setSelectedPlan] = useState(
+    () => queryParams.get("plan") || null,
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPlanForModal, setSelectedPlanForModal] = useState(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(search);
+    const seasonFromUrl = params.get("season");
+    const planFromUrl = params.get("plan");
+    if (seasonFromUrl) setSelectedSeason(seasonFromUrl);
+    if (planFromUrl) setSelectedPlan(planFromUrl);
+  }, [search]);
 
   const heroRef = useRef(null);
   const timelineRef = useRef(null);
@@ -503,12 +523,29 @@ export default function JYAMembershipPage() {
     else lenis.start();
   }, [lenis, isModalOpen]);
 
+  const scrollToElement = (elementId, offset = -100) => {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+    if (lenis) {
+      lenis.resize();
+      lenis.scrollTo(el, { offset, duration: 1.3, force: true });
+    } else {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
+  const handleSelectPlan = (planId, shouldScroll = false) => {
+    setSelectedPlan(planId);
+    if (shouldScroll) {
+      scrollToElement(`membership-${planId}`, -100);
+    }
+  };
+
   const handleOpenModal = (planId = null) => {
-    if (planId) {
-      const match = memberships.find((m) => m.id === planId);
-      if (match) {
-        setSelectedPlanForModal(match.fullPlanName);
-      }
+    const activeId = planId || selectedPlan;
+    if (activeId) {
+      setSelectedPlan(activeId);
+      setSelectedPlanForModal(activeId);
     } else {
       setSelectedPlanForModal(null);
     }
@@ -520,13 +557,7 @@ export default function JYAMembershipPage() {
   };
 
   const scrollToPlans = () => {
-    const el = document.getElementById("membership-plans");
-    if (!el) return;
-    if (lenis) {
-      lenis.scrollTo(el, { offset: -24, duration: 1.4 });
-    } else {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
+    scrollToElement("membership-plans", -24);
   };
 
   return (
@@ -737,8 +768,40 @@ export default function JYAMembershipPage() {
             descriptionClass="text-[#103F2E]/80"
           />
 
+          <div className="mb-8 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
+            {memberships.map((m) => {
+              const isSelected = selectedPlan === m.id;
+              return (
+                <button
+                  key={m.id}
+                  type="button"
+                  onClick={() => handleSelectPlan(m.id, true)}
+                  className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 font-serif text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+                    isSelected
+                      ? "border-[#C9A45C] bg-[#103F2E] text-[#F9F6EE] shadow-md ring-2 ring-[#C9A45C]/30"
+                      : "border-[#C9A45C]/40 bg-white text-[#103F2E] hover:border-[#C9A45C] hover:bg-[#F9F6EE]"
+                  }`}
+                >
+                  <span className="text-[#C9A45C]">{m.no}.</span>
+                  <span>{m.title}</span>
+                  <span
+                    className={`rounded-full px-2 py-0.5 font-sans text-[10px] font-semibold ${
+                      isSelected
+                        ? "bg-[#C9A45C] text-[#0B3326]"
+                        : "bg-[#103F2E]/10 text-[#103F2E]"
+                    }`}
+                  >
+                    {m.priceDisplay}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
           <div className="mb-10 grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 lg:mb-12 lg:grid-cols-3 lg:gap-8">
-            {memberships.slice(0, 3).map((m, idx) => (
+            {memberships.slice(0, 3).map((m, idx) => {
+              const isSelectedPlan = selectedPlan === m.id;
+              return (
               <Reveal
                 key={m.id}
                 kind="up"
@@ -748,15 +811,33 @@ export default function JYAMembershipPage() {
                   idx === 2 ? "md:col-span-2 lg:col-span-1" : ""
                 }`}
               >
-                <TiltCard className="group flex h-full flex-col justify-between rounded-3xl border border-[#C9A45C]/40 bg-white p-6 shadow-lg transition-shadow duration-300 hover:border-[#C9A45C] hover:shadow-2xl sm:p-8">
+                <div
+                  id={`membership-${m.id}`}
+                  onClick={() => setSelectedPlan(m.id)}
+                  className="h-full scroll-mt-28 cursor-pointer"
+                >
+                <TiltCard className={`group flex h-full flex-col justify-between rounded-3xl border bg-white p-6 shadow-lg transition-all duration-300 hover:border-[#C9A45C] hover:shadow-2xl sm:p-8 ${
+                  isSelectedPlan
+                    ? "border-2 border-[#C9A45C] ring-4 ring-[#C9A45C]/35 shadow-2xl -translate-y-1"
+                    : selectedPlan
+                      ? "border-[#C9A45C]/30 opacity-85 hover:opacity-100"
+                      : "border-[#C9A45C]/40"
+                }`}>
                   <div>
                     <div className="flex items-center justify-between gap-3 border-b border-[#EDE5D5] pb-5">
                       <span className="font-serif text-4xl font-light text-[#C9A45C]">
                         {m.no}
                       </span>
-                      <span className="rounded-full border border-[#103F2E]/15 bg-[#103F2E]/5 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[#103F2E] sm:text-xs">
-                        {m.badge}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        {isSelectedPlan && (
+                          <span className="rounded-full bg-[#103F2E] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#C9A45C]">
+                            Selected Plan
+                          </span>
+                        )}
+                        <span className="rounded-full border border-[#103F2E]/15 bg-[#103F2E]/5 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[#103F2E] sm:text-xs">
+                          {m.badge}
+                        </span>
+                      </div>
                     </div>
 
                     <h3 className="mt-6 font-serif text-xl font-bold leading-tight text-[#103F2E] sm:text-2xl">
@@ -823,15 +904,26 @@ export default function JYAMembershipPage() {
                     )}
                   </div>
                 </TiltCard>
+                </div>
               </Reveal>
-            ))}
+              );
+            })}
           </div>
 
           {(() => {
             const m = memberships[3];
+            const isSelectedEcosphere = selectedPlan === m.id;
             return (
               <Reveal kind="scale" duration={0.9}>
-                <article className="relative overflow-hidden rounded-3xl border-2 border-[#C9A45C] bg-gradient-to-br from-[#103F2E] via-[#0B3326] to-[#103F2E] p-6 text-[#F9F6EE] shadow-2xl sm:p-8 lg:p-12">
+                <article
+                  id={`membership-${m.id}`}
+                  onClick={() => setSelectedPlan(m.id)}
+                  className={`relative scroll-mt-28 cursor-pointer overflow-hidden rounded-3xl border-2 border-[#C9A45C] bg-gradient-to-br from-[#103F2E] via-[#0B3326] to-[#103F2E] p-6 text-[#F9F6EE] shadow-2xl transition-all sm:p-8 lg:p-12 ${
+                    isSelectedEcosphere
+                      ? "ring-4 ring-[#C9A45C]/45 shadow-[0_25px_70px_rgba(201,164,92,0.3)]"
+                      : ""
+                  }`}
+                >
                   <Parallax
                     range={50}
                     className="pointer-events-none absolute -right-20 -top-20 h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(201,164,92,0.3),transparent_68%)]"
@@ -881,7 +973,6 @@ export default function JYAMembershipPage() {
                               <Leaf className="h-5 w-5 text-[#C9A45C] sm:h-6 sm:w-6" />
                             </div>
                             <div className="min-w-0">
-                            
                               <p className="text-sm font-medium leading-relaxed text-[#F9F6EE] sm:text-base">
                                 {m.whoFor[1]}
                               </p>
@@ -919,8 +1010,6 @@ export default function JYAMembershipPage() {
                           subject to entrance qualification.
                         </div>
                       </Reveal>
-
-                    
                     </div>
 
                     <Reveal
@@ -969,20 +1058,20 @@ export default function JYAMembershipPage() {
                       </Stagger>
                     </Reveal>
                   </div>
-                    <div className="w-full flex justify-center mt-5">
-                        <Reveal delay={0.45}>
-                        <Magnetic className="inline-block w-full ">
-                          <CommonButton
-                            label={m.cta}
-                            onClick={() => handleOpenModal(m.id)}
-                            icon={
-                              <ArrowRight className="h-4 w-4 text-[#0B3326]" />
-                            }
-                            className="!h-12 !w-full !px-8 sm:!w-auto bg-[#C9A45C] hover:bg-[#B89248] text-[#0B3326] font-bold !rounded-xl shadow-lg tracking-wide"
-                          />
-                        </Magnetic>
-                      </Reveal>
-                    </div>
+                  <div className="w-full flex justify-center mt-5">
+                    <Reveal delay={0.45}>
+                      <Magnetic className="inline-block w-full ">
+                        <CommonButton
+                          label={m.cta}
+                          onClick={() => handleOpenModal(m.id)}
+                          icon={
+                            <ArrowRight className="h-4 w-4 text-[#0B3326]" />
+                          }
+                          className="!h-12 !w-full !px-8 sm:!w-auto bg-[#C9A45C] hover:bg-[#B89248] text-[#0B3326] font-bold !rounded-xl shadow-lg tracking-wide"
+                        />
+                      </Magnetic>
+                    </Reveal>
+                  </div>
                 </article>
               </Reveal>
             );
@@ -990,7 +1079,10 @@ export default function JYAMembershipPage() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden border-b border-[#C9A45C]/30 bg-[#F9F6EE] py-14 text-[#103F2E] md:py-20">
+      <section
+        id="seasonal-academy"
+        className="relative scroll-mt-24 overflow-hidden border-b border-[#C9A45C]/30 bg-[#F9F6EE] py-14 text-[#103F2E] md:py-20"
+      >
         <Parallax
           range={-50}
           className="pointer-events-none absolute -right-32 top-10 h-[360px] w-[360px] rounded-full bg-[radial-gradient(circle,rgba(201,164,92,0.18),transparent_68%)]"
@@ -1085,39 +1177,81 @@ export default function JYAMembershipPage() {
                   delay={0.2}
                   className="space-y-3 sm:space-y-4"
                 >
-                  {seasonalCalendar.map((season) => (
-                    <Item
-                      key={season.index}
-                      kind="up"
-                      duration={0.6}
-                      whileHover={{ x: 6, transition: { duration: 0.25 } }}
-                      className="flex flex-col justify-between gap-3 rounded-xl border border-[#C9A45C]/30 bg-[#F9F6EE] p-4 sm:flex-row sm:items-center"
-                    >
-                      <div className="min-w-0">
-                        <div className="font-serif text-base font-bold text-[#103F2E] sm:text-lg">
-                          {season.index}. {season.sanskrit}
-                        </div>
-                        <div className="text-xs font-semibold text-[#103F2E]/70">
-                          {season.english}
-                        </div>
+                  {seasonalCalendar.map((season) => {
+                    const isSelectedSeason = selectedSeason === season.id;
+                    return (
+                      <div
+                        key={season.index}
+                        id={`season-${season.id}`}
+                        onClick={() => setSelectedSeason(season.id)}
+                        className="scroll-mt-28 cursor-pointer"
+                      >
+                        <Item
+                          kind="up"
+                          duration={0.6}
+                          whileHover={{ x: 6, transition: { duration: 0.25 } }}
+                          className={`flex flex-col justify-between gap-3 rounded-xl border p-4 transition-all sm:flex-row sm:items-center ${
+                            isSelectedSeason
+                              ? "border-2 border-[#C9A45C] bg-[#103F2E] text-[#F9F6EE] ring-4 ring-[#C9A45C]/25 shadow-lg"
+                              : "border-[#C9A45C]/30 bg-[#F9F6EE] text-[#103F2E] hover:border-[#C9A45C]"
+                          }`}
+                        >
+                          <div className="min-w-0">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <div
+                                className={`font-serif text-base font-bold sm:text-lg ${
+                                  isSelectedSeason
+                                    ? "text-[#F9F6EE]"
+                                    : "text-[#103F2E]"
+                                }`}
+                              >
+                                {season.index}. {season.sanskrit}
+                              </div>
+                         
+                            </div>
+                            <div
+                              className={`text-xs font-semibold ${
+                                isSelectedSeason
+                                  ? "text-[#C9A45C]"
+                                  : "text-[#103F2E]/70"
+                              }`}
+                            >
+                              {season.english}
+                            </div>
+                          </div>
+                          <div
+                            className={`shrink-0 self-start rounded-lg border px-3 py-1.5 font-serif text-xs font-bold sm:self-auto ${
+                              isSelectedSeason
+                                ? "border-[#C9A45C] bg-[#0B3326] text-[#C9A45C]"
+                                : "border-[#C9A45C]/30 bg-white text-[#C9A45C]"
+                            }`}
+                          >
+                            {season.dates}
+                          </div>
+                        </Item>
                       </div>
-                      <div className="shrink-0 self-start rounded-lg border border-[#C9A45C]/30 bg-white px-3 py-1.5 font-serif text-xs font-bold text-[#C9A45C] sm:self-auto">
-                        {season.dates}
-                      </div>
-                    </Item>
-                  ))}
+                    );
+                  })}
                 </Stagger>
 
-                <div className="pt-2 text-center">
+                <div className="pt-2 text-center space-y-2.5">
                   <Magnetic strength={0.12} className="w-full">
                     <CommonButton
-                      label="Apply for जैवमण्डलEcosphere Life Membership"
+                      label="Apply for जैवमण्डल Ecosphere Life Membership"
                       fullWidth
                       onClick={() => handleOpenModal("ecosphere")}
                       className="!h-11 !w-full !px-5 bg-[#103F2E] hover:bg-[#0B3326] text-[#F9F6EE] border border-[#C9A45C]/40 !rounded-xl font-medium tracking-wide shadow-md justify-center"
                     />
                   </Magnetic>
-                  <p className="mt-2 text-[11px] italic text-[#103F2E]/60">
+                  <button
+                    type="button"
+                    onClick={scrollToPlans}
+                    className="inline-flex items-center justify-center gap-1.5 text-xs font-semibold text-[#103F2E] underline decoration-[#C9A45C] underline-offset-4 transition-colors hover:text-[#C9A45C] cursor-pointer"
+                  >
+                    <span>Want a different membership? View &amp; switch all 4 plans</span>
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </button>
+                  <p className="mt-1 text-[11px] italic text-[#103F2E]/60">
                     Admission is subject to the entrance examination,
                     qualification criteria, availability of seats and JYA
                     policies.
@@ -1160,13 +1294,13 @@ export default function JYAMembershipPage() {
                     JYA Open
                   </th>
                   <th className="w-[18.75%] p-5 text-center font-serif text-sm font-bold text-[#C9A45C]">
-                    शतायुस्World
+                    शतायुस् World
                   </th>
                   <th className="w-[18.75%] p-5 text-center font-serif text-sm font-bold text-[#C9A45C]">
                     GlobalAyurX
                   </th>
                   <th className="w-[18.75%] bg-[#C9A45C]/20 p-5 text-center font-serif text-sm font-bold text-[#F9F6EE]">
-                    जैवमण्डलEcosphere
+                    जैवमण्डल Ecosphere
                   </th>
                 </tr>
               </thead>
@@ -1453,6 +1587,7 @@ export default function JYAMembershipPage() {
           open={isModalOpen}
           onClose={handleCloseModal}
           initialMembership={selectedPlanForModal}
+          initialSeason={selectedSeason}
         />
       )}
     </div>

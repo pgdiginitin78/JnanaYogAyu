@@ -27,7 +27,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "Home", path: "/" },
-    { name: "Shatayush World", path: "/shatayushworld" },
+    { name: "Shatayush World", path: "/shatayushWorld" },
     { name: "Global AyurX", path: "/globalayurx" },
     { name: "EcoSphere", path: "/ecosphere" },
     { name: "Muktikhela", path: "/muktikhela" },

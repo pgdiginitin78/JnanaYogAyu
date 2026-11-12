@@ -1,14 +1,33 @@
 import * as yup from "yup";
 
+const dropdownNullable = yup.mixed().nullable();
+const dropdownRequired = (message) =>
+  yup
+    .mixed()
+    .nullable()
+    .test("required", message, (val) => {
+      if (!val) return false;
+      if (typeof val === "string") return val.trim().length > 0;
+      if (typeof val === "object") {
+        return Boolean(val.value || val.label);
+      }
+      return true;
+    });
+
 export const membershipSchema = yup.object({
   // Step 1: Personal Information
-  fullName: yup
+  firstName: yup
     .string()
     .trim()
-    .required("Full name is required")
-    .min(2, "Full name must be at least 2 characters"),
+    .required("First name is required")
+    .min(2, "First name must be at least 2 characters"),
+  lastName: yup
+    .string()
+    .trim()
+    .required("Last name is required"),
+  fullName: yup.string().nullable(),
   dob: yup.mixed().nullable(),
-  gender: yup.string().nullable(),
+  gender: dropdownNullable,
   mobile: yup
     .string()
     .trim()
@@ -24,6 +43,7 @@ export const membershipSchema = yup.object({
     .trim()
     .required("City is required"),
   state: yup.string().nullable(),
+  pincode: yup.string().nullable(),
   country: yup.string().default("India"),
 
   // Step 2: Professional Information
@@ -33,9 +53,7 @@ export const membershipSchema = yup.object({
   interests: yup.array().of(yup.string()).default([]),
 
   // Step 3: Membership Selection
-  membershipOption: yup
-    .string()
-    .required("Please select your preferred membership plan"),
+  membershipOption: dropdownRequired("Please select your preferred membership plan"),
 
   // Step 4: Additional Information
   accessSelections: yup.array().of(yup.string()).default([]),
@@ -43,8 +61,8 @@ export const membershipSchema = yup.object({
     .string()
     .required("Please select your preferred mode of participation")
     .default("Both"),
-  ecosphereSeason: yup.string().nullable(),
-  ecosphereResidential: yup.string().nullable(),
+  ecosphereSeason: dropdownNullable,
+  ecosphereResidential: dropdownNullable,
   entranceExamApplied: yup.boolean().default(false),
   academyInterest: yup.string().nullable(),
 
@@ -57,14 +75,17 @@ export const membershipSchema = yup.object({
 });
 
 export const defaultFormValues = {
+  firstName: "",
+  lastName: "",
   fullName: "",
   dob: null,
-  gender: "",
+  gender: null,
   mobile: "",
   whatsapp: "",
   email: "",
   city: "",
   state: "",
+  pincode: "",
   country: "India",
   profession: "",
   organisation: "",
@@ -73,8 +94,8 @@ export const defaultFormValues = {
   membershipOption: "शतायुस्World Life Membership – ₹500",
   accessSelections: [],
   modeOfParticipation: "Both",
-  ecosphereSeason: "",
-  ecosphereResidential: "",
+  ecosphereSeason: null,
+  ecosphereResidential: null,
   entranceExamApplied: false,
   academyInterest: "",
   declaration1: true,

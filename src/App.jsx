@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
@@ -7,21 +7,74 @@ import Navbar from "./components/Navbar";
 import HomePage from "./components/HomePage";
 import Footer from "./components/Footer";
 import JYAMembershipPage from "./components/membership/JYAMembershipPage";
+import { LenisContext } from "./components/membership/SmoothScroll";
+import ShatayushWorld from "./components/shatayushWorld/ShatayushWorld";
 
 
 function ScrollToTop({ lenisRef }) {
-  const { pathname, search } = useLocation();
+  const { pathname, search, hash } = useLocation();
+  const prevPathnameRef = useRef(pathname);
 
   useEffect(() => {
-    if (lenisRef.current) {
-      lenisRef.current.scrollTo(0, {
-        immediate: true,
-        force: true,
-      });
-    } else {
+    const queryParams = new URLSearchParams(search);
+    const seasonParam = queryParams.get("season");
+    const planParam = queryParams.get("plan");
+
+    const targetId =
+      hash?.replace("#", "") ||
+      (seasonParam ? `season-${seasonParam}` : "") ||
+      (planParam ? `membership-${planParam}` : "") ||
+      (pathname === "/muktikhela" ? "muktikhela" : "");
+
+    const isRouteChanged = prevPathnameRef.current !== pathname;
+    prevPathnameRef.current = pathname;
+
+    // Always start at top immediately when switching pages so the user sees the page redirect
+    // and then smoothly scrolls down to the focused section/card.
+    if (isRouteChanged || !targetId) {
+      if (lenisRef.current) {
+        lenisRef.current.scrollTo(0, {
+          immediate: true,
+          force: true,
+        });
+      }
       window.scrollTo(0, 0);
     }
-  }, [pathname, search, lenisRef]);
+
+    if (!targetId) return undefined;
+
+    const scrollToTarget = () => {
+      const el =
+        document.getElementById(targetId) ||
+        (seasonParam ? document.getElementById("seasonal-academy") : null) ||
+        (planParam ? document.getElementById("membership-plans") : null);
+
+      if (!el) return false;
+
+      if (lenisRef.current) {
+        lenisRef.current.resize();
+        lenisRef.current.scrollTo(el, {
+          offset: -96,
+          duration: 1.5,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          immediate: false,
+          force: true,
+        });
+      } else {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      return true;
+    };
+
+    const delay = isRouteChanged ? 380 : 120;
+    const timer = setTimeout(() => {
+      if (!scrollToTarget()) {
+        setTimeout(scrollToTarget, 300);
+      }
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [pathname, search, hash, lenisRef]);
 
   return null;
 }
@@ -55,6 +108,7 @@ const Contact = () => (
 
 function App() {
   const lenisRef = useRef(null);
+  const [lenisInstance, setLenisInstance] = useState(null);
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
@@ -71,6 +125,7 @@ function App() {
     });
 
     lenisRef.current = lenis;
+    setLenisInstance(lenis);
 
     lenis.scrollTo(0, {
       immediate: true,
@@ -89,32 +144,37 @@ function App() {
     return () => {
       cancelAnimationFrame(animationFrameId);
       lenisRef.current = null;
+      setLenisInstance(null);
       lenis.destroy();
     };
   }, []);
 
   return (
-    <Router>
-      <div className="min-h-screen bg-white relative overflow-x-hidden">
-        <ScrollToTop lenisRef={lenisRef} />
+    <LenisContext.Provider value={lenisInstance}>
+      <Router>
+        <div className="min-h-screen bg-white relative overflow-x-hidden">
+          <ScrollToTop lenisRef={lenisRef} />
 
-        <Navbar />
+          <Navbar />
 
-        <div className="relative z-10 pt-16">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/community" element={<Community />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/knowledge" element={<Knowledge />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/membership" element={<JYAMembershipPage />} />
-          </Routes>
+          <div className="relative z-10 pt-16">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/community" element={<Community />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/knowledge" element={<Knowledge />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/membership" element={<JYAMembershipPage />} />
+              <Route path="/shatayushWorld" element={<ShatayushWorld />} />
+              <Route path="/muktikhela" element={<HomePage />} />
+            </Routes>
+          </div>
+
+          <Footer />
         </div>
-
-        <Footer />
-      </div>
-    </Router>
+      </Router>
+    </LenisContext.Provider>
   );
 }
 

@@ -3,7 +3,7 @@ import Lenis from "lenis";
 import { frame, cancelFrame } from "framer-motion";
 import "lenis/dist/lenis.css";
 
-const LenisContext = createContext(null);
+export const LenisContext = createContext(null);
 
 export const useLenis = () => useContext(LenisContext);
 

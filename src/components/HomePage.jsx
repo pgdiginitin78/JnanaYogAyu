@@ -72,6 +72,9 @@ import WellnessMarketplace from "./ui/WellnessMarketplace";
 
 import JyaBg from "../components/ui/assets/section-two/Elegant Cream and Gold Wave Haze.png";
 import JyaLotusImg from "../components/ui/assets/section-two/Golden Lotus with Halo and Ripples.png";
+import card1Img from "../components/ui/assets/section-two/card1-clinic-tech.jpg";
+import card2Img from "../components/ui/assets/section-two/card2-organic-market.png";
+import card3Img from "../components/ui/assets/section-two/card3-community-ecosystem.jpg";
 
 const MonitorLeaf = ({ className }) => (
   <svg
@@ -523,39 +526,33 @@ export default function HomePage() {
 
       {/* SECTION 2: WHAT IS JYA (The JnanaYogAyu Ecosystem) */}
 
-      <section className="relative isolate overflow-hidden bg-[#FAF5E8] py-16 sm:py-20 lg:py-14">
+      <section className="relative isolate overflow-hidden bg-[#FAF5E8] py-10 lg:py-18">
         {/* Background */}
-        <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 -z-10 overflow-hidden">
           <img
             src={JyaBg}
             alt=""
-            className="h-full w-full object-cover opacity-20"
+            className="h-full w-full object-cover opacity-25 mix-blend-multiply"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#FFFDF7]/85 via-[#FAF5E8]/75 to-[#F4EBD9]/90" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#FFFDF7]/90 via-[#FAF5E8]/80 to-[#F5ECE0]/95" />
+          <div className="pointer-events-none absolute -top-40 left-1/2 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-gradient-to-b from-[#F7E7C4]/40 to-transparent blur-3xl" />
         </div>
 
-        <div className="mx-auto max-w-[1380px] px-5 sm:px-8 lg:px-12">
+        <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
           {/* MAIN HEADING */}
           <motion.div
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="mx-auto max-w-5xl text-center"
+            className="w-full"
           >
-        
-
-            <h2 className="font-serif text-2xl font-bold leading-[1.12] tracking-tight text-[#0F3D29]  md:text-5xl">
-              Ancient Wisdom.
-              <br />
-              Modern Intelligence.
-              <br />
-              <span className="italic text-[#A27128]">
+            <h2 className="font-serif text-2xl font-bold  tracking-tight text-[#0F3D29]  md:text-3xl lg:text-[44px]">
+              Ancient Wisdom. Modern Intelligence. <br />
+              <span className=" text-[#A27128] mt-1">
                 A Better Way of Living.
               </span>
             </h2>
-
-            <div className="mx-auto mt-6 h-[2px] w-40 rounded-full bg-[#C8933F]" />
           </motion.div>
 
           {/* INTRODUCTION */}
@@ -564,45 +561,62 @@ export default function HomePage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.15 }}
-            className="mx-auto mt-10 max-w-4xl text-center"
+            className=" mt-6 "
           >
-            <p className="font-serif text-lg font-bold leading-relaxed text-[#0F3D29] sm:text-xl lg:text-2xl">
-              JnanaYogAyu (JYA) is an integrated ecosystem bringing together
-              health, wellness, Ayurveda, technology, learning and conscious
-              living on a single platform.
-            </p>
+            <div className="relative  ">
+              <p className="font-serif text-lg font-bold leading-relaxed text-[#0F3D29] sm:text-xl lg:text-2xl">
+                JnanaYogAyu (JYA) is an integrated ecosystem bringing together
+                health, wellness, Ayurveda, technology, learning and conscious
+                living on a single platform.
+              </p>
 
-            <p className="mx-auto mt-5 max-w-3xl text-sm leading-7 text-[#354237] sm:text-base">
-              Rooted in the timeless principles of Jnana (Knowledge), Yoga and
-              Ayurveda (Ayu), JYA connects individuals, healthcare
-              practitioners, clinics, hospitals, wellness centres and businesses
-              through a comprehensive range of services and digital solutions.
-            </p>
+              <div className="mx-auto my-5 flex items-center justify-center gap-3">
+                <div className="h-px w-24 bg-gradient-to-r from-transparent to-[#C8933F]/60" />
+                <span className="h-1.5 w-1.5 rounded-full bg-[#C8933F]" />
+                <div className="h-px w-24 bg-gradient-to-l from-transparent to-[#C8933F]/60" />
+              </div>
+
+              <p className=" text-sm leading-7 text-[#354237] sm:text-base">
+                Rooted in the timeless principles of Jnana (Knowledge), Yoga and
+                Ayurveda (Ayu), JYA connects individuals, healthcare
+                practitioners, clinics, hospitals, wellness centres and
+                businesses through a comprehensive range of services and digital
+                solutions.
+              </p>
+            </div>
           </motion.div>
 
           {/* CONTENT CARDS */}
-          <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
             {/* CARD 1 */}
             <motion.article
               initial={{ opacity: 0, y: 35 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.65 }}
-              className="group relative flex flex-col rounded-[28px] border border-[#E7D7B5] bg-white/75 p-7 shadow-[0_12px_40px_rgba(42,67,43,0.06)] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(42,67,43,0.12)] sm:p-9"
+              className="group relative flex flex-col overflow-hidden rounded-[28px] border border-[#E7D7B5] bg-white/85 shadow-[0_14px_45px_rgba(42,67,43,0.07)] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_24px_55px_rgba(42,67,43,0.14)]"
             >
-              <div className="mb-7 flex h-14 w-14 items-center justify-center rounded-2xl border border-[#E5D4A9] bg-[#F8F0D9] text-[#145235] transition-transform duration-500 group-hover:scale-110">
-                <MonitorLeaf className="h-7 w-7" />
+              {/* Image Banner */}
+              <div className="relative h-60 w-full overflow-hidden bg-[#FAF5E8]">
+                <img
+                  src={card1Img}
+                  alt=""
+                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
               </div>
 
-              <div className="mb-5 h-[2px] w-12 rounded-full bg-[#C8933F]" />
+              {/* Card Body */}
+              <div className="flex flex-1 flex-col p-7 pt-4 sm:p-9 sm:pt-4">
+                <div className="mb-5 h-[2px] w-12 rounded-full bg-[#C8933F]" />
 
-              <p className="text-[15px] leading-[1.85] text-[#29382E] sm:text-base">
-                From clinic management and automation solutions that help
-                Ayurvedic practitioners streamline their practice, to a unified
-                platform that enables individuals to access services and track
-                their wellness journey, JYA bridges traditional healthcare
-                wisdom with modern technology.
-              </p>
+                <p className="text-[15px] leading-[1.85] text-[#29382E] sm:text-base">
+                  From clinic management and automation solutions that help
+                  Ayurvedic practitioners streamline their practice, to a
+                  unified platform that enables individuals to access services
+                  and track their wellness journey, JYA bridges traditional
+                  healthcare wisdom with modern technology.
+                </p>
+              </div>
             </motion.article>
 
             {/* CARD 2 */}
@@ -611,22 +625,30 @@ export default function HomePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.65, delay: 0.12 }}
-              className="group relative flex flex-col rounded-[28px] border border-[#E7D7B5] bg-white/75 p-7 shadow-[0_12px_40px_rgba(42,67,43,0.06)] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(42,67,43,0.12)] sm:p-9"
+              className="group relative flex flex-col overflow-hidden rounded-[28px] border border-[#E7D7B5] bg-white/85 shadow-[0_14px_45px_rgba(42,67,43,0.07)] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_24px_55px_rgba(42,67,43,0.14)]"
             >
-              <div className="mb-7 flex h-14 w-14 items-center justify-center rounded-2xl border border-[#E5D4A9] bg-[#F8F0D9] text-[#145235] transition-transform duration-500 group-hover:scale-110">
-                <PiShoppingCart className="h-7 w-7" />
+              {/* Image Banner */}
+              <div className="relative h-60 w-full overflow-hidden bg-[#FAF5E8]">
+                <img
+                  src={card2Img}
+                  alt=""
+                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
               </div>
 
-              <div className="mb-5 h-[2px] w-12 rounded-full bg-[#C8933F]" />
+              {/* Card Body */}
+              <div className="flex flex-1 flex-col p-7 pt-4 sm:p-9 sm:pt-4">
+                <div className="mb-5 h-[2px] w-12 rounded-full bg-[#C8933F]" />
 
-              <p className="text-[15px] leading-[1.85] text-[#29382E] sm:text-base">
-                The ecosystem also supports clinics, hospitals and Ayurvedic
-                centres with digital marketing and growth services, enables
-                access to organic and high-quality products through its commerce
-                and barter network, creates opportunities to source and sell
-                organic produce, and makes knowledge accessible through curated
-                learning programmes and courses.
-              </p>
+                <p className="text-[15px] leading-[1.85] text-[#29382E] sm:text-base">
+                  The ecosystem also supports clinics, hospitals and Ayurvedic
+                  centres with digital marketing and growth services, enables
+                  access to organic and high-quality products through its
+                  commerce and barter network, creates opportunities to source
+                  and sell organic produce, and makes knowledge accessible
+                  through curated learning programmes and courses.
+                </p>
+              </div>
             </motion.article>
 
             {/* CARD 3 */}
@@ -635,22 +657,30 @@ export default function HomePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.65, delay: 0.24 }}
-              className="group relative flex flex-col rounded-[28px] border border-[#E7D7B5] bg-white/75 p-7 shadow-[0_12px_40px_rgba(42,67,43,0.06)] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(42,67,43,0.12)] sm:p-9"
+              className="group relative flex flex-col overflow-hidden rounded-[28px] border border-[#E7D7B5] bg-white/85 shadow-[0_14px_45px_rgba(42,67,43,0.07)] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_24px_55px_rgba(42,67,43,0.14)]"
             >
-              <div className="mb-7 flex h-14 w-14 items-center justify-center rounded-2xl border border-[#E5D4A9] bg-[#F8F0D9] text-[#145235] transition-transform duration-500 group-hover:scale-110">
-                <PiUsersThree className="h-7 w-7" />
+              {/* Image Banner */}
+              <div className="relative h-60 w-full overflow-hidden bg-[#FAF5E8]">
+                <img
+                  src={card3Img}
+                  alt=""
+                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
               </div>
 
-              <div className="mb-5 h-[2px] w-12 rounded-full bg-[#C8933F]" />
+              {/* Card Body */}
+              <div className="flex flex-1 flex-col p-7 pt-4 sm:p-9 sm:pt-4">
+                <div className="mb-5 h-[2px] w-12 rounded-full bg-[#C8933F]" />
 
-              <p className="text-[15px] leading-[1.85] text-[#29382E] sm:text-base">
-                Whether you are a healthcare practitioner looking to modernise
-                your practice, an individual seeking a more informed approach to
-                wellness, a healthcare institution looking to strengthen its
-                digital presence, or someone interested in learning, sourcing
-                and sharing quality products, JYA brings these opportunities
-                together.
-              </p>
+                <p className="text-[15px] leading-[1.85] text-[#29382E] sm:text-base">
+                  Whether you are a healthcare practitioner looking to modernise
+                  your practice, an individual seeking a more informed approach
+                  to wellness, a healthcare institution looking to strengthen
+                  its digital presence, or someone interested in learning,
+                  sourcing and sharing quality products, JYA brings these
+                  opportunities together.
+                </p>
+              </div>
             </motion.article>
           </div>
 
@@ -660,16 +690,16 @@ export default function HomePage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="relative mt-16 overflow-hidden rounded-[28px] bg-gradient-to-r from-[#0B3825] via-[#145235] to-[#0B3825] px-6 py-10 text-center shadow-[0_15px_45px_rgba(15,61,41,0.15)] sm:px-12 sm:py-14"
+            className="relative mt-20 overflow-hidden rounded-[32px] border border-[#D5A354]/40 bg-gradient-to-r from-[#07281A] via-[#103F2A] to-[#07281A] px-6 py-12 text-center shadow-[0_20px_55px_rgba(15,61,41,0.22)] sm:px-14 sm:py-16"
           >
-      
-
-            <div className="relative z-10">
-              <h3 className="font-serif text-2xl font-bold leading-snug text-[#FFFDF5] sm:text-3xl lg:text-4xl">
+            <div className="relative z-10 mx-auto max-w-3xl">
+              <h3 className="font-serif text-2xl font-bold leading-snug tracking-wide text-[#FFFDF5] sm:text-3xl lg:text-4xl">
                 One ecosystem. Multiple possibilities.
               </h3>
 
-              <p className="mt-4 font-serif text-base italic text-[#F2C56B] sm:text-lg lg:text-xl">
+              <div className="mx-auto my-4 h-[2px] w-20 rounded-full bg-[#D5A354]/60" />
+
+              <p className="font-serif text-base italic text-[#F2C56B] sm:text-lg lg:text-xl">
                 A more connected approach to health, wellness and living.
               </p>
             </div>

@@ -131,9 +131,17 @@ const generateApplicationId = () => {
   return "JYA-" + Math.floor(100000 + Math.random() * 900000);
 };
 
+const getTierString = (tier) => {
+  if (!tier) return "";
+  if (typeof tier === "string") return tier;
+  if (typeof tier === "object") return tier.value || tier.label || "";
+  return String(tier);
+};
+
 const getFeeAmount = (tier = "") => {
-  if (!tier) return 500;
-  const lower = tier.toLowerCase();
+  const str = getTierString(tier);
+  if (!str) return 500;
+  const lower = str.toLowerCase();
   if (
     lower.includes("5,000") ||
     lower.includes("5000") ||
@@ -149,6 +157,7 @@ export default function MembershipModal({
   open,
   onClose,
   initialMembership = null,
+  initialSeason = null,
 }) {
   const [modalStep, setModalStep] = useState(1);
   const [submissionSuccess, setSubmissionSuccess] = useState(false);
@@ -165,29 +174,51 @@ export default function MembershipModal({
   } = useForm({
     resolver: yupResolver(membershipSchema),
     defaultValues: defaultFormValues,
-    mode: "onBlur",
+    mode: "onChange",
   });
 
-  const selectedTier = useWatch({ control, name: "membershipOption" });
+  const rawSelectedTier = useWatch({ control, name: "membershipOption" });
+  const selectedTier = getTierString(rawSelectedTier);
   const formValues = useWatch({ control });
+  const fullApplicantName =
+    [formValues?.firstName, formValues?.lastName].filter(Boolean).join(" ") ||
+    formValues?.fullName ||
+    "";
 
   useEffect(() => {
     if (initialMembership) {
+      const normalizedInit = String(initialMembership)
+        .toLowerCase()
+        .replace(/\s+/g, "");
       const match = membershipSelectOptions.find(
         (o) =>
           o.id === initialMembership ||
-          o.value.toLowerCase().includes(initialMembership.toLowerCase()),
+          o.value.toLowerCase().replace(/\s+/g, "").includes(normalizedInit),
       );
       if (match) {
-        setValue("membershipOption", match.value);
+        setValue("membershipOption", match.value, { shouldValidate: true });
       }
     }
   }, [initialMembership, setValue]);
 
+  useEffect(() => {
+    if (initialSeason) {
+      const seasonMap = {
+        summer: seasonOptions[0],
+        rainy: seasonOptions[1],
+        winter: seasonOptions[3],
+      };
+      const matchedSeason = seasonMap[initialSeason];
+      if (matchedSeason) {
+        setValue("ecosphereSeason", matchedSeason, { shouldValidate: true });
+      }
+    }
+  }, [initialSeason, setValue]);
+
   const handleNext = async () => {
     let isValid = false;
     if (modalStep === 1) {
-      isValid = await trigger(["fullName", "email", "mobile", "city"]);
+      isValid = await trigger(["firstName", "lastName", "email", "mobile", "city"]);
     } else if (modalStep === 2) {
       isValid = true;
     } else if (modalStep === 3) {
@@ -213,7 +244,7 @@ export default function MembershipModal({
       amount: fee,
       description: `${selectedTier} Membership Registration`,
       prefill: {
-        name: formValues?.fullName || "",
+        name: fullApplicantName,
         email: formValues?.email || "",
         contact: formValues?.mobile || "",
       },
@@ -349,7 +380,7 @@ export default function MembershipModal({
               <p className="text-[#1B2A22] text-sm sm:text-[17px] leading-relaxed mb-5 font-serif max-w-3xl">
                 Thank you,{" "}
                 <strong className="font-bold">
-                  {formValues?.fullName || "Member"}
+                  {fullApplicantName || "Member"}
                 </strong>
                 . Your application for{" "}
                 <strong className="font-bold">{selectedTier}</strong> has been
@@ -547,9 +578,20 @@ export default function MembershipModal({
               </div>
 
               <div className="pt-6 mt-6 border-t border-white/10">
-                <p className="text-[10px] uppercase tracking-wider text-[#C9A45C] font-semibold">
-                  SELECTED MEMBERSHIP
-                </p>
+                <div className="flex items-center justify-between">
+                  <p className="text-[10px] uppercase tracking-wider text-[#C9A45C] font-semibold">
+                    SELECTED MEMBERSHIP
+                  </p>
+                  {modalStep !== 3 && (
+                    <button
+                      type="button"
+                      onClick={() => setModalStep(3)}
+                      className="text-[10px] font-semibold uppercase tracking-wider text-[#C9A45C] underline underline-offset-2 hover:text-white cursor-pointer"
+                    >
+                      Change Plan
+                    </button>
+                  )}
+                </div>
                 <p className="font-serif text-sm text-white/90 font-medium mt-0.5 truncate">
                   {selectedTier || "शतायुस्World Life Membership"}
                 </p>
@@ -936,9 +978,18 @@ export default function MembershipModal({
                           <span className="text-xs text-[#1B5137]/70 font-medium">
                             Selected Membership:
                           </span>
-                          <span className="font-serif text-sm font-semibold text-[#C9A45C]">
-                            {selectedTier}
-                          </span>
+                          <div className="flex items-center gap-2">
+                            <span className="font-serif text-sm font-semibold text-[#C9A45C]">
+                              {selectedTier}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => setModalStep(3)}
+                              className="rounded border border-[#C9A45C]/50 bg-[#FBF8F1] px-2 py-0.5 text-[10px] font-semibold text-[#0D3323] hover:bg-[#C9A45C] cursor-pointer"
+                            >
+                              Change
+                            </button>
+                          </div>
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-xs">
@@ -947,7 +998,7 @@ export default function MembershipModal({
                               Applicant:
                             </span>
                             <span className="text-[#0D3323] font-semibold truncate">
-                              {formValues?.fullName || "—"}
+                              {fullApplicantName || "—"}
                             </span>
                           </div>
                           <div className="flex">
