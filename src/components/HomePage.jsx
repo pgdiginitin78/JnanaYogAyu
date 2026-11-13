@@ -546,9 +546,9 @@ export default function HomePage() {
             transition={{ duration: 0.7 }}
             className="w-full"
           >
-            <h2 className="font-serif text-2xl font-bold  tracking-tight text-[#0F3D29]  md:text-3xl lg:text-[44px]">
+            <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-forest">
               Ancient Wisdom. Modern Intelligence. <br />
-              <span className=" text-[#A27128] mt-1">
+              <span className="gradient-heading italic mt-1 inline-block">
                 A Better Way of Living.
               </span>
             </h2>
@@ -562,7 +562,7 @@ export default function HomePage() {
             className=" mt-6 "
           >
             <div className="relative  ">
-              <p className="font-serif text-lg font-bold leading-relaxed text-[#0F3D29] sm:text-xl lg:text-2xl">
+              <p className="font-serif text-base sm:text-lg lg:text-xl font-bold leading-relaxed text-[#0F3D29]">
                 JnanaYogAyu (JYA) is an integrated ecosystem bringing together
                 health, wellness, Ayurveda, technology, learning and conscious
                 living on a single platform.
@@ -680,13 +680,13 @@ export default function HomePage() {
             className="relative mt-20 overflow-hidden rounded-[32px] border border-[#D5A354]/40 bg-gradient-to-r from-[#07281A] via-[#103F2A] to-[#07281A] px-6 py-12 text-center shadow-[0_20px_55px_rgba(15,61,41,0.22)] sm:px-14 sm:py-16"
           >
             <div className="relative z-10 mx-auto max-w-3xl">
-              <h3 className="font-serif text-2xl font-bold leading-snug tracking-wide text-[#FFFDF5] sm:text-3xl lg:text-4xl">
+              <h3 className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold leading-snug tracking-wide text-[#FFFDF5]">
                 One ecosystem. Multiple possibilities.
               </h3>
 
               <div className="mx-auto my-4 h-[2px] w-20 rounded-full bg-[#D5A354]/60" />
 
-              <p className="font-serif text-base italic text-[#F2C56B] sm:text-lg lg:text-xl">
+              <p className="font-serif text-sm sm:text-base lg:text-lg italic text-[#F2C56B]">
                 A more connected approach to health, wellness and living.
               </p>
             </div>
@@ -703,7 +703,7 @@ export default function HomePage() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, amount: 0.2 }}
-              className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-forest"
+              className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-forest"
             >
               The <span className="italic gradient-heading">JYA</span> Ecosystem
             </motion.h2>
@@ -949,9 +949,9 @@ export default function HomePage() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: false, amount: 0.2 }}
-                className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#FDFBF7]"
+                className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-[#FDFBF7]"
               >
-                Blogs
+                <span className="gradient-heading-dark italic">Blogs</span>
               </motion.h2>
               <motion.p
                 variants={fadeUp}
@@ -1029,9 +1029,9 @@ export default function HomePage() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: false, amount: 0.2 }}
-                className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-forest leading-tight"
+                className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-forest leading-tight tracking-tight"
               >
-                <span className=" gradient-heading">Whitepapers</span>&nbsp; &
+                <span className="italic gradient-heading">Whitepapers</span>&nbsp; &
                 Reports
               </motion.h2>
               <motion.p
@@ -1145,7 +1145,7 @@ export default function HomePage() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, amount: 0.2 }}
-              className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-bold text-[#103F2A] tracking-tight"
+              className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight text-[#103F2A] tracking-tight"
             >
               Podcast <span className="italic gradient-heading">Videos</span>
             </motion.h2>

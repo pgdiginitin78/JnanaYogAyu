@@ -730,18 +730,16 @@ export default function ShatayushWorld() {
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.4 }}
-            className="mt-5 font-serif text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl md:text-7xl lg:text-8xl"
+            className="mt-5 font-serif font-medium text-[clamp(40px,3.6vw,76px)] leading-[1.1] tracking-[-0.03em] text-[#FFFDF7]"
           >
-            <span className="bg-gradient-to-b from-[#FFFDF7] via-[#FFFDF7] to-[#E8C581] bg-clip-text text-transparent">
-              Shatayus World
-            </span>
+            Shatayus <span className="gradient-heading-dark italic">World</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.5 }}
-            className="mt-3 font-serif text-2xl italic tracking-wide text-[#F2C56B] sm:text-3xl md:text-4xl"
+            className="mt-3 font-serif text-lg sm:text-xl md:text-2xl font-medium italic tracking-wide text-[#F2C56B]"
           >
             Journey Within
           </motion.p>
@@ -782,15 +780,16 @@ export default function ShatayushWorld() {
         <div className="relative mx-auto px-5 lg:px-20">
           <div className="flex flex-col items-start justify-between gap-4 border-b border-[#E7D7B5] pb-6 md:flex-row md:items-end">
             <div>
-              <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#0F3D29]">
-                Why Shatayus and what makes it different.
+              <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-forest">
+                Why <span className="gradient-heading italic">Shatayus</span>{" "}
+                and what makes it different.
               </h2>
               <div className="mt-1">
-                <span className="font-serif text-lg sm:text-xl font-bold italic text-[#C8933F]">
+                <span className="font-serif text-base sm:text-lg lg:text-xl font-medium italic text-[#C8933F]">
                   One Universe. One Health. One Life.
                 </span>
               </div>
-              <p className="mt-3 text-base sm:text-lg leading-relaxed text-[#29382E]">
+              <p className="mt-3 font-sans text-base sm:text-lg leading-relaxed text-[#29382E]">
                 A journey towards understanding yourself, transforming the way
                 you live and embracing a healthier, more conscious way of life.
               </p>
@@ -839,8 +838,11 @@ export default function ShatayushWorld() {
         <div className="mx-auto px-5 lg:px-20">
           <div className="flex flex-col items-start justify-between gap-4 border-b border-[#D5A354]/25 pb-5 sm:flex-row sm:items-end">
             <div>
-              <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#FFFDF7]">
-                Four phases : The complete transformation journey.
+              <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-[#FFFDF7]">
+                Four phases : The complete{" "}
+                <span className="gradient-heading-dark italic">
+                  transformation journey.
+                </span>
               </h2>
             </div>
 
@@ -892,7 +894,7 @@ export default function ShatayushWorld() {
 
                 <div className="flex flex-col justify-between lg:col-span-7 py-1">
                   <div>
-                    <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-[#FFFDF7] leading-tight">
+                    <h3 className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-[#FFFDF7] leading-tight">
                       {transformationPhases[phaseIndex].title}
                     </h3>
 
@@ -947,10 +949,13 @@ export default function ShatayushWorld() {
         <div className="relative mx-auto px-5 lg:px-20">
           <div className="flex flex-col items-start justify-between gap-4 border-b border-[#E7D7B5] pb-5 sm:flex-row sm:items-end">
             <div>
-              <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#0F3D29]">
-                Explore Our Seasonal Academy
+              <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-forest">
+                Explore Our{" "}
+                <span className="gradient-heading italic">
+                  Seasonal Academy
+                </span>
               </h2>
-              <p className="mt-1 font-serif text-lg sm:text-xl font-bold italic text-[#C8933F]">
+              <p className="mt-1 font-serif text-base sm:text-lg lg:text-xl font-medium italic text-[#C8933F]">
                 Three Seasons. Three Academies. One Transformation.
               </p>
             </div>
@@ -1098,10 +1103,10 @@ export default function ShatayushWorld() {
       <section className="relative overflow-hidden bg-[#FFFDF8] py-14 lg:py-10">
         <div className="mx-auto px-5 lg:px-20">
           <div className="border-b border-[#E7D7B5] pb-4">
-            <h2 className="mt-1 font-serif text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#0F3D29]">
-              Why Shatayus?
+            <h2 className="mt-1 font-serif text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-forest">
+              Why <span className="gradient-heading italic">Shatayus?</span>
             </h2>
-            <p className="mt-1 font-serif text-lg sm:text-xl font-bold italic text-[#C8933F]">
+            <p className="mt-1 font-serif text-base sm:text-lg lg:text-xl font-medium italic text-[#C8933F]">
               More Than a Programme. A Way of Life.
             </p>
           </div>
@@ -1163,8 +1168,9 @@ export default function ShatayushWorld() {
         <div className="mx-auto w-full px-5 sm:px-8 lg:px-20">
           <div className="flex flex-col items-start justify-between gap-4 border-b border-[#E7D7B5] pb-4 sm:flex-row sm:items-end">
             <div>
-              <h2 className="mt-1 font-serif text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#0F3D29]">
-                Downloadable resources
+              <h2 className="mt-1 font-serif text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-forest">
+                Downloadable{" "}
+                <span className="gradient-heading italic">resources</span>
               </h2>
             </div>
 
@@ -1288,12 +1294,14 @@ export default function ShatayushWorld() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="rounded-3xl border border-[#D5A354]/30 bg-[#071E14]/60 px-5 py-10 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-md sm:px-12 sm:py-14"
           >
-            <h2 className="font-serif text-3xl font-bold leading-tight text-[#FFFDF7] [text-shadow:0_2px_18px_rgba(0,0,0,0.55)] sm:text-4xl">
-              Discover yourself. Reconnect with nature. Transform the way you
-              live.
+            <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight text-[#FFFDF7] [text-shadow:0_2px_18px_rgba(0,0,0,0.55)]">
+              Discover yourself. Reconnect with nature.{" "}
+              <span className="gradient-heading-dark italic">
+                Transform the way you live.
+              </span>
             </h2>
 
-            <p className="mt-4 font-serif text-2xl italic text-[#F2C56B] sm:text-3xl">
+            <p className="mt-4 font-serif text-base sm:text-lg lg:text-xl font-medium italic text-[#F2C56B]">
               Shatayus – Journey Within
             </p>
 

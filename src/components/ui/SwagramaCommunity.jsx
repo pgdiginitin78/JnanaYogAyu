@@ -251,19 +251,10 @@ function ClientShowcase() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={vp}
-                className="font-serif text-4xl md:text-5xl font-semibold leading-tight"
-                style={{ color: theme.heading }}
+                className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-forest"
               >
                 {client.headlinePlain}{" "}
-                <span
-                  style={{
-                    background: theme.textGradient,
-                    WebkitBackgroundClip: "text",
-                    backgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    color: "transparent",
-                  }}
-                >
+                <span className="italic gradient-heading">
                   {client.headlineAccent}
                 </span>
               </motion.h1>
@@ -339,15 +330,12 @@ function ClientShowcase() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={vp}
-                className="font-serif text-3xl md:text-4xl font-semibold"
-                style={{ color: theme.heading }}
+                className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-forest"
               >
-                {client.highlightsTitle}
+                Why Join Our{" "}
+                <span className="italic gradient-heading">Community?</span>
               </motion.h2>
-              <div
-                className="mx-auto mt-4 h-1 w-24 rounded-full"
-                style={{ background: theme.textGradient }}
-              ></div>
+              <div className="mx-auto mt-4 h-px w-20 bg-amber rounded-full" />
             </div>
 
             <div

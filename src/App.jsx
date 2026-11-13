@@ -23,8 +23,7 @@ function ScrollToTop({ lenisRef }) {
     const targetId =
       hash?.replace("#", "") ||
       (seasonParam ? `season-${seasonParam}` : "") ||
-      (planParam ? `membership-${planParam}` : "") ||
-      (pathname === "/muktikhela" ? "muktikhela" : "");
+      (planParam ? `membership-${planParam}` : "");
 
     const isRouteChanged = prevPathnameRef.current !== pathname;
     prevPathnameRef.current = pathname;
@@ -167,7 +166,6 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/membership" element={<JYAMembershipPage />} />
               <Route path="/shatayushWorld" element={<ShatayushWorld />} />
-              <Route path="/muktikhela" element={<HomePage />} />
             </Routes>
           </div>
 

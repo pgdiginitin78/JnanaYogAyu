@@ -118,9 +118,10 @@ function WellnessMarketplace() {
             initial="hidden"
             whileInView="visible"
             viewport={vp}
-            className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-forest leading-tight"
+            className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-forest leading-tight tracking-tight"
           >
-            A Healthier Life, Rooted in <span className="gradient-heading">Nature and Community</span>.
+            A Healthier Life, Rooted in{" "}
+            <span className="italic gradient-heading">Nature and Community</span>.
           </motion.h1>
           <motion.p
             variants={fadeUp}
@@ -150,7 +151,7 @@ function WellnessMarketplace() {
             >
               <div>
                 <div className="mb-6 flex items-baseline justify-between flex-wrap gap-2">
-                  <h2 className="font-serif text-forest text-2xl md:text-3xl font-bold">
+                  <h2 className="font-serif text-forest text-xl sm:text-2xl font-bold">
                     {section.title}
                   </h2>
                   <p className="text-amber font-serif text-sm tracking-wider">{section.hindi}</p>

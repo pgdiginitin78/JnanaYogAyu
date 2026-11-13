@@ -15,9 +15,15 @@ import {
   Layers,
   Compass,
   Leaf,
+  Sun,
+  CloudRain,
+  Snowflake,
+  CheckCircle2,
 } from "lucide-react";
+import { FiChevronRight } from "react-icons/fi";
+import { PiFlowerLotus } from "react-icons/pi";
 
-import heroLessonImage from "../ui/assets/Community Learning Circle Under the Tree.webp";
+import heroLessonImage from "./assets/membership-hero.webp";
 import MembershipModal from "./MembershipModal";
 import CommonButton from "../../common/button/CommonButton";
 import { useLenis } from "./SmoothScroll";
@@ -422,32 +428,18 @@ function ComparisonCell({ colKey, value }) {
   return <span>{value}</span>;
 }
 
-function SectionHeading({
-  eyebrow,
-  eyebrowClass,
-  parts,
-  titleClass,
-  description,
-  descriptionClass,
-}) {
+function SectionHeading({ parts, titleClass, description, descriptionClass }) {
   return (
-    <div className="mx-auto mb-12 max-w-3xl text-center sm:mb-16">
-      <Reveal
-        as="span"
-        kind="scale"
-        className={`inline-block rounded-full border px-4 py-1.5 font-serif text-[10px] font-bold uppercase tracking-[0.25em] shadow-sm sm:text-xs ${eyebrowClass}`}
-      >
-        {eyebrow}
-      </Reveal>
+    <div className="mx-auto mb-12 max-w-3xl text-center sm:mb-10">
       <SplitWords
         as="h2"
         parts={parts}
-        className={`mt-4 font-serif text-2xl font-bold leading-tight tracking-tight sm:text-3xl lg:text-4xl ${titleClass}`}
+        className={`mt-4 font-serif text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight tracking-tight ${titleClass}`}
       />
       <Reveal
         as="p"
         delay={0.25}
-        className={`mt-4 text-sm sm:text-base md:text-lg ${descriptionClass}`}
+        className={`mt-4 font-sans text-sm sm:text-base md:text-lg ${descriptionClass}`}
       >
         {description}
       </Reveal>
@@ -481,27 +473,17 @@ export default function JYAMembershipPage() {
   const timelineRef = useRef(null);
 
   const { scrollYProgress: pageProgress } = useScroll();
-  const progressScale = useSpring(pageProgress, {
-    stiffness: 120,
-    damping: 28,
-    restDelta: 0.001,
-  });
 
   const { scrollYProgress: heroProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
   });
-  const heroTextY = useTransform(
+  const heroY = useTransform(
     heroProgress,
     [0, 1],
-    [0, shouldReduce ? 0 : -50],
+    ["0%", shouldReduce ? "0%" : "20%"],
   );
-  const heroImageScale = useTransform(
-    heroProgress,
-    [0, 1],
-    [1, shouldReduce ? 1 : 1.18],
-  );
-  const cueOpacity = useTransform(heroProgress, [0, 0.2], [1, 0]);
+  const heroOpacity = useTransform(heroProgress, [0, 0.6], [1, 0]);
 
   const { scrollYProgress: timelineProgress } = useScroll({
     target: timelineRef,
@@ -563,180 +545,116 @@ export default function JYAMembershipPage() {
   return (
     <div className="w-full overflow-x-clip bg-[#F9F6EE] font-sans text-[#103F2E] antialiased selection:bg-[#C9A45C] selection:text-[#0B3326]">
       <motion.div
-        style={{ scaleX: progressScale }}
-        className="fixed left-0 right-0 top-0 z-[60] h-1 origin-left bg-gradient-to-r from-[#C9A45C] via-[#E7CB8A] to-[#C9A45C] shadow-[0_0_12px_rgba(201,164,92,0.8)]"
+        style={{ scaleX: pageProgress }}
+        className="fixed left-0 right-0 top-0 z-[60] h-1 origin-left will-change-transform bg-gradient-to-r from-[#C9A45C] via-[#E7CB8A] to-[#C9A45C] shadow-[0_0_12px_rgba(201,164,92,0.8)]"
       />
 
       <section
         ref={heroRef}
-        className="relative overflow-hidden border-b border-[#C9A45C]/30 bg-[#F9F6EE] pb-16 pt-10 sm:pb-20 sm:pt-14 lg:pb-28 lg:pt-20"
+        className="relative w-full min-h-[760px] lg:min-h-[820px] 2xl:min-h-[92dvh] py-16 lg:py-20 flex items-center overflow-hidden bg-[#FFFDF9]"
       >
-        <Parallax
-          range={90}
-          className="pointer-events-none absolute -right-24 -top-24 h-[360px] w-[360px] rounded-full bg-[radial-gradient(circle,rgba(201,164,92,0.3),transparent_68%)] sm:h-[460px] sm:w-[460px]"
-        />
-        <Parallax
-          range={-70}
-          className="pointer-events-none absolute -bottom-24 -left-24 h-[360px] w-[360px] rounded-full bg-[radial-gradient(circle,rgba(16,63,46,0.14),transparent_68%)] sm:h-[460px] sm:w-[460px]"
-        />
+        <motion.div
+          style={{ y: heroY }}
+          className="absolute inset-0 z-0 will-change-transform"
+        >
+          <img
+            src={heroLessonImage}
+            alt="JnanaYogAyu Ayurvedic sanctuary courtyard gathering of practitioners and learners"
+            width={1920}
+            height={1080}
+            className="absolute inset-0 w-full h-full object-cover object-center"
+          />
 
-        <div className="relative z-10 mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
-            <motion.div
-              style={{ y: heroTextY }}
-              className="space-y-5 text-left sm:space-y-6 lg:col-span-7"
-            >
-              <SplitWords
-                as="h1"
-                animateOnMount
-                delay={0.1}
-                parts={[
-                  { text: "Be a Part of the" },
-                  { text: "JYA Ecosystem", className: "gradient-heading" },
-                ]}
-                className="font-serif text-[2.2rem] font-bold leading-[1.1] tracking-tight text-[#103F2E] sm:text-5xl lg:text-6xl"
-              />
-
-              <motion.p
-                initial={shouldReduce ? { opacity: 0 } : { opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.55, ease }}
-                className="font-serif text-lg font-medium italic text-[#C9A45C] sm:text-xl md:text-2xl"
-              >
-                Learn. Experience. Connect. Grow.
-              </motion.p>
-
-              <motion.div
-                initial={
-                  shouldReduce ? { opacity: 0 } : { opacity: 0, scaleX: 0 }
-                }
-                animate={{ opacity: 1, scaleX: 1 }}
-                transition={{ duration: 1, delay: 0.7, ease }}
-                className="my-4 flex max-w-sm origin-left items-center gap-4"
-              >
-                <div className="h-px flex-1 bg-gradient-to-r from-[#C9A45C] to-transparent" />
-                <div className="h-2 w-2 rotate-45 border border-[#C9A45C] bg-[#C9A45C]/30" />
-                <div className="h-px flex-1 bg-gradient-to-l from-[#C9A45C] to-transparent" />
-              </motion.div>
-
-              <div className="space-y-4 font-sans text-[15px] leading-relaxed text-[#103F2E]/85 sm:text-base lg:text-lg">
-                {[
-                  "JnanaYogAyu (JYA) brings together health, wellness, Ayurveda, knowledge, technology and conscious living through an integrated ecosystem.",
-                  "JYA Memberships offer different ways to participate in this ecosystem — whether you are an individual exploring holistic wellness, an Ayurveda practitioner, a healthcare professional, a learner or someone looking to experience a more natural and sustainable way of life.",
-                  "Choose a membership that aligns with your interests and aspirations. Access programmes, learning opportunities, services, products and a growing community committed to healthier and more conscious living.",
-                ].map((paragraph, i) => (
-                  <motion.p
-                    key={i}
-                    initial={
-                      shouldReduce ? { opacity: 0 } : { opacity: 0, y: 22 }
-                    }
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.8 + i * 0.12, ease }}
-                  >
-                    {paragraph}
-                  </motion.p>
-                ))}
-              </div>
-
-              <motion.div
-                initial={shouldReduce ? { opacity: 0 } : { opacity: 0, y: 22 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 1.2, ease }}
-                className="flex flex-col gap-3 pt-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 sm:pt-4"
-              >
-                <Magnetic className="w-full sm:w-auto">
-                  <CommonButton
-                    label="Become a Member"
-                    onClick={() => handleOpenModal()}
-                    icon={<ArrowRight className="h-4 w-4 text-[#C9A45C]" />}
-                    className="!h-12 !w-full !px-7 sm:!w-auto bg-[#103F2E] hover:bg-[#0B3326] text-[#F9F6EE] border border-[#C9A45C]/50 !rounded-xl font-medium tracking-wide shadow-lg"
-                  />
-                </Magnetic>
-                <Magnetic className="w-full sm:w-auto">
-                  <CommonButton
-                    label="Explore Memberships"
-                    onClick={scrollToPlans}
-                    className="!h-12 !w-full !px-7 sm:!w-auto bg-white/70 hover:bg-white text-[#103F2E] border border-[#103F2E]/20 !rounded-xl font-medium tracking-wide shadow-sm"
-                  />
-                </Magnetic>
-              </motion.div>
-            </motion.div>
-
-            <div className="relative mx-auto w-full max-w-md sm:max-w-lg lg:col-span-5 lg:max-w-none">
-              <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                <Orbit
-                  duration={60}
-                  className="aspect-square h-full shrink-0 rounded-full border border-dashed border-[#C9A45C]/60 sm:h-[108%]"
-                />
-              </div>
-
-              <Parallax range={36} className="relative z-10">
-                <motion.div
-                  animate={shouldReduce ? undefined : { y: [0, -10, 0] }}
-                  transition={{
-                    duration: 6,
-                    ease: "easeInOut",
-                    repeat: Infinity,
-                  }}
-                >
-                  <motion.div
-                    initial={
-                      shouldReduce
-                        ? { opacity: 0 }
-                        : { opacity: 0, scale: 0.92, y: 30 }
-                    }
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    transition={{ duration: 1, delay: 0.2, ease }}
-                    className="rounded-3xl border-2 border-[#C9A45C]/40 bg-white p-2.5 shadow-2xl sm:p-3"
-                  >
-                    <motion.div
-                      initial={
-                        shouldReduce
-                          ? { opacity: 0 }
-                          : { clipPath: "inset(16% 16% 16% 16% round 28px)" }
-                      }
-                      animate={
-                        shouldReduce
-                          ? { opacity: 1 }
-                          : { clipPath: "inset(0% 0% 0% 0% round 16px)" }
-                      }
-                      transition={{ duration: 1.2, delay: 0.4, ease }}
-                      className="relative h-[320px] overflow-hidden rounded-2xl sm:h-[420px] lg:h-[500px] xl:h-[540px]"
-                    >
-                      <motion.div
-                        style={{ scale: heroImageScale }}
-                        className="h-full w-full"
-                      >
-                        <motion.img
-                          initial={shouldReduce ? undefined : { scale: 1.3 }}
-                          animate={{ scale: 1 }}
-                          transition={{ duration: 1.6, delay: 0.4, ease }}
-                          src={heroLessonImage}
-                          alt="Traditional Ayurveda Gurukul Lesson"
-                          className="h-full w-full object-cover"
-                        />
-                      </motion.div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0B3326]/90 via-[#0B3326]/20 to-transparent" />
-                    </motion.div>
-                  </motion.div>
-                </motion.div>
-              </Parallax>
-            </div>
-          </div>
-        </div>
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,249,236,0.9)_0%,rgba(255,249,236,0.8)_32%,rgba(255,249,236,0.42)_50%,rgba(255,249,236,0)_66%)]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#082218]/20 via-transparent to-transparent" />
+        </motion.div>
 
         <motion.div
-          aria-hidden="true"
-          style={{ opacity: cueOpacity }}
-          className="absolute bottom-5 left-1/2 z-10 -ml-3 hidden h-10 w-6 justify-center rounded-full border border-[#103F2E]/30 p-1.5 lg:flex"
+          style={{ opacity: heroOpacity }}
+          className="relative z-10 w-full px-6 md:px-12 lg:px-[6vw]"
         >
-          <motion.span
-            animate={
-              shouldReduce ? undefined : { y: [0, 14, 0], opacity: [1, 0.2, 1] }
-            }
-            transition={{ duration: 1.8, ease: "easeInOut", repeat: Infinity }}
-            className="h-1.5 w-1.5 rounded-full bg-[#C9A45C]"
-          />
+          <motion.div
+            initial={shouldReduce ? { opacity: 0 } : { opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease }}
+            className="relative lg:max-w-[48vw]"
+          >
+            <div className="flex items-center gap-4 mb-6">
+              <span className="w-[46px] h-px bg-[#D5A354]" />
+              <span className="font-sans text-[11px] xl:text-xs font-bold tracking-[0.3em] text-[#173826] uppercase">
+                Learn. Experience. Connect. Grow.
+              </span>
+            </div>
+
+            <h1 className="font-serif font-medium text-[clamp(40px,3.6vw,76px)] leading-[1.1] tracking-[-0.03em] text-[#103F2A] mb-7">
+              <span className="block sm:whitespace-nowrap">
+                Be a Part of the{" "}
+              </span>
+              <span className="block">
+                <span className="gradient-heading italic">JYA Ecosystem</span>
+              </span>
+            </h1>
+
+            <div className="flex items-center gap-3 mb-7">
+              <div className="w-[clamp(110px,12vw,230px)] h-px bg-gradient-to-r from-transparent to-[#D5A354]/80" />
+              <PiFlowerLotus className="w-6 h-6 text-[#D5A354] shrink-0" />
+              <div className="w-[clamp(110px,12vw,230px)] h-px bg-gradient-to-l from-transparent to-[#D5A354]/80" />
+            </div>
+
+            <div className="space-y-3.5 font-sans text-[15px] sm:text-base xl:text-[17px] leading-[1.6] text-[#143B27] max-w-[620px] mb-8 font-normal">
+              <p>
+                JnanaYogAyu (JYA) brings together health, wellness, Ayurveda,
+                knowledge, technology and conscious living through an integrated
+                ecosystem.
+              </p>
+              <p>
+                JYA Memberships offer different ways to participate in this
+                ecosystem — whether you are an individual exploring holistic
+                wellness, an Ayurveda practitioner, a healthcare professional, a
+                learner or someone looking to experience a more natural and
+                sustainable way of life.
+              </p>
+              <p>
+                Choose a membership that aligns with your interests and
+                aspirations. Access programmes, learning opportunities,
+                services, products and a growing community committed to
+                healthier and more conscious living.
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <motion.button
+                type="button"
+                onClick={() => handleOpenModal()}
+                whileHover={
+                  shouldReduce
+                    ? undefined
+                    : { scale: 1.025, backgroundColor: "#18583B" }
+                }
+                whileTap={shouldReduce ? undefined : { scale: 0.97 }}
+                transition={{ duration: 0.2 }}
+                className="min-w-[205px] h-[56px] px-7 flex items-center justify-center gap-3 rounded-[12px] bg-[#0F4A32] text-white font-sans font-semibold text-[15px] tracking-wide shadow-[0_8px_20px_rgba(16,67,45,0.28)] cursor-pointer"
+              >
+                Become a Member
+                <FiChevronRight className="w-4 h-4" />
+              </motion.button>
+
+              <motion.button
+                type="button"
+                onClick={scrollToPlans}
+                whileHover={
+                  shouldReduce
+                    ? undefined
+                    : { scale: 1.025, backgroundColor: "rgba(255,255,255,0.9)" }
+                }
+                whileTap={shouldReduce ? undefined : { scale: 0.97 }}
+                transition={{ duration: 0.2 }}
+                className="min-w-[240px] h-[56px] px-7 flex items-center justify-center gap-3 rounded-[12px] bg-[#1C3A28]/55 border border-white/60 text-white font-sans font-semibold text-[15px] tracking-wide shadow-sm [text-shadow:0_1px_3px_rgba(0,0,0,0.35)] cursor-pointer"
+              >
+                Explore Memberships
+              </motion.button>
+            </div>
+          </motion.div>
         </motion.div>
       </section>
 
@@ -748,164 +666,321 @@ export default function JYAMembershipPage() {
 
       <section
         id="membership-plans"
-        className="relative overflow-hidden border-b border-[#C9A45C]/30 bg-gradient-to-b from-[#F9F6EE] via-[#EDE5D5]/40 to-[#F9F6EE] py-14 md:py-20"
+        className="relative overflow-hidden border-b border-[#C9A45C]/30 bg-gradient-to-b from-[#F9F6EE] via-[#EDE5D5]/40 to-[#F9F6EE] py-14 md:py-10"
       >
-        <Parallax
-          range={60}
+        <div
+          aria-hidden="true"
           className="pointer-events-none absolute -left-32 top-1/3 h-[380px] w-[380px] rounded-full bg-[radial-gradient(circle,rgba(201,164,92,0.18),transparent_68%)]"
         />
 
         <div className="relative mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
           <SectionHeading
-            eyebrow="Choose Your Tier"
             eyebrowClass="border-[#C9A45C]/40 bg-white/80 text-[#103F2E]"
             parts={[
-              { text: "CHOOSE YOUR" },
-              { text: "MEMBERSHIP", className: "gradient-heading" },
+              { text: "Choose Your" },
+              { text: "Membership", className: "gradient-heading italic" },
             ]}
             titleClass="text-[#103F2E]"
             description="Explore four curated pathways to immerse in the JYA wellness, healthcare, and educational ecosystem."
             descriptionClass="text-[#103F2E]/80"
           />
 
-          <div className="mb-8 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
-            {memberships.map((m) => {
-              const isSelected = selectedPlan === m.id;
-              return (
-                <button
-                  key={m.id}
-                  type="button"
-                  onClick={() => handleSelectPlan(m.id, true)}
-                  className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 font-serif text-xs sm:text-sm font-bold transition-all cursor-pointer ${
-                    isSelected
-                      ? "border-[#C9A45C] bg-[#103F2E] text-[#F9F6EE] shadow-md ring-2 ring-[#C9A45C]/30"
-                      : "border-[#C9A45C]/40 bg-white text-[#103F2E] hover:border-[#C9A45C] hover:bg-[#F9F6EE]"
-                  }`}
-                >
-                  <span className="text-[#C9A45C]">{m.no}.</span>
-                  <span>{m.title}</span>
-                  <span
-                    className={`rounded-full px-2 py-0.5 font-sans text-[10px] font-semibold ${
-                      isSelected
-                        ? "bg-[#C9A45C] text-[#0B3326]"
-                        : "bg-[#103F2E]/10 text-[#103F2E]"
-                    }`}
-                  >
-                    {m.priceDisplay}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-
-          <div className="mb-10 grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 lg:mb-12 lg:grid-cols-3 lg:gap-8">
+          <div className="mb-10 grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 lg:mb-12 lg:grid-cols-3 lg:gap-7">
             {memberships.slice(0, 3).map((m, idx) => {
               const isSelectedPlan = selectedPlan === m.id;
+              const isFeatured = m.id === "shatayus";
+              const isExecutive = m.id === "ayurx";
+              const isDarkPass = isFeatured || isExecutive;
+
+              const passSurface = isExecutive
+                ? "bg-gradient-to-br from-[#071D15] via-[#0B2B1F] to-[#123D2D] text-[#F9F6EE] border-[#C9A45C]/70"
+                : isFeatured
+                  ? "bg-gradient-to-br from-[#0E3A2A] via-[#0A2E21] to-[#072017] text-[#F9F6EE] border-[#C9A45C]/60"
+                  : "bg-gradient-to-br from-[#FFFDF9] via-[#FAF4E6] to-[#F3E9D2] text-[#103F2E] border-[#C9A45C]/45";
+
+              const cardShell = isDarkPass
+                ? "bg-gradient-to-b from-[#0C2F23] to-[#082219] text-[#F9F6EE] border-[#C9A45C]/45"
+                : "bg-white text-[#103F2E] border-[#C9A45C]/40";
+
               return (
-              <Reveal
-                key={m.id}
-                kind="up"
-                duration={0.8}
-                delay={(idx % 3) * 0.12}
-                className={`h-full ${
-                  idx === 2 ? "md:col-span-2 lg:col-span-1" : ""
-                }`}
-              >
-                <div
-                  id={`membership-${m.id}`}
-                  onClick={() => setSelectedPlan(m.id)}
-                  className="h-full scroll-mt-28 cursor-pointer"
+                <Reveal
+                  key={m.id}
+                  kind="up"
+                  duration={0.8}
+                  delay={(idx % 3) * 0.12}
+                  className={`h-full ${
+                    idx === 2 ? "md:col-span-2 lg:col-span-1" : ""
+                  }`}
                 >
-                <TiltCard className={`group flex h-full flex-col justify-between rounded-3xl border bg-white p-6 shadow-lg transition-all duration-300 hover:border-[#C9A45C] hover:shadow-2xl sm:p-8 ${
-                  isSelectedPlan
-                    ? "border-2 border-[#C9A45C] ring-4 ring-[#C9A45C]/35 shadow-2xl -translate-y-1"
-                    : selectedPlan
-                      ? "border-[#C9A45C]/30 opacity-85 hover:opacity-100"
-                      : "border-[#C9A45C]/40"
-                }`}>
-                  <div>
-                    <div className="flex items-center justify-between gap-3 border-b border-[#EDE5D5] pb-5">
-                      <span className="font-serif text-4xl font-light text-[#C9A45C]">
-                        {m.no}
-                      </span>
-                      <div className="flex items-center gap-2">
-                        {isSelectedPlan && (
-                          <span className="rounded-full bg-[#103F2E] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#C9A45C]">
-                            Selected Plan
-                          </span>
-                        )}
-                        <span className="rounded-full border border-[#103F2E]/15 bg-[#103F2E]/5 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[#103F2E] sm:text-xs">
-                          {m.badge}
-                        </span>
-                      </div>
-                    </div>
-
-                    <h3 className="mt-6 font-serif text-xl font-bold leading-tight text-[#103F2E] sm:text-2xl">
-                      {m.title}
-                    </h3>
-                    <p className="mt-2 font-serif text-sm italic text-[#C9A45C] md:min-h-[44px]">
-                      {m.tagline}
-                    </p>
-
-                    <div className="mt-6 rounded-2xl border border-[#C9A45C]/30 bg-[#F9F6EE] p-4">
-                      <div className="font-serif text-2xl font-bold text-[#103F2E] sm:text-3xl">
-                        <PriceValue value={m.priceDisplay} />
-                      </div>
-                      <div className="mt-1 text-xs text-[#103F2E]/70">
-                        {m.priceSubtitle}
-                      </div>
-                    </div>
-
-                    <div className="mt-6 border-t border-[#EDE5D5] pt-5">
-                      <h4 className="mb-2 font-serif text-xs font-bold uppercase tracking-widest text-[#103F2E]">
-                        Who is it for?
-                      </h4>
-                      <p className="text-xs leading-relaxed text-[#103F2E]/80 sm:text-sm">
-                        {m.whoFor[0]}
-                      </p>
-                    </div>
-
-                    <Stagger
-                      stagger={0.08}
-                      delay={0.15}
-                      className="mt-6 space-y-2.5 border-t border-[#EDE5D5] pt-5"
+                  <div
+                    id={`membership-${m.id}`}
+                    onClick={() => setSelectedPlan(m.id)}
+                    className="h-full scroll-mt-28 cursor-pointer"
+                  >
+                    <TiltCard
+                      className={`group relative flex h-full flex-col justify-between overflow-hidden rounded-[28px] border p-5 shadow-[0_20px_50px_rgba(11,51,38,0.12)] transition-all duration-300 hover:-translate-y-1.5 hover:border-[#C9A45C] hover:shadow-[0_28px_70px_rgba(11,51,38,0.22)] sm:p-6 ${cardShell} ${
+                        isSelectedPlan
+                          ? "border-2 border-[#C9A45C] ring-4 ring-[#C9A45C]/35 shadow-[0_28px_70px_rgba(201,164,92,0.28)] -translate-y-1"
+                          : selectedPlan
+                            ? "opacity-90 hover:opacity-100"
+                            : ""
+                      }`}
                     >
-                      <h4 className="mb-2 font-serif text-xs font-bold uppercase tracking-widest text-[#103F2E]">
-                        {m.benefitsTitle}
-                      </h4>
-                      {m.benefits.slice(0, 4).map((b, bIdx) => (
-                        <Item
-                          key={bIdx}
-                          kind="left"
-                          duration={0.5}
-                          className="flex items-start gap-2.5 text-xs text-[#103F2E]/85 sm:text-sm"
-                        >
-                          <AnimatedCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#C9A45C]" />
-                          <span className="line-clamp-2">{b}</span>
-                        </Item>
-                      ))}
-                    </Stagger>
-                  </div>
+                      {/* Top subtle spotlight */}
+                      <div className="pointer-events-none absolute inset-x-0 -top-24 h-48 bg-[radial-gradient(ellipse_at_top,rgba(201,164,92,0.22),transparent_70%)] opacity-60 transition-opacity duration-500 group-hover:opacity-100" />
 
-                  <div className="mt-8 space-y-2.5 border-t border-[#EDE5D5] pt-6">
-                    <Magnetic strength={0.15} className="w-full">
-                      <CommonButton
-                        label={m.cta}
-                        fullWidth
-                        onClick={() => handleOpenModal(m.id)}
-                        icon={<ArrowRight className="h-4 w-4 text-[#C9A45C]" />}
-                        className="!h-11 !w-full !px-5 bg-[#103F2E] hover:bg-[#0B3326] text-[#F9F6EE] border border-[#C9A45C]/40 !rounded-xl font-medium tracking-wide shadow-sm"
-                      />
-                    </Magnetic>
-                    {m.ctaNote && (
-                      <p className="text-center text-xs italic text-[#103F2E]/60">
-                        {m.ctaNote}
-                      </p>
-                    )}
+                      <div>
+                        {/* Physical / Digital Membership Pass Card Header */}
+                        <div
+                          className={`relative overflow-hidden rounded-2xl border p-5 shadow-inner transition-transform duration-500 group-hover:scale-[1.01] ${passSurface}`}
+                        >
+                          {/* Metallic sheen sweep on hover */}
+                          <div className="pointer-events-none absolute -inset-full translate-x-[-60%] rotate-12 bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-[60%]" />
+
+                          {/* Subtle dot-matrix / guilloche texture */}
+                          <div className="pointer-events-none absolute inset-0 opacity-20 bg-[radial-gradient(rgba(201,164,92,0.45)_1px,transparent_1px)] [background-size:14px_14px]" />
+
+                          {/* Pass Top Row: Brand Crest + Tier Code + Badge */}
+                          <div className="relative flex items-center justify-between gap-2">
+                            <div className="flex items-center gap-2">
+                              <span
+                                className={`flex h-8 w-8 items-center justify-center rounded-lg border ${
+                                  isDarkPass
+                                    ? "border-[#C9A45C]/50 bg-[#C9A45C]/15 text-[#E8C581]"
+                                    : "border-[#C9A45C]/50 bg-[#103F2E] text-[#E8C581]"
+                                }`}
+                              >
+                                <PiFlowerLotus className="h-4 w-4" />
+                              </span>
+                              <div>
+                                <span
+                                  className={`block font-sans text-[9px] font-bold uppercase tracking-[0.24em] ${
+                                    isDarkPass
+                                      ? "text-[#C9A45C]"
+                                      : "text-[#103F2E]/70"
+                                  }`}
+                                >
+                                  JYA Member Pass
+                                </span>
+                                <span
+                                  className={`block font-mono text-[10px] font-semibold tracking-widest ${
+                                    isDarkPass
+                                      ? "text-[#F9F6EE]/80"
+                                      : "text-[#103F2E]"
+                                  }`}
+                                >
+                                  TIER · {m.no}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="flex flex-col items-end gap-1">
+                              {isSelectedPlan && (
+                                <span className="rounded-full bg-[#C9A45C] px-2.5 py-0.5 font-sans text-[9px] font-bold uppercase tracking-wider text-[#082219]">
+                                  Selected
+                                </span>
+                              )}
+                              <span
+                                className={`rounded-full border px-2.5 py-0.5 font-sans text-[10px] font-bold uppercase tracking-wider ${
+                                  isDarkPass
+                                    ? "border-[#C9A45C]/50 bg-[#C9A45C]/15 text-[#E8C581]"
+                                    : "border-[#103F2E]/20 bg-[#103F2E]/5 text-[#103F2E]"
+                                }`}
+                              >
+                                {m.badge}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Pass Title & Tagline */}
+                          <div className="relative mt-5">
+                            <h3
+                              className={`font-serif text-xl font-bold leading-snug sm:text-[22px] ${
+                                isDarkPass ? "text-[#FFFDF8]" : "text-[#103F2E]"
+                              }`}
+                            >
+                              {m.title}
+                            </h3>
+                            <p
+                              className={`mt-1 line-clamp-2 font-serif text-xs italic sm:text-[13px] ${
+                                isDarkPass
+                                  ? "text-[#E8C581]/90"
+                                  : "text-[#9A6F26]"
+                              }`}
+                            >
+                              {m.tagline}
+                            </p>
+                          </div>
+
+                          {/* Pass Bottom Row: Metallic Chip + Price */}
+                          <div
+                            className={`relative mt-5 flex items-end justify-between border-t pt-4 ${
+                              isDarkPass
+                                ? "border-[#C9A45C]/25"
+                                : "border-[#C9A45C]/30"
+                            }`}
+                          >
+                            <div className="flex items-center gap-2.5">
+                              {/* Tactile metallic card chip */}
+                              <div
+                                aria-hidden="true"
+                                className="h-7 w-9 rounded-md border border-[#E8C581]/60 bg-gradient-to-br from-[#E8C581]/80 via-[#C9A45C]/60 to-[#9A6F26]/70 shadow-sm flex items-center justify-center"
+                              >
+                                <div className="h-4 w-5 rounded-[3px] border border-[#082219]/25" />
+                              </div>
+                              <div className="text-[10px] leading-tight">
+                                <span
+                                  className={`block font-sans font-bold uppercase tracking-wider ${
+                                    isDarkPass
+                                      ? "text-[#F9F6EE]/85"
+                                      : "text-[#103F2E]/85"
+                                  }`}
+                                >
+                                  {isDarkPass ? "Lifetime" : "Open"}
+                                </span>
+                                <span
+                                  className={
+                                    isDarkPass
+                                      ? "text-[#F9F6EE]/55"
+                                      : "text-[#103F2E]/55"
+                                  }
+                                >
+                                  {isDarkPass ? "One-time" : "No Fee"}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="text-right">
+                              <div
+                                className={`font-serif text-2xl font-bold leading-none sm:text-3xl ${
+                                  isDarkPass
+                                    ? "text-[#FFFDF8]"
+                                    : "text-[#103F2E]"
+                                }`}
+                              >
+                                <PriceValue value={m.priceDisplay} />
+                              </div>
+                              <div
+                                className={`mt-1 text-[10px] font-medium ${
+                                  isDarkPass
+                                    ? "text-[#E8C581]/80"
+                                    : "text-[#103F2E]/65"
+                                }`}
+                              >
+                                {m.priceSubtitle}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Who is it for */}
+                        <div
+                          className={`mt-5 rounded-xl border p-3.5 ${
+                            isDarkPass
+                              ? "border-[#C9A45C]/20 bg-white/[0.04]"
+                              : "border-[#EDE5D5] bg-[#FBF8F1]"
+                          }`}
+                        >
+                          <h4
+                            className={`mb-1.5 font-sans text-[10px] font-bold uppercase tracking-[0.2em] ${
+                              isDarkPass ? "text-[#E8C581]" : "text-[#9A6F26]"
+                            }`}
+                          >
+                            Designed For
+                          </h4>
+                          <p
+                            className={`text-xs leading-relaxed sm:text-[13px] ${
+                              isDarkPass
+                                ? "text-[#F9F6EE]/85"
+                                : "text-[#103F2E]/80"
+                            }`}
+                          >
+                            {m.whoFor[0]}
+                          </p>
+                        </div>
+
+                        {/* Benefits List */}
+                        <Stagger
+                          stagger={0.07}
+                          delay={0.12}
+                          className="mt-5 space-y-2.5 px-1"
+                        >
+                          <h4
+                            className={`mb-2 font-sans text-[10px] font-bold uppercase tracking-[0.2em] ${
+                              isDarkPass
+                                ? "text-[#E8C581]"
+                                : "text-[#103F2E]/70"
+                            }`}
+                          >
+                            {m.benefitsTitle}
+                          </h4>
+                          {m.benefits.slice(0, 4).map((b, bIdx) => (
+                            <Item
+                              key={bIdx}
+                              kind="left"
+                              duration={0.45}
+                              className={`flex items-start gap-2.5 text-xs sm:text-[13px] ${
+                                isDarkPass
+                                  ? "text-[#F9F6EE]/90"
+                                  : "text-[#103F2E]/85"
+                              }`}
+                            >
+                              <AnimatedCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#C9A45C]" />
+                              <span className="line-clamp-2 leading-snug">
+                                {b}
+                              </span>
+                            </Item>
+                          ))}
+                        </Stagger>
+                      </div>
+
+                      {/* Footer CTA */}
+                      <div
+                        className={`mt-6 space-y-2.5 border-t pt-5 ${
+                          isDarkPass
+                            ? "border-[#C9A45C]/20"
+                            : "border-[#EDE5D5]"
+                        }`}
+                      >
+                        <Magnetic strength={0.15} className="w-full">
+                          <CommonButton
+                            label={m.cta}
+                            fullWidth
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleOpenModal(m.id);
+                            }}
+                            icon={
+                              <ArrowRight
+                                className={`h-4 w-4 ${
+                                  isDarkPass
+                                    ? "text-[#082219]"
+                                    : "text-[#C9A45C]"
+                                }`}
+                              />
+                            }
+                            className={`!h-12 !w-full !px-5 !rounded-xl font-semibold tracking-wide shadow-md transition-all ${
+                              isDarkPass
+                                ? "bg-gradient-to-r from-[#C9A45C] via-[#DFBE78] to-[#C9A45C] hover:brightness-105 text-[#082219] border border-[#E8C581]"
+                                : "bg-[#103F2E] hover:bg-[#0B3326] text-[#F9F6EE] border border-[#C9A45C]/40"
+                            }`}
+                          />
+                        </Magnetic>
+                        {m.ctaNote && (
+                          <p
+                            className={`text-center text-[11px] italic ${
+                              isDarkPass
+                                ? "text-[#F9F6EE]/65"
+                                : "text-[#103F2E]/60"
+                            }`}
+                          >
+                            {m.ctaNote}
+                          </p>
+                        )}
+                      </div>
+                    </TiltCard>
                   </div>
-                </TiltCard>
-                </div>
-              </Reveal>
+                </Reveal>
               );
             })}
           </div>
@@ -924,8 +999,8 @@ export default function JYAMembershipPage() {
                       : ""
                   }`}
                 >
-                  <Parallax
-                    range={50}
+                  <div
+                    aria-hidden="true"
                     className="pointer-events-none absolute -right-20 -top-20 h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(201,164,92,0.3),transparent_68%)]"
                   />
                   <Orbit
@@ -938,13 +1013,13 @@ export default function JYAMembershipPage() {
                       <SplitWords
                         as="h3"
                         parts={[{ text: m.title }]}
-                        className="font-serif text-2xl font-bold leading-tight text-[#F9F6EE] sm:text-3xl lg:text-4xl"
+                        className="font-serif text-xl font-bold leading-tight text-[#F9F6EE] sm:text-2xl lg:text-3xl"
                       />
                       <Reveal
                         as="p"
                         kind="left"
                         delay={0.15}
-                        className="font-serif text-lg italic text-[#C9A45C] sm:text-xl md:text-2xl"
+                        className="font-serif text-base italic text-[#C9A45C] sm:text-lg lg:text-xl"
                       >
                         {m.tagline}
                       </Reveal>
@@ -1081,11 +1156,11 @@ export default function JYAMembershipPage() {
 
       <section
         id="seasonal-academy"
-        className="relative scroll-mt-24 overflow-hidden border-b border-[#C9A45C]/30 bg-[#F9F6EE] py-14 text-[#103F2E] md:py-20"
+        className="relative scroll-mt-24 overflow-hidden border-b border-[#C9A45C]/30 bg-[#F9F6EE] py-16 text-[#103F2E] md:py-24"
       >
-        <Parallax
-          range={-50}
-          className="pointer-events-none absolute -right-32 top-10 h-[360px] w-[360px] rounded-full bg-[radial-gradient(circle,rgba(201,164,92,0.18),transparent_68%)]"
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-32 top-10 h-[380px] w-[380px] rounded-full bg-[radial-gradient(circle,rgba(201,164,92,0.18),transparent_68%)]"
         />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -1093,8 +1168,10 @@ export default function JYAMembershipPage() {
             eyebrow="Gurukul Immersion"
             eyebrowClass="border-[#C9A45C]/40 bg-white text-[#103F2E]"
             parts={[
+              { text: "120+ Days Residential Academy &" },
               {
-                text: "120+ Days Residential Academy & Certification Programmes",
+                text: "Certification Programmes",
+                className: "gradient-heading italic",
               },
             ]}
             titleClass="text-[#103F2E]"
@@ -1102,69 +1179,46 @@ export default function JYAMembershipPage() {
             descriptionClass="font-serif italic text-[#103F2E]/80"
           />
 
+          {/* Unified Single-Bar Metrics Strip */}
           <Stagger
-            stagger={0.1}
-            className="mb-14 grid grid-cols-2 gap-3 sm:gap-6 lg:mb-16 lg:grid-cols-4"
+            stagger={0.08}
+            className="mb-10 grid grid-cols-2 divide-y divide-[#C9A45C]/25 overflow-hidden rounded-2xl border border-[#C9A45C]/40 bg-white shadow-sm sm:mb-12 lg:grid-cols-4 lg:divide-x lg:divide-y-0"
           >
-            {academyStats.map((st) => (
+            {academyStats.map((st, idx) => (
               <Item
                 key={st.label}
-                kind="scale"
-                duration={0.6}
-                className="rounded-2xl border border-[#C9A45C]/30 bg-white p-4 text-center shadow-md transition-colors hover:border-[#C9A45C] sm:p-6 lg:p-8"
+                kind="up"
+                duration={0.5}
+                className={`p-5 text-center sm:p-6 ${
+                  idx % 2 === 1
+                    ? "border-l border-[#C9A45C]/25 lg:border-l-0"
+                    : ""
+                }`}
               >
-                <div className="font-serif text-3xl font-bold text-[#103F2E] sm:text-4xl lg:text-5xl">
+                <div className="font-serif text-3xl font-bold text-[#103F2E] sm:text-4xl">
                   <Counter value={st.value} suffix={st.suffix} />
                 </div>
-                <div className="mt-2 font-sans text-xs font-semibold text-[#103F2E] sm:text-sm lg:text-base">
+                <div className="mt-1.5 font-sans text-xs font-bold text-[#103F2E] sm:text-sm">
                   {st.label}
                 </div>
-                <div className="mt-1 text-[11px] text-[#103F2E]/60 sm:text-xs">
+                <div className="mt-0.5 text-[11px] text-[#103F2E]/60">
                   {st.sub}
                 </div>
               </Item>
             ))}
           </Stagger>
 
-          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12">
-            <div className="space-y-5 text-left lg:col-span-6">
-              <Reveal
-                as="h3"
-                kind="left"
-                className="font-serif text-xl font-bold text-[#103F2E] sm:text-2xl lg:text-3xl"
-              >
-                Academy Highlights
-              </Reveal>
-              <Reveal
-                as="p"
-                kind="left"
-                delay={0.1}
-                className="font-sans text-sm leading-relaxed text-[#103F2E]/80 sm:text-base"
-              >
-                The जैवमण्डलEcosphere Academy offers an authentic Gurukul
-                atmosphere located at SwaGrama. Students engage in practical
-                exposure, traditional herbal preparation, pulse diagnosis,
-                dinacharya routines, and ecological living.
-              </Reveal>
-              <Stagger stagger={0.08} delay={0.15} className="space-y-3">
-                {academyHighlights.map((highlight, hIdx) => (
-                  <Item
-                    key={hIdx}
-                    kind="left"
-                    duration={0.55}
-                    className="flex items-start gap-3 text-sm text-[#103F2E]/90"
-                  >
-                    <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[#C9A45C]" />
-                    <span>{highlight}</span>
-                  </Item>
-                ))}
-              </Stagger>
-            </div>
-
-            <Reveal kind="right" duration={0.9} className="lg:col-span-6">
-              <div className="space-y-6 rounded-3xl border border-[#C9A45C]/40 bg-white p-5 shadow-xl sm:p-8">
-                <div className="border-b border-[#EDE5D5] pb-4">
-                  <span className="font-serif text-xs font-bold uppercase tracking-widest text-[#C9A45C]">
+          {/* Main 2-Column Balanced Showcase: Left = Calendar & Admissions | Right = Highlights Dossier */}
+          <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-12">
+            {/* Left: Seasonal Academy Calendar + Apply CTA */}
+            <Reveal
+              kind="left"
+              duration={0.75}
+              className="flex flex-col justify-between rounded-3xl border border-[#C9A45C]/40 bg-white p-6 shadow-lg sm:p-8 lg:col-span-5"
+            >
+              <div>
+                <div className="border-b border-[#EDE5D5] pb-4 text-left">
+                  <span className="font-sans text-[10px] font-bold uppercase tracking-[0.25em] text-[#C9A45C]">
                     Schedule
                   </span>
                   <h4 className="mt-1 font-serif text-xl font-bold text-[#103F2E] sm:text-2xl">
@@ -1172,90 +1226,129 @@ export default function JYAMembershipPage() {
                   </h4>
                 </div>
 
-                <Stagger
-                  stagger={0.12}
-                  delay={0.2}
-                  className="space-y-3 sm:space-y-4"
-                >
+                <div className="mt-5 space-y-3">
                   {seasonalCalendar.map((season) => {
                     const isSelectedSeason = selectedSeason === season.id;
+                    const SeasonIcon =
+                      season.id === "summer"
+                        ? Sun
+                        : season.id === "rainy"
+                          ? CloudRain
+                          : Snowflake;
+
                     return (
-                      <div
+                      <button
                         key={season.index}
+                        type="button"
                         id={`season-${season.id}`}
                         onClick={() => setSelectedSeason(season.id)}
-                        className="scroll-mt-28 cursor-pointer"
+                        className={`w-full scroll-mt-28 rounded-2xl border p-4 text-left transition-all duration-200 cursor-pointer ${
+                          isSelectedSeason
+                            ? "border-[#C9A45C] bg-[#103F2E] text-[#F9F6EE] shadow-md ring-2 ring-[#C9A45C]/30"
+                            : "border-[#C9A45C]/30 bg-[#FAF6EC] text-[#103F2E] hover:border-[#C9A45C] hover:bg-[#F4EDDC]"
+                        }`}
                       >
-                        <Item
-                          kind="up"
-                          duration={0.6}
-                          whileHover={{ x: 6, transition: { duration: 0.25 } }}
-                          className={`flex flex-col justify-between gap-3 rounded-xl border p-4 transition-all sm:flex-row sm:items-center ${
-                            isSelectedSeason
-                              ? "border-2 border-[#C9A45C] bg-[#103F2E] text-[#F9F6EE] ring-4 ring-[#C9A45C]/25 shadow-lg"
-                              : "border-[#C9A45C]/30 bg-[#F9F6EE] text-[#103F2E] hover:border-[#C9A45C]"
-                          }`}
-                        >
-                          <div className="min-w-0">
-                            <div className="flex flex-wrap items-center gap-2">
-                              <div
-                                className={`font-serif text-base font-bold sm:text-lg ${
-                                  isSelectedSeason
-                                    ? "text-[#F9F6EE]"
-                                    : "text-[#103F2E]"
-                                }`}
-                              >
-                                {season.index}. {season.sanskrit}
-                              </div>
-                         
-                            </div>
-                            <div
-                              className={`text-xs font-semibold ${
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="flex items-center gap-3">
+                            <span
+                              className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border ${
                                 isSelectedSeason
-                                  ? "text-[#C9A45C]"
-                                  : "text-[#103F2E]/70"
+                                  ? "border-[#C9A45C]/50 bg-[#0B2D20] text-[#E8C581]"
+                                  : "border-[#C9A45C]/35 bg-white text-[#9A6F26]"
                               }`}
                             >
-                              {season.english}
+                              <SeasonIcon className="h-4 w-4" />
+                            </span>
+                            <div>
+                              <div className="font-serif text-base font-bold leading-snug">
+                                {season.sanskrit}
+                              </div>
+                              <div
+                                className={`text-xs font-semibold ${
+                                  isSelectedSeason
+                                    ? "text-[#E8C581]"
+                                    : "text-[#103F2E]/70"
+                                }`}
+                              >
+                                {season.english}
+                              </div>
                             </div>
                           </div>
-                          <div
-                            className={`shrink-0 self-start rounded-lg border px-3 py-1.5 font-serif text-xs font-bold sm:self-auto ${
-                              isSelectedSeason
-                                ? "border-[#C9A45C] bg-[#0B3326] text-[#C9A45C]"
-                                : "border-[#C9A45C]/30 bg-white text-[#C9A45C]"
-                            }`}
-                          >
-                            {season.dates}
-                          </div>
-                        </Item>
-                      </div>
+                        </div>
+
+                        <div
+                          className={`mt-3 border-t pt-2.5 font-serif text-xs font-semibold ${
+                            isSelectedSeason
+                              ? "border-[#C9A45C]/25 text-[#F2D492]"
+                              : "border-[#C9A45C]/20 text-[#9A6F26]"
+                          }`}
+                        >
+                          {season.dates}
+                        </div>
+                      </button>
                     );
                   })}
-                </Stagger>
+                </div>
+              </div>
 
-                <div className="pt-2 text-center space-y-2.5">
-                  <Magnetic strength={0.12} className="w-full">
-                    <CommonButton
-                      label="Apply for जैवमण्डल Ecosphere Life Membership"
-                      fullWidth
-                      onClick={() => handleOpenModal("ecosphere")}
-                      className="!h-11 !w-full !px-5 bg-[#103F2E] hover:bg-[#0B3326] text-[#F9F6EE] border border-[#C9A45C]/40 !rounded-xl font-medium tracking-wide shadow-md justify-center"
-                    />
-                  </Magnetic>
-                  <button
-                    type="button"
-                    onClick={scrollToPlans}
-                    className="inline-flex items-center justify-center gap-1.5 text-xs font-semibold text-[#103F2E] underline decoration-[#C9A45C] underline-offset-4 transition-colors hover:text-[#C9A45C] cursor-pointer"
-                  >
-                    <span>Want a different membership? View &amp; switch all 4 plans</span>
-                    <ArrowRight className="h-3.5 w-3.5" />
-                  </button>
-                  <p className="mt-1 text-[11px] italic text-[#103F2E]/60">
-                    Admission is subject to the entrance examination,
-                    qualification criteria, availability of seats and JYA
-                    policies.
-                  </p>
+              <div className="mt-6 space-y-3 border-t border-[#EDE5D5] pt-5 text-center">
+                <Magnetic strength={0.12} className="w-full">
+                  <CommonButton
+                    label="Apply for जैवमण्डल Ecosphere Life Membership"
+                    fullWidth
+                    onClick={() => handleOpenModal("ecosphere")}
+                    className="!h-11 !w-full !px-5 bg-[#103F2E] hover:bg-[#0B3326] text-[#F9F6EE] border border-[#C9A45C]/40 !rounded-xl font-medium tracking-wide shadow-md justify-center"
+                  />
+                </Magnetic>
+
+                <button
+                  type="button"
+                  onClick={scrollToPlans}
+                  className="inline-flex items-center justify-center gap-1.5 text-xs font-semibold text-[#103F2E] underline decoration-[#C9A45C] underline-offset-4 transition-colors hover:text-[#9A6F26] cursor-pointer"
+                >
+                  <span>
+                    Want a different membership? View &amp; switch all 4 plans
+                  </span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </button>
+
+                <p className="text-[11px] italic leading-relaxed text-[#103F2E]/60">
+                  Admission is subject to the entrance examination,
+                  qualification criteria, availability of seats and JYA
+                  policies.
+                </p>
+              </div>
+            </Reveal>
+
+            <Reveal
+              kind="right"
+              duration={0.75}
+              className="flex flex-col justify-between rounded-3xl border border-[#C9A45C]/50 bg-gradient-to-br from-[#0D3828] via-[#0A2B1F] to-[#072017] p-6 text-left text-[#F9F6EE] shadow-xl sm:p-8 lg:col-span-7 lg:p-10"
+            >
+              <div>
+                <h3 className="mt-2 font-serif text-2xl font-bold text-[#FFFDF8] sm:text-3xl">
+                  Academy Highlights
+                </h3>
+
+                <p className="mt-3 font-sans text-sm leading-relaxed text-[#F9F6EE]/85 sm:text-base">
+                  The जैवमण्डल Ecosphere Academy offers an authentic Gurukul
+                  atmosphere located at SwaGrama. Students engage in practical
+                  exposure, traditional herbal preparation, pulse diagnosis,
+                  dinacharya routines, and ecological living.
+                </p>
+
+                <div className="mt-7 grid grid-cols-1 gap-3.5 sm:grid-cols-2">
+                  {academyHighlights.map((highlight, hIdx) => (
+                    <div
+                      key={hIdx}
+                      className="flex items-start gap-3 rounded-2xl border border-[#C9A45C]/25 bg-white/[0.05] p-4 transition-colors hover:border-[#C9A45C]/60 hover:bg-white/[0.08]"
+                    >
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#E8C581]" />
+                      <span className="text-sm leading-relaxed text-[#F9F6EE]/90">
+                        {highlight}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </Reveal>
@@ -1264,8 +1357,8 @@ export default function JYAMembershipPage() {
       </section>
 
       <section className="relative overflow-hidden bg-gradient-to-br from-[#0B3326] via-[#103F2E] to-[#0B3326] py-14 text-[#F9F6EE] md:py-20">
-        <Parallax
-          range={60}
+        <div
+          aria-hidden="true"
           className="pointer-events-none absolute -left-24 top-20 h-[380px] w-[380px] rounded-full bg-[radial-gradient(circle,rgba(201,164,92,0.14),transparent_68%)]"
         />
 
@@ -1273,7 +1366,13 @@ export default function JYAMembershipPage() {
           <SectionHeading
             eyebrow="Feature Matrix"
             eyebrowClass="border-[#C9A45C]/30 bg-white/5 text-[#C9A45C]"
-            parts={[{ text: "FIND THE MEMBERSHIP THAT SUITS YOU" }]}
+            parts={[
+              { text: "Find the Membership" },
+              {
+                text: "That Suits You",
+                className: "gradient-heading-dark italic",
+              },
+            ]}
             titleClass="text-[#F9F6EE]"
             description="Compare all four membership offerings across 10 vital criteria."
             descriptionClass="text-[#F9F6EE]/80"
@@ -1392,7 +1491,10 @@ export default function JYAMembershipPage() {
           <SectionHeading
             eyebrow="TIMELINE"
             eyebrowClass="border-[#C9A45C]/40 bg-white text-[#C9A45C]"
-            parts={[{ text: "HOW TO BECOME A JYA MEMBER" }]}
+            parts={[
+              { text: "How to Become a" },
+              { text: "JYA Member", className: "gradient-heading italic" },
+            ]}
             titleClass="text-[#103F2E]"
             description="Becoming a JYA member is an elegant five-step pathway to holistic learning and community living."
             descriptionClass="text-[#103F2E]/80"
@@ -1516,69 +1618,132 @@ export default function JYAMembershipPage() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#0B3326] via-[#103F2E] to-[#0B3326] py-16 text-center text-[#F9F6EE] md:py-24">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(201,164,92,0.14)_0%,transparent_70%)]" />
-        <div className="pointer-events-none absolute left-1/2 top-1/2 -ml-[180px] -mt-[180px] h-[360px] w-[360px] md:-ml-[310px] md:-mt-[310px] md:h-[620px] md:w-[620px]">
-          <Orbit
-            duration={90}
-            className="h-full w-full rounded-full border border-dashed border-[#C9A45C]/25"
-          />
-        </div>
-        <div className="pointer-events-none absolute left-1/2 top-1/2 -ml-[130px] -mt-[130px] h-[260px] w-[260px] md:-ml-[230px] md:-mt-[230px] md:h-[460px] md:w-[460px]">
-          <Orbit
-            reverse
-            duration={70}
-            className="h-full w-full rounded-full border border-[#C9A45C]/20"
-          />
-        </div>
+      <section className="relative overflow-hidden bg-[#F9F6EE] px-4 py-14 sm:px-6 md:py-20 lg:px-20">
+        <div className="relative mx-auto overflow-hidden rounded-[12px] border border-[#C9A45C]/55 bg-gradient-to-br from-[#071E15] via-[#0B2D20] to-[#0F3B2A] p-7 text-[#F9F6EE] shadow-[0_32px_90px_rgba(11,45,32,0.28)] sm:p-10 lg:p-14">
+          <div className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(201,164,92,0.2),transparent_68%)]" />
+          <div className="pointer-events-none absolute -bottom-28 -right-24 h-96 w-96 rounded-full bg-[radial-gradient(circle,rgba(201,164,92,0.16),transparent_70%)]" />
+          <div className="pointer-events-none absolute inset-0 opacity-15 bg-[radial-gradient(rgba(201,164,92,0.45)_1px,transparent_1px)] [background-size:20px_20px]" />
 
-        <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6">
-          <SplitWords
-            as="h2"
-            parts={[
-              { text: "Be Part of" },
-              { text: "Something Bigger", className: "gradient-heading-dark" },
-            ]}
-            className="font-serif text-3xl font-bold tracking-tight text-[#F9F6EE] sm:text-4xl lg:text-5xl mb-1"
-          />
+          <div className="pointer-events-none absolute -right-32 top-1/2 -mt-[260px] hidden h-[520px] w-[520px] lg:block">
+            <Orbit
+              duration={90}
+              className="h-full w-full rounded-full border border-dashed border-[#C9A45C]/25"
+            />
+          </div>
 
-          <Reveal
-            kind="fade"
-            delay={0.2}
-            className="mx-auto my-8 flex max-w-xs items-center justify-center gap-4"
-          >
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-[#C9A45C]" />
-            <div className="h-2.5 w-2.5 rotate-45 border border-[#C9A45C] bg-[#C9A45C]/30" />
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-[#C9A45C]" />
-          </Reveal>
+          <div className="relative z-10 grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12">
+            <div className="text-left lg:col-span-7">
+              <Reveal kind="left">
+                <span className="inline-flex items-center gap-2 rounded-full border border-[#C9A45C]/45 bg-[#C9A45C]/10 px-4 py-1.5 font-sans text-[10px] font-bold uppercase tracking-[0.26em] text-[#E8C581]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#E8C581]" />
+                  JnanaYogAyu · Community
+                </span>
+              </Reveal>
 
-          <ScrubWords
-            text={closingText}
-            className="mx-auto max-w-3xl font-sans text-lg leading-relaxed text-[#F9F6EE] sm:text-xl md:text-2xl"
-          />
-
-          <Reveal
-            as="p"
-            delay={0.15}
-            className="mt-8 font-serif text-lg font-medium italic text-[#C9A45C] sm:text-2xl md:text-3xl"
-          >
-            Join the JYA Ecosystem. Begin Your Journey Today.
-          </Reveal>
-
-          <Reveal
-            kind="scale"
-            delay={0.25}
-            className="mt-10 flex justify-center sm:mt-12"
-          >
-            <Magnetic className="w-full sm:w-auto">
-              <CommonButton
-                label="Join the JYA Community"
-                onClick={() => handleOpenModal()}
-                icon={<ArrowRight className="h-4 w-4 text-[#0B3326]" />}
-                className="!h-12 !w-full !px-9 sm:!w-auto bg-[#C9A45C] hover:bg-[#B89248] text-[#0B3326] font-bold !rounded-2xl shadow-xl tracking-wide text-base mx-auto"
+              <SplitWords
+                as="h2"
+                parts={[
+                  { text: "Be Part of" },
+                  {
+                    text: "Something Bigger",
+                    className: "gradient-heading-dark italic pb-1.5 pr-2",
+                  },
+                ]}
+                className="mt-5 font-serif text-3xl font-bold leading-[1.2] tracking-tight text-[#FFFDF8] pb-1 sm:text-4xl lg:text-5xl"
               />
-            </Magnetic>
-          </Reveal>
+
+              <div className="my-6 flex max-w-xs items-center gap-3">
+                <div className="h-px flex-1 bg-gradient-to-r from-[#C9A45C] to-transparent" />
+                <PiFlowerLotus className="h-5 w-5 shrink-0 text-[#E8C581]" />
+                <div className="h-px flex-1 bg-gradient-to-l from-[#C9A45C] to-transparent" />
+              </div>
+
+              <Reveal
+                as="p"
+                kind="up"
+                delay={0.1}
+                className="max-w-2xl font-sans text-base leading-relaxed text-[#F9F6EE]/95 sm:text-lg"
+              >
+                {closingText}
+              </Reveal>
+
+              <Reveal
+                as="p"
+                delay={0.15}
+                className="mt-6 font-serif text-lg font-medium italic text-[#E8C581] sm:text-xl"
+              >
+                Join the JYA Ecosystem. Begin Your Journey Today.
+              </Reveal>
+
+              <Reveal
+                kind="up"
+                delay={0.2}
+                className="mt-8 flex flex-col gap-3.5 sm:flex-row sm:items-center"
+              >
+                <Magnetic className="w-full sm:w-auto">
+                  <CommonButton
+                    label="Join the JYA Community"
+                    onClick={() => handleOpenModal()}
+                    icon={<ArrowRight className="h-4 w-4 text-[#082218]" />}
+                    className="!h-12 !w-full !px-8 sm:!w-auto bg-gradient-to-r from-[#C9A45C] via-[#DFBE78] to-[#C9A45C] hover:brightness-105 text-[#082218] font-bold !rounded-xl shadow-[0_12px_32px_rgba(201,164,92,0.3)] tracking-wide text-sm sm:text-base"
+                  />
+                </Magnetic>
+
+                <button
+                  type="button"
+                  onClick={scrollToPlans}
+                  className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-[#C9A45C]/45 bg-white/[0.06] px-6 font-sans text-sm font-semibold text-[#F9F6EE] backdrop-blur-sm transition-all hover:border-[#E8C581] hover:bg-white/[0.12] sm:w-auto cursor-pointer"
+                >
+                  Compare All 4 Plans
+                </button>
+              </Reveal>
+            </div>
+
+            <Reveal kind="right" delay={0.15} className="lg:col-span-5">
+              <div className="rounded-2xl border border-[#C9A45C]/40 bg-[#061A12]/90 p-5 shadow-xl sm:p-6">
+                <div className="flex items-center justify-between border-b border-[#C9A45C]/25 pb-3.5">
+                  <div>
+                    <span className="block font-sans text-[10px] font-bold uppercase tracking-[0.24em] text-[#C9A45C]">
+                      Direct Enrolment
+                    </span>
+                    <h3 className="mt-0.5 font-serif text-lg font-bold text-[#FFFDF8]">
+                      Choose Your Pathway
+                    </h3>
+                  </div>
+                  <PiFlowerLotus className="h-5 w-5 text-[#C9A45C]/80" />
+                </div>
+
+                <div className="mt-4 space-y-2.5">
+                  {memberships.map((m) => (
+                    <button
+                      key={m.id}
+                      type="button"
+                      onClick={() => handleOpenModal(m.id)}
+                      className="group flex w-full items-center justify-between gap-3 rounded-xl border border-[#C9A45C]/25 bg-white/[0.04] px-4 py-3 text-left transition-all duration-200 hover:border-[#C9A45C] hover:bg-white/[0.1] cursor-pointer"
+                    >
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className="truncate font-serif text-sm font-bold text-[#FFFDF8] group-hover:text-[#E8C581] transition-colors">
+                            {m.title}
+                          </span>
+                        </div>
+                        <span className="mt-0.5 block truncate text-[11px] text-[#F9F6EE]/65">
+                          {m.badge}
+                        </span>
+                      </div>
+
+                      <div className="flex shrink-0 items-center gap-2.5">
+                        <span className="rounded-lg border border-[#C9A45C]/35 bg-[#C9A45C]/15 px-2.5 py-1 font-serif text-xs font-bold text-[#E8C581]">
+                          {m.priceDisplay}
+                        </span>
+                        <ArrowRight className="h-3.5 w-3.5 text-[#C9A45C] transition-transform duration-200 group-hover:translate-x-1" />
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 

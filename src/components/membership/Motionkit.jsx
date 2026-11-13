@@ -15,7 +15,7 @@ import {
 export const ease = [0.22, 1, 0.36, 1];
 
 export const viewportConfig = {
-  once: false,
+  once: true,
   amount: 0.12,
   margin: "0px 0px -5% 0px",
 };
@@ -146,12 +146,20 @@ export function SplitWords({
   const words = [];
 
   parts.forEach((part, pi) => {
-    part.text
-      .split(/\s+/)
-      .filter(Boolean)
-      .forEach((word, wi) => {
-        words.push({ word, className: part.className, key: `${pi}-${wi}` });
+    if (part.className && part.className.includes("gradient-heading")) {
+      words.push({
+        word: part.text.trim(),
+        className: part.className,
+        key: `${pi}-0`,
       });
+    } else {
+      part.text
+        .split(/\s+/)
+        .filter(Boolean)
+        .forEach((word, wi) => {
+          words.push({ word, className: part.className, key: `${pi}-${wi}` });
+        });
+    }
   });
 
   const label = parts.map((part) => part.text).join(" ");
@@ -397,10 +405,6 @@ export function Marquee({
   speed = 45,
 }) {
   const reduce = useReducedMotion();
-  const { scrollY } = useScroll();
-  const velocity = useVelocity(scrollY);
-  const smooth = useSpring(velocity, { stiffness: 90, damping: 30 });
-  const skewX = useTransform(smooth, [-2500, 2500], reduce ? [0, 0] : [-8, 8]);
 
   const row = (
     <div className="flex shrink-0 items-center gap-6 pr-6 sm:gap-10 sm:pr-10">
@@ -415,15 +419,13 @@ export function Marquee({
 
   return (
     <div className={`overflow-hidden ${className}`}>
-      <motion.div style={{ skewX }}>
-        <motion.div
-          className="flex w-max"
-          animate={reduce ? undefined : { x: ["0%", "-50%"] }}
-          transition={{ duration: speed, ease: "linear", repeat: Infinity }}
-        >
-          {row}
-          {row}
-        </motion.div>
+      <motion.div
+        className="flex w-max will-change-transform"
+        animate={reduce ? undefined : { x: ["0%", "-50%"] }}
+        transition={{ duration: speed, ease: "linear", repeat: Infinity }}
+      >
+        {row}
+        {row}
       </motion.div>
     </div>
   );
@@ -437,7 +439,7 @@ export function Orbit({ className = "", duration = 60, reverse = false }) {
       aria-hidden="true"
       animate={reduce ? undefined : { rotate: reverse ? -360 : 360 }}
       transition={{ duration, ease: "linear", repeat: Infinity }}
-      className={className}
+      className={`will-change-transform ${className}`}
     />
   );
 }

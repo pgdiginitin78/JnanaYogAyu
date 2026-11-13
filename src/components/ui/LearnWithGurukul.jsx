@@ -62,9 +62,9 @@ function LearnWithGurukul() {
               initial="hidden"
               whileInView="visible"
               viewport={vp}
-              className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#FDFBF7] leading-tight"
+              className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-[#FDFBF7] leading-tight tracking-tight"
             >
-              Learn with <span className="gradient-heading-dark">Swagurukul</span>
+              Learn with <span className="italic gradient-heading-dark">Swagurukul</span>
             </motion.h1>
             <motion.h2
               variants={fadeUp}
@@ -72,7 +72,7 @@ function LearnWithGurukul() {
               initial="hidden"
               whileInView="visible"
               viewport={vp}
-              className="font-sans text-lg md:text-xl text-amber font-medium italic"
+              className="font-serif text-base sm:text-lg lg:text-xl text-amber font-medium italic"
             >
               Learn Traditionally. Practice Consciously. Live Naturally.
             </motion.h2>

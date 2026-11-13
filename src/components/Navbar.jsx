@@ -43,19 +43,15 @@ const Navbar = () => {
       const currentPath = location.pathname.toLowerCase();
       const targetPath = path.toLowerCase();
 
-      if (targetPath === "/muktikhela") {
-        return currentPath === "/muktikhela" || location.hash === "#muktikhela";
-      }
-
       if (targetPath === "/") {
-        return currentPath === "/" && location.hash !== "#muktikhela";
+        return currentPath === "/";
       }
 
       return (
         currentPath === targetPath || currentPath.startsWith(`${targetPath}/`)
       );
     },
-    [location.pathname, location.hash]
+    [location.pathname]
   );
 
   const moveUnderlineToLink = useCallback((targetPath, immediate = false) => {
