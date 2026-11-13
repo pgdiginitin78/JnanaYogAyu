@@ -487,15 +487,10 @@ export default function JYAMembershipPage() {
 
   const { scrollYProgress: timelineProgress } = useScroll({
     target: timelineRef,
-    offset: ["start 70%", "end 55%"],
-  });
-  const timelineScale = useSpring(timelineProgress, {
-    stiffness: 100,
-    damping: 26,
-    restDelta: 0.001,
+    offset: ["start 75%", "end 60%"],
   });
   const timelineHeadTop = useTransform(
-    timelineScale,
+    timelineProgress,
     (v) => `${Math.min(100, Math.max(0, v * 100))}%`,
   );
 
@@ -1486,7 +1481,7 @@ export default function JYAMembershipPage() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden border-b border-[#C9A45C]/30 bg-[#F9F6EE] py-14 text-[#103F2E] md:py-20">
+      <section className="relative overflow-hidden border-b border-[#C9A45C]/30 bg-[#F9F6EE] py-14 text-[#103F2E] md:py-10">
         <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
           <SectionHeading
             eyebrow="TIMELINE"
@@ -1500,58 +1495,63 @@ export default function JYAMembershipPage() {
             descriptionClass="text-[#103F2E]/80"
           />
 
-          <div ref={timelineRef} className="relative mx-auto mt-10 max-w-5xl">
+          <div ref={timelineRef} className="relative mx-auto mt-12 max-w-5xl">
             <div className="absolute bottom-4 left-6 top-4 -ml-px w-[2px] bg-[#C9A45C]/20 md:left-1/2" />
             <motion.div
-              style={{ scaleY: shouldReduce ? 1 : timelineScale }}
-              className="absolute bottom-4 left-6 top-4 -ml-px w-[2px] origin-top bg-gradient-to-b from-[#C9A45C] via-[#C9A45C] to-[#103F2E] md:left-1/2"
+              style={{ scaleY: shouldReduce ? 1 : timelineProgress }}
+              className="absolute bottom-4 left-6 top-4 -ml-px w-[2px] origin-top will-change-transform bg-gradient-to-b from-[#C9A45C] via-[#C9A45C] to-[#103F2E] md:left-1/2"
             />
             {!shouldReduce && (
               <div className="pointer-events-none absolute inset-x-0 bottom-4 top-4">
                 <motion.div
                   style={{ top: timelineHeadTop }}
-                  className="absolute left-6 -ml-[5px] -mt-[5px] h-[10px] w-[10px] rounded-full bg-[#C9A45C] shadow-[0_0_14px_3px_rgba(201,164,92,0.7)] md:left-1/2"
+                  className="absolute left-6 -ml-[6px] -mt-[6px] h-3 w-3 rounded-full bg-[#C9A45C] shadow-[0_0_16px_4px_rgba(201,164,92,0.75)] md:left-1/2"
                 />
               </div>
             )}
 
-            <div className="space-y-10 md:space-y-16">
+            <div className="space-y-10 md:space-y-14">
               {journeySteps.map((st, index) => {
                 const isRight = index % 2 === 0;
                 const IconComp = st.icon;
                 const card = (
-                  <Reveal kind={isRight ? "right" : "left"} duration={0.7}>
-                    <TiltCard
-                      max={4}
-                      className={`group rounded-2xl border border-[#C9A45C]/35 bg-white p-5 text-left shadow-sm transition-shadow duration-300 hover:shadow-xl sm:rounded-3xl sm:p-8 ${
+                  <Reveal kind={isRight ? "right" : "left"} duration={0.6}>
+                    <div
+                      className={`group relative overflow-hidden rounded-3xl border border-[#C9A45C]/45 bg-gradient-to-br from-white via-[#FFFDF9] to-[#FAF5E8] p-6 text-left shadow-[0_18px_48px_rgba(16,63,46,0.08)] transition-all duration-300 hover:-translate-y-1 hover:border-[#C9A45C] hover:shadow-[0_24px_60px_rgba(16,63,46,0.14)] sm:p-8 ${
                         isRight ? "md:ml-6" : "md:mr-6"
                       }`}
                     >
-                      <div className="mb-2 flex items-center justify-between">
-                        <span className="font-serif text-xs font-bold uppercase tracking-widest text-[#C9A45C]">
-                          {st.num}
-                        </span>
-                        <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#F9F6EE] text-[#103F2E]">
-                          <IconComp className="h-3.5 w-3.5 text-[#C9A45C]" />
-                        </div>
-                      </div>
+                      {/* Top gold accent bar */}
+                      <span
+                        aria-hidden="true"
+                        className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#C9A45C] via-[#E8C581] to-transparent"
+                      />
 
-                      <h3 className="font-serif text-lg font-bold leading-snug text-[#103F2E] sm:text-xl md:text-2xl">
+                
+
+               
+
+                      <h3 className="relative mt-5 font-serif text-xl font-bold leading-snug text-[#103F2E] sm:text-2xl">
                         {st.title}
                       </h3>
-                      <p className="mt-2.5 font-sans text-xs leading-relaxed text-[#103F2E]/80 sm:text-sm">
+                      <p className="relative mt-2.5 font-sans text-sm leading-relaxed text-[#103F2E]/80">
                         {st.description}
                       </p>
 
-                      <CommonButton
-                        label="Learn More"
-                        onClick={() => handleOpenModal()}
-                        icon={
-                          <ArrowRight className="h-3.5 w-3.5 text-[#C9A45C]" />
-                        }
-                        className="mt-5 !h-8 !px-4 bg-[#F9F6EE] hover:bg-[#103F2E] text-[#103F2E] hover:text-[#F9F6EE] border border-[#103F2E]/20 hover:border-[#103F2E] !rounded-full text-xs font-semibold shadow-none transition-all"
-                      />
-                    </TiltCard>
+                      <div className="relative mt-6 flex items-center justify-between border-t border-[#EDE5D5] pt-4">
+                        <CommonButton
+                          label="Learn More"
+                          onClick={() => handleOpenModal()}
+                          icon={
+                            <ArrowRight className="h-3.5 w-3.5 text-[#C9A45C]" />
+                          }
+                          className="!h-9 !px-5 bg-[#103F2E] hover:bg-[#0B3326] text-[#F9F6EE] border border-[#C9A45C]/40 !rounded-full text-xs font-semibold shadow-sm transition-all"
+                        />
+                        <span className="font-serif text-xs italic text-[#9A6F26]">
+                          Step {st.num} of 0{journeySteps.length}
+                        </span>
+                      </div>
+                    </div>
                   </Reveal>
                 );
 
@@ -1560,31 +1560,19 @@ export default function JYAMembershipPage() {
                     key={st.num}
                     className="relative flex flex-col items-center md:flex-row"
                   >
-                    <div className="absolute left-6 top-8 z-20 -ml-3.5 md:left-1/2">
+                    <div className="absolute left-6 top-8 z-20 -ml-4 md:left-1/2">
                       <motion.div
                         initial={
                           shouldReduce
                             ? { opacity: 0 }
-                            : { opacity: 0, scale: 0.3 }
+                            : { opacity: 0, scale: 0.5 }
                         }
                         whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: false, amount: 0.6 }}
-                        transition={{ duration: 0.5, ease }}
-                        className="relative flex h-7 w-7 items-center justify-center rounded-full border-2 border-[#103F2E] bg-[#F9F6EE] shadow-md"
+                        viewport={{ once: true, amount: 0.4 }}
+                        transition={{ duration: 0.45, ease }}
+                        className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#C9A45C] bg-[#103F2E] font-serif text-[11px] font-bold text-[#E8C581] shadow-md"
                       >
-                        {!shouldReduce && (
-                          <motion.span
-                            aria-hidden="true"
-                            animate={{ scale: [1, 2], opacity: [0.7, 0] }}
-                            transition={{
-                              duration: 2,
-                              ease: "easeOut",
-                              repeat: Infinity,
-                            }}
-                            className="absolute inset-0 rounded-full border border-[#C9A45C]"
-                          />
-                        )}
-                        <div className="h-2.5 w-2.5 rounded-full bg-[#C9A45C]" />
+                        {st.num}
                       </motion.div>
                     </div>
 
