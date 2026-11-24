@@ -1,0 +1,12 @@
+{
+  "name": "jnanayogayu-backend",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Backend API service for JnanaYogAyu (MakeMyTrip-style Ayurvedic Clinics & Holistic Wellness Aggregator)",
+  "type": "module",
+  "scripts": {
+    "dev": "echo \"Backend implementation pending — see docs/JYA_WEBSITE_AND_BACKEND_ARCHITECTURE.md\"",
+    "start": "echo \"Backend implementation pending — see docs/JYA_WEBSITE_AND_BACKEND_ARCHITECTURE.md\""
+  }
+}
+

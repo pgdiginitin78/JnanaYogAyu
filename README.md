@@ -1,16 +1,56 @@
-# React + Vite
+# JnanaYogAyu (JYA)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**JnanaYogAyu** is a MakeMyTrip-style multi-partner Ayurvedic clinics, Panchakarma centres, holistic wellness, learning (`Swagurukul`), and natural marketplace aggregator platform.
 
-Currently, two official plugins are available:
+## Repository Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```text
+JnanaYogAyu/
+├── frontend/          # React 19 + Vite + Tailwind CSS client web app
+│   ├── public/        # Static public assets (favicon, icons)
+│   ├── src/
+│   │   ├── assets/    # Organized domain images (brand, community, gurukul, home, marketplace, membership, muktikhela, shatayush)
+│   │   ├── components/
+│   │   │   ├── common/      # Reusable buttons, forms, icons, loader, modals, table, ErrorBoundary, SmoothScroll
+│   │   │   ├── layout/      # Navbar, Footer, ScrollToTop
+│   │   │   ├── membership/  # MembershipModal, MotionKit
+│   │   │   └── sections/    # Hero & Home page feature sections
+│   │   ├── context/   # Global React Context providers (LoaderContext)
+│   │   ├── hooks/     # Custom React hooks
+│   │   ├── pages/     # Route-level pages (HomePage, MembershipPage, ShatayushWorldPage)
+│   │   ├── services/  # External integrations & API clients (razorpay.js)
+│   │   ├── utils/     # Shared utilities & helpers
+│   │   └── validation/# Yup validation schemas (membershipSchema, shatayushSchema)
+│   ├── .env           # Public VITE_* environment variables only
+│   └── package.json
+├── backend/           # Segregated server-side API & worker scaffold
+│   ├── src/
+│   │   ├── config/    # Environment, DB, Razorpay & storage configuration
+│   │   ├── db/        # Migrations & seeds
+│   │   ├── middleware/# Auth JWT, RBAC & tenant isolation middleware
+│   │   ├── modules/   # Domain modules (auth, users, partners, vaidyas, vendors, catalog, bookings, payments, memberships, shatayush, muktikhela, content, admin, superadmin)
+│   │   ├── routes/    # API routes (/api/v1/...)
+│   │   ├── services/  # WhatsApp Business API, Email, S3/R2 signed URLs
+│   │   └── utils/     # Shared server helpers
+│   ├── .env           # Server-only secrets (RAZORPAY_KEY_SECRET, DB, JWT)
+│   └── package.json
+└── docs/              # Architecture documentation, flowcharts, UI mockups & PDF spec
+```
 
-## React Compiler
+## Running the Frontend
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-## Expanding the ESLint configuration
+Production build:
+```bash
+cd frontend
+npm run build
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Architecture & Documentation
+- Full spec (Markdown): [docs/JYA_WEBSITE_AND_BACKEND_ARCHITECTURE.md](docs/JYA_WEBSITE_AND_BACKEND_ARCHITECTURE.md)
+- Full spec with flowcharts & UI mockups (PDF): [docs/JYA_WEBSITE_AND_BACKEND_ARCHITECTURE.pdf](docs/JYA_WEBSITE_AND_BACKEND_ARCHITECTURE.pdf)
