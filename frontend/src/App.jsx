@@ -45,7 +45,7 @@ const Contact = () => (
 
 function AppContent({ lenisRef }) {
   const location = useLocation();
-  const isV2 = location.pathname.startsWith("/v2");
+  const isV2 = location.pathname.toLowerCase().startsWith("/v2");
 
   if (isV2) {
     return (
@@ -97,8 +97,11 @@ function App() {
       touchMultiplier: 2,
     });
 
+    let cancelled = false;
     lenisRef.current = lenis;
-    setLenisInstance(lenis);
+    Promise.resolve().then(() => {
+      if (!cancelled) setLenisInstance(lenis);
+    });
 
     lenis.scrollTo(0, {
       immediate: true,
@@ -115,6 +118,7 @@ function App() {
     animationFrameId = requestAnimationFrame(raf);
 
     return () => {
+      cancelled = true;
       cancelAnimationFrame(animationFrameId);
       lenisRef.current = null;
       setLenisInstance(null);
